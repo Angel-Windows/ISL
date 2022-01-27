@@ -6,7 +6,7 @@ use App\Models\Navigation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-class CalendarController extends Controller
+class ProgressController extends Controller
 {
     public function __construct()
     {

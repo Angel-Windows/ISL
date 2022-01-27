@@ -16,6 +16,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersSeeder::class,
             UsersProfilesSeeder::class,
+]);
+        $this->call([
+            NavigationSeeder::class,
+
 //            RegularLessonsSeeder::class,
 //            LessonsSeeder::class,
 //            NavigationSeeder::class,

@@ -1,0 +1,17 @@
+@import "variable";
+@import "component";
+body{
+    background: var(--color_dark_grey);
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+.menu_top {
+    padding: 35px 80px;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+
+    * {
+        display: inline-block;
+    }
+}

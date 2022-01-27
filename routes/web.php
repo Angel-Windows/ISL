@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 auth();
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+Route::get('/progress', [CalendarController::class, 'index'])->name('progress');
 
 
 require __DIR__.'/auth.php';
