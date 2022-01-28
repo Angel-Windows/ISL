@@ -4,6 +4,11 @@
   --color_dark_grey-2: #3C3C3C;
   --color_white: #FFFFFF;
   --color_dark_white: #D8CDCD;
+  --calendar_normal: #7986CB;
+  --calendar_closed: #616161;
+  --calendar_transfer: #F3C875;
+  --calendar_success: #009587;
+  --calendar_delete: #1b1b28;
 }
 
 .nav {
@@ -13,7 +18,7 @@
   justify-content: space-between;
   background: var(--color_light_grey);
   color: var(--color_white);
-  width: 300px;
+  width: 290px;
   height: 100vh;
   box-sizing: border-box;
   padding: 40px 20px;
@@ -165,12 +170,103 @@ body {
   grid-template-columns: auto 1fr;
 }
 
+h2 {
+  margin-left: auto;
+  color: var(--color_dark_white);
+  font-size: 22px;
+}
+
+.content {
+  padding: 10px 80px 46px;
+}
+
+.section {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
 .menu_top {
   padding: 35px 80px;
   display: flex;
+  grid-gap: 50px;
   justify-content: space-between;
   color: white;
 }
-.menu_top * {
-  display: inline-block;
+.menu_top span {
+  font-size: 22px;
+  color: var(--color_white);
+}
+.menu_top .menu_nav, .menu_top .menu_profile {
+  display: flex;
+  align-content: center;
+  padding: 10px 30px;
+  background: var(--color_light_grey);
+  border-radius: 10px;
+}
+.menu_top .menu_nav {
+  width: 100%;
+}
+.menu_top .item_menu {
+  display: flex;
+  grid-gap: 13px;
+  align-items: center;
+  margin-right: 20px;
+}
+.menu_top .today {
+  grid-gap: 7px;
+}
+.menu_top .img {
+  height: 15px;
+  width: auto;
+}
+.menu_top .coin {
+  display: flex;
+  align-items: center;
+  grid-gap: 7px;
+}
+.menu_top .coin .img {
+  height: 28px;
+  width: 51px;
+}
+.menu_top .coin span {
+  font-family: "Noto Sans Display", sans-serif;
+  font-weight: 500;
+}
+.menu_top .menu_profile {
+  grid-gap: 88px;
+}
+.menu_top .profile_avatar {
+  height: 53px;
+  width: 53px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table .item {
+  box-sizing: border-box;
+  padding-left: 10px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  top: 0;
+  bottom: 1px;
+  left: 0;
+  right: 1px;
+  border-radius: 7px;
+  background: var(--calendar_normal);
+  font-size: 15px;
+}
+table .item.closed {
+  background: var(--calendar_closed);
+}
+table .item.transfer {
+  background: var(--calendar_transfer);
+  color: var(--color_white);
+}
+table .item.success {
+  background: var(--calendar_success);
+}
+table .item.delete {
+  background: var(--calendar_delete);
 }

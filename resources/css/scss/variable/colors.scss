@@ -1,7 +1,14 @@
-:root{
-    --color_light_grey:  #474747;
+:root {
+    --color_light_grey: #474747;
     --color_dark_grey: #272727;
     --color_dark_grey-2: #3C3C3C;
-    --color_white:  #FFFFFF;
+    --color_white: #FFFFFF;
     --color_dark_white: #D8CDCD;
+    //calendar_status
+    --calendar_normal: #7986CB;
+    --calendar_closed: #616161;
+    --calendar_transfer: #F3C875;
+    --calendar_success: #009587;
+
+    --calendar_delete: #1b1b28;
 }

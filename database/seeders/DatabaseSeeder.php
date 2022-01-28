@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
 ]);
         $this->call([
             NavigationSeeder::class,
+            RegularLessonsSeeder::class,
+            CalendarSeeder::class,
 
 //            RegularLessonsSeeder::class,
 //            LessonsSeeder::class,

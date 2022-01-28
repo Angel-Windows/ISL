@@ -24,7 +24,7 @@
             <h1>IT Schoollearn</h1>
         </div>
         <aside class="nav_list">
-            @foreach($data as $item)
+            @foreach($data_navigation as $item)
                 <a href="{{route($item->link)}}" @if($route_name == $item->link) class="active" @endif>
                     <div class="img"><img src="{{asset('res/nav_itmem_home.png')}}" alt=""></div>
                     <em>{{$item->name}}</em>
@@ -47,34 +47,105 @@
         </ul>
     </footer>
 </nav>
-<section>
+<section class="section">
     <aside class="menu_top">
         <div class="menu_nav">
-            <div class="today">
-                <div class="img"><img src="{{asset('res/arrow_left.png')}}" alt=""></div>
-                <span>Today</span>
-                <div class="img"><img src="{{asset('res/arrow_right.png')}}" alt=""></div>
+            <div class="today item_menu">
+                <a href="{{route($route_name, ['page'=>($page-1)])}}" class="img"><img
+                        src="{{asset('res/arrow_left.png')}}" alt=""></a>
+                <a href="{{route($route_name, ['page'=>0])}}"><span>Today</span></a>
+                <a href="{{route($route_name, ['page'=>($page+1)])}}" class="img"><img
+                        src="{{asset('res/arrow_right.png')}}" alt=""></a>
             </div>
-            <div class="work">
+            <div class="work item_menu">
                 <div class="img"><img src="{{asset('res/plus.png')}}" alt=""></div>
                 <span>Work</span>
             </div>
-            <div class="statistic">
+            <div class="statistic item_menu">
                 <div class="img"><img src="{{asset('res/statistic.png')}}" alt=""></div>
                 <span>Statistic</span>
             </div>
+            <h2 class="item_menu">Расписание {{$now_data}}</h2>
         </div>
         <div class="menu_profile">
-            <div class="coin"><div class="img"><img src="" alt=""></div></div>
-            <div class="profile img"></div>
+            <div class="coin">
+                <div class="img"><img src="{{asset('res/sc.png')}}" alt=""></div>
+                <span>15600</span>
+            </div>
+            <div class="profile_avatar img"><img src="{{asset('res/avatara_user.png')}}" alt=""></div>
         </div>
     </aside>
     <div class="content calendar">
-        <section>
+        <table>
+            <col class="col1 unselectable">
+            <col span=1 class="coln unselectable">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Пн</th>
+                <th>Вт</th>
+                <th>Ср</th>
+                <th>Чт</th>
+                <th>Пт</th>
+                <th>Сб</th>
+                <th>Вс</th>
 
-        </section>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $temp_data_lesson = $data_lesson;
+            $data_day = [1, 2, 3, 4, 5, 6, 0];
+            ?>
+            @for($i = 9; $i<=22;$i++)
+                <tr>
+                    <?php
+                    if ($i < 10) {
+                        $num_day = "0" . $i;
+                    } else {
+                        $num_day = $i;
+                    }
+                    $num_day .= ":00"
+                    ?>
+                    <td class="time">{{$num_day}}</td>
+                    @for($j = 0; $j < 7; $j++)
+                        <td>
+                            @foreach($temp_data_lesson as $key=>$item)
+                                @if($item->day_week == $data_day[$j] &&  $item->time_start == $num_day.":00")
+                                    <?php
+                                    $class_names = '';
+                                    switch ((int)$item->status) {
+                                        case 0:
+                                            $class_names = "normal";
+                                            break;
+                                        case 1:
+                                            $class_names = "closed";
+                                            break;
+                                        case 2:
+                                            $class_names = "transfer";
+                                            break;
+                                        case 3:
+                                            $class_names = "success";
+                                            break;
+                                        default :
+                                            $class_names = 'delete';
+                                            break;
+                                    }
+                                    ?>
+                                    <div class="item {{$class_names}}">
+                                        <p>{{$item->student_name}}</p>
+                                        <p>{{$num_day}} - {{$i + 1 . ":00"}}</p>
+                                    </div>
+                                    <?php unset($temp_data_lesson[$key]); ?>
+                                @endif
+                            @endforeach
+                        </td>
+                    @endfor
+                </tr>
+            @endfor
+            </tbody>
+        </table>
         <aside class="menu_right">
-
         </aside>
     </div>
 </section>
