@@ -164,27 +164,11 @@
     display: none;
   }
 }
-body {
-  background: var(--color_dark_grey);
-  display: grid;
-  grid-template-columns: auto 1fr;
+@media all and (max-width: 1500px) {
+  .nav {
+    width: 0px;
+  }
 }
-
-h2 {
-  margin-left: auto;
-  color: var(--color_dark_white);
-  font-size: 22px;
-}
-
-.content {
-  padding: 10px 80px 46px;
-}
-
-.section {
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-
 .menu_top {
   padding: 35px 80px;
   display: flex;
@@ -242,31 +226,135 @@ h2 {
   overflow: hidden;
 }
 
+@media all and (max-width: 1225px) {
+  .menu_top h2.item_menu {
+    display: none;
+  }
+}
+@media all and (max-width: 964px) {
+  .menu_top .menu_nav {
+    width: auto;
+  }
+  .menu_top .menu_nav .item_menu span {
+    display: none;
+  }
+
+  .item_menu.statistic {
+    margin: 0;
+  }
+}
+@media all and (max-width: 730px) {
+  .menu_top, body .content {
+    padding: 20px 30px;
+  }
+}
+@media all and (max-width: 610px) {
+  .coin .img {
+    display: none;
+  }
+
+  .menu_top .profile_avatar {
+    height: 40px;
+    width: 40px;
+  }
+}
+@media all and (max-width: 540px) {
+  .menu_top .menu_profile {
+    background: none;
+    padding: 0;
+  }
+
+  .menu_top .coin {
+    display: none;
+  }
+
+  .menu_top .profile_avatar {
+    height: 50px;
+    width: 50px;
+  }
+
+  .menu_top {
+    grid-gap: 20px;
+  }
+
+  .menu_top .menu_nav {
+    padding: 0 15px;
+  }
+}
+body {
+  background: var(--color_dark_grey);
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+h2 {
+  margin-left: auto;
+  color: var(--color_dark_white);
+  font-size: 22px;
+}
+
+.content {
+  padding: 10px 80px 46px;
+}
+
+.section {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+table td {
+  position: relative;
+}
 table .item {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   box-sizing: border-box;
   padding-left: 10px;
-  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  top: 0;
-  bottom: 1px;
-  left: 0;
-  right: 1px;
   border-radius: 7px;
   background: var(--calendar_normal);
   font-size: 15px;
 }
+table .item p {
+  white-space: nowrap;
+}
+table .item:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
+}
 table .item.closed {
   background: var(--calendar_closed);
+}
+table .item.closed:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
 }
 table .item.transfer {
   background: var(--calendar_transfer);
   color: var(--color_white);
 }
+table .item.transfer:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
+}
 table .item.success {
   background: var(--calendar_success);
 }
+table .item.success:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
+}
 table .item.delete {
   background: var(--calendar_delete);
+}
+table .item.delete:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
 }

@@ -83,12 +83,12 @@
             <tr>
                 <th></th>
                 <th>Пн</th>
-                <th>Вт</th>
-                <th>Ср</th>
-                <th>Чт</th>
-                <th>Пт</th>
-                <th>Сб</th>
-                <th>Вс</th>
+{{--                <th>Вт</th>--}}
+{{--                <th>Ср</th>--}}
+{{--                <th>Чт</th>--}}
+{{--                <th>Пт</th>--}}
+{{--                <th>Сб</th>--}}
+{{--                <th>Вс</th>--}}
 
             </tr>
             </thead>
@@ -108,7 +108,9 @@
                     $num_day .= ":00"
                     ?>
                     <td class="time">{{$num_day}}</td>
-                    @for($j = 0; $j < 7; $j++)
+                    @for($j = 0; $j < 1; $j++)
+{{--                    @for($j = 0; $j < 4; $j++)--}}
+{{--                    @for($j = 0; $j < 7; $j++)--}}
                         <td>
                             @foreach($temp_data_lesson as $key=>$item)
                                 @if($item->day_week == $data_day[$j] &&  $item->time_start == $num_day.":00")

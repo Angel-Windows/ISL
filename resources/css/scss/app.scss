@@ -22,105 +22,78 @@ h2 {
     grid-template-rows: auto 1fr;
 }
 
-.menu_top {
-    padding: 35px 80px;
-    display: flex;
-    grid-gap: 50px;
-    justify-content: space-between;
-    color: white;
 
-    span {
-        font-size: 22px;
-        color: var(--color_white)
+
+table {
+    td {
+        position: relative;
     }
 
-    .menu_nav, .menu_profile {
-        display: flex;
-        align-content: center;
-        padding: 10px 30px;
-        background: var(--color_light_grey);
-        border-radius: 10px;
-    }
-
-    .menu_nav {
-        width: 100%;
-    }
-
-    .item_menu {
-        display: flex;
-        grid-gap: 13px;
-        align-items: center;
-        margin-right: 20px;
-    }
-
-    .today {
-        grid-gap: 7px;
-    }
-
-    .img {
-        height: 15px;
-        width: auto;
-    }
-
-    .coin {
-        display: flex;
-        align-items: center;
-        grid-gap: 7px;
-
-        .img {
-            height: 28px;
-            width: 51px;
-        }
-
-        span {
-            font-family: "Noto Sans Display", sans-serif;
-            font-weight: 500;
-
-        }
-    }
-
-    .menu_profile {
-        grid-gap: 88px;
-    }
-
-    .profile_avatar {
-        height: 53px;
-        width: 53px;
-        border-radius: 10px;
+    .item {
+        position: absolute;
         overflow: hidden;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        box-sizing: border-box;
+        padding-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 7px;
+        background: var(--calendar_normal);
+        font-size: 15px;
+
+        p {
+            white-space: nowrap;
+        }
+
+        &:after {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 30px;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
+        }
+
+        &.closed {
+            &:after {
+                background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
+            }
+
+            background: var(--calendar_closed);
+        }
+
+        &.transfer {
+            &:after {
+                background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
+            }
+
+            background: var(--calendar_transfer);
+            color: var(--color_white);
+        }
+
+        &.success {
+            &:after {
+                background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
+            }
+
+            background: var(--calendar_success);
+        }
+
+        &.delete {
+            &:after {
+                background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
+            }
+
+            background: var(--calendar_delete);
+        }
+
     }
+
 }
 
-table .item {
-    box-sizing: border-box;
-    padding-left: 10px;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    top: 0;
-    bottom: 1px;
-    left: 0;
-    right: 1px;
-    border-radius: 7px;
-    background: var(--calendar_normal);
-    font-size: 15px;
 
-    &.closed {
-        background: var(--calendar_closed);
-    }
-
-    &.transfer {
-        background: var(--calendar_transfer);
-        color: var(--color_white);
-    }
-
-    &.success {
-        background: var(--calendar_success);
-    }
-
-    &.delete {
-        background: var(--calendar_delete);
-    }
-
-}
