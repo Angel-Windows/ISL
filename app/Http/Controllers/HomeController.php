@@ -12,6 +12,8 @@ class HomeController extends Controller
     {
         $this->middleware(function ($request, $next) {
             $route_name = Route::getFacadeRoot()->current()->uri();
+            $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
+            view()->share('data_navigation', $data_navigation);
             view()->share('route_name', $route_name);
             return $next($request);
         });
@@ -23,8 +25,10 @@ class HomeController extends Controller
 
     public function index()
     {
-        $data = Navigation::whereIn('group', [0, 1, 2])->get();
-        return view('pages.calendar')
-            ->with('data', $data);
+        return view('layouts.app');
+
+//        $data = Navigation::whereIn('group', [0, 1, 2])->get();
+//        return view('pages.calendar')
+//            ->with('data', $data);
     }
 }

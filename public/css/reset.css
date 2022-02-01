@@ -7,48 +7,53 @@ body {
 
 }
 
-body * {
+body *, a{
     margin: 0;
     padding: 0;
-    font: inherit;
     line-height: 1;
+    font: inherit;
+    color: inherit;
+
 }
 
 body em, body .img, body img {
     display: inline-block;
 }
 
-table {
-    border-collapse: collapse;
-    color: white;
-    table-layout: fixed;
-    height: 100%;
-    width: 100%;
-}
+
 
 .col1 {
     width: 60px;
-
 }
 
-table th {
-    color: var(--color_dark_white);
-    font-size: 22px;
+.unselectable{
+    draggable: false;
+    pointer-events: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
 }
 
-table td {
-    position: relative;
-    border-right: 0.5px solid var(--color_light_grey);
-    border-bottom: 0.5px solid var(--color_light_grey);
+.hr{
+    /*height: 0;*/
+    /*width: 100%;*/
+    margin: 20px 0;
+    padding: 0;
+    border: none;
+    /*border-bottom: 1px dashed var(--color_dark_white);*/
+
+    height: 2px;
+
+    background: linear-gradient(to right, transparent 50%, var(--color_light_grey) 50%), var(--color_dark_white);
+    background-size: 16px 2px, 100% 2px;
 }
-table td.time{
-    font-weight: 400;
-    font-size: 20px;
-    color: var(--color_dark_white);
-}
-.time{
-    font-size: 20px;
-}
+
+/*.time{*/
+/*    font-size: 14px;*/
+/*}*/
 ul {
     list-style: none;
 }

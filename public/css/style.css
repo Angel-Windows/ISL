@@ -9,6 +9,63 @@
   --calendar_transfer: #F3C875;
   --calendar_success: #009587;
   --calendar_delete: #1b1b28;
+  --calendar_no_check: #E67C73;
+}
+
+.color_light_grey {
+  color: var(--color_light_grey);
+}
+
+.background_light_grey {
+  background: var(--color_light_grey);
+}
+
+.color_calendar_normal {
+  color: var(--calendar_normal);
+}
+
+.background_calendar_normal {
+  background: var(--calendar_normal);
+}
+
+.color_calendar_closed {
+  color: var(--calendar_closed);
+}
+
+.background_calendar_closed {
+  background: var(--calendar_closed);
+}
+
+.color_calendar_transfer {
+  color: var(--calendar_transfer);
+}
+
+.background_calendar_transfer {
+  background: var(--calendar_transfer);
+}
+
+.color_calendar_success {
+  color: var(--calendar_success);
+}
+
+.background_calendar_success {
+  background: var(--calendar_success);
+}
+
+.color_calendar_delete {
+  color: var(--calendar_delete);
+}
+
+.background_calendar_delete {
+  background: var(--calendar_delete);
+}
+
+.color_calendar_no_check {
+  color: var(--calendar_no_check);
+}
+
+.background_calendar_no_check {
+  background: var(--calendar_no_check);
 }
 
 .nav {
@@ -129,9 +186,10 @@
   margin-top: 55px;
   display: flex;
   justify-content: center;
+  align-items: center;
   grid-gap: 20px;
   width: calc(100% - 30px);
-  padding: 10px 0;
+  height: 40px;
   border-radius: 10px;
   background: var(--color_dark_grey);
 }
@@ -164,27 +222,11 @@
     display: none;
   }
 }
-body {
-  background: var(--color_dark_grey);
-  display: grid;
-  grid-template-columns: auto 1fr;
+@media all and (max-width: 1500px) {
+  .nav {
+    width: 0px;
+  }
 }
-
-h2 {
-  margin-left: auto;
-  color: var(--color_dark_white);
-  font-size: 22px;
-}
-
-.content {
-  padding: 10px 80px 46px;
-}
-
-.section {
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-
 .menu_top {
   padding: 35px 80px;
   display: flex;
@@ -242,31 +284,209 @@ h2 {
   overflow: hidden;
 }
 
-table .item {
+@media all and (max-width: 1225px) {
+  .menu_top h2.item_menu {
+    display: none;
+  }
+}
+@media all and (max-width: 964px) {
+  .menu_top .menu_nav {
+    width: auto;
+  }
+  .menu_top .menu_nav .item_menu span {
+    display: none;
+  }
+
+  .item_menu.statistic {
+    margin: 0;
+  }
+}
+@media all and (max-width: 730px) {
+  .menu_top, body .content {
+    padding: 20px 30px;
+  }
+}
+@media all and (max-width: 610px) {
+  .coin .img {
+    display: none;
+  }
+
+  .menu_top .profile_avatar {
+    height: 40px;
+    width: 40px;
+  }
+}
+@media all and (max-width: 540px) {
+  .menu_top .menu_profile {
+    background: none;
+    padding: 0;
+  }
+
+  .menu_top .coin {
+    display: none;
+  }
+
+  .menu_top .profile_avatar {
+    height: 50px;
+    width: 50px;
+  }
+
+  .menu_top {
+    grid-gap: 20px;
+  }
+
+  .menu_top .menu_nav {
+    padding: 0 15px;
+  }
+}
+.menu_right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  grid-gap: 50px;
+}
+
+.content_item {
+  background: var(--color_light_grey);
+  border-radius: 10px;
+  min-width: 260px;
+  width: 260px;
+  padding: 10px 30px;
+}
+.content_item h2 {
+  color: var(--color_white);
+  margin-bottom: 8px;
+}
+.content_item td {
+  padding: 4px 0;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: 400;
+  color: var(--color_white);
+  font-size: 15px;
+}
+.content_item .info td:nth-child(1) {
+  width: 100%;
+}
+.content_item .info td:nth-child(2) {
+  text-align: end;
+}
+.content_item .filter .img {
+  border-radius: 5px;
+  margin-right: 20px;
+  padding: 10px;
+  height: 22px;
+  width: 22px;
+}
+
+body {
+  background: var(--color_dark_grey);
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+h2 {
+  margin-left: auto;
+  color: var(--color_dark_white);
+  font-size: 22px;
+}
+
+.content {
+  padding: 10px 80px 90px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 50px;
+}
+
+.section {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+table.calendar_table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  height: 100%;
+  width: 100%;
+  border-spacing: 0;
+  caret-color: transparent;
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--color_dark_white);
+}
+table.calendar_table th {
+  color: var(--color_dark_white);
+  font-size: 22px;
+}
+table.calendar_table td {
+  position: relative;
+  border-right: 0.1px solid var(--color_light_grey);
+  border-bottom: 0.1px solid var(--color_light_grey);
+}
+table.calendar_table td.time {
+  font-weight: 400;
+  font-size: 20px;
+  color: var(--color_dark_white);
+  position: relative;
+}
+table.calendar_table td.time:after {
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  content: "";
+  height: 4px;
+  width: 20px;
+  background: var(--color_dark_grey);
+}
+table.calendar_table .item {
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   box-sizing: border-box;
   padding-left: 10px;
-  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  top: 0;
-  bottom: 1px;
-  left: 0;
-  right: 1px;
   border-radius: 7px;
   background: var(--calendar_normal);
   font-size: 15px;
 }
-table .item.closed {
+table.calendar_table .item p {
+  white-space: nowrap;
+}
+table.calendar_table .item:after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 30px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
+}
+table.calendar_table .item.closed {
   background: var(--calendar_closed);
 }
-table .item.transfer {
+table.calendar_table .item.closed:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
+}
+table.calendar_table .item.transfer {
   background: var(--calendar_transfer);
   color: var(--color_white);
 }
-table .item.success {
+table.calendar_table .item.transfer:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
+}
+table.calendar_table .item.success {
   background: var(--calendar_success);
 }
-table .item.delete {
+table.calendar_table .item.success:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
+}
+table.calendar_table .item.delete {
   background: var(--calendar_delete);
+}
+table.calendar_table .item.delete:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
 }

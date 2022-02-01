@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static where(array|array[] $data_filter)
+ */
 class Calendar extends Model
 {
     use HasFactory;

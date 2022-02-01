@@ -138,9 +138,10 @@
             margin-top: 55px;
             display: flex;
             justify-content: center;
+            align-items: center;
             grid-gap: 20px;
             width: calc(100% - (20px * 1.5));
-            padding: 10px 0;
+            height: 40px;
             border-radius: 10px;
             background: var(--color_dark_grey);
 
@@ -185,6 +186,11 @@
 
 }
 
+@media all and (max-width: 1500px){
+    .nav{
+        width: 0px;
+    }
+}
 
 
 
