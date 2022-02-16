@@ -16,18 +16,16 @@ use App\Http\Controllers\HomeController;
 */
 auth();
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth'])->name('dashboard');
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
+//Page
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 Route::get('/progress', [CalendarController::class, 'index'])->name('progress');
 
-
-require __DIR__.'/auth.php';
+//AJAX
+Route::get('/calendar/filters', [CalendarController::class, ''])->name('calendar.filters');
+require __DIR__ . '/auth.php';

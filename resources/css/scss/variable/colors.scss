@@ -12,46 +12,84 @@
     --calendar_delete: #1b1b28;
     --calendar_no_check: #E67C73;
 }
-.color_light_grey{
+
+.color_light_grey {
     color: var(--color_light_grey);
 }
-.background_light_grey{
+
+.background_light_grey {
+    color: white;
     background: var(--color_light_grey);
 }
 
-.color_calendar_normal{
+.color_calendar_normal {
     color: var(--calendar_normal);
 }
-.background_calendar_normal{
+
+.background_calendar_normal {
+    color: white;
     background: var(--calendar_normal);
+    &:after {
+        background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
+    }
 }
-.color_calendar_closed{
+
+.color_calendar_closed {
     color: var(--calendar_closed);
 }
-.background_calendar_closed{
+
+.background_calendar_closed {
+    color: white;
     background: var(--calendar_closed);
+    &:after {
+        background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
+    }
 }
-.color_calendar_transfer{
+
+.color_calendar_transfer {
     color: var(--calendar_transfer);
 }
-.background_calendar_transfer{
+
+.background_calendar_transfer {
+    color: white;
     background: var(--calendar_transfer);
+    &:after {
+        background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
+    }
 }
-.color_calendar_success{
+
+.color_calendar_success {
     color: var(--calendar_success);
 }
-.background_calendar_success{
+
+.background_calendar_success {
+    color: white;
     background: var(--calendar_success);
+    &:after {
+        background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
+    }
 }
-.color_calendar_delete{
+
+.color_calendar_delete {
     color: var(--calendar_delete);
 }
-.background_calendar_delete{
+
+.background_calendar_delete {
+    color: white;
     background: var(--calendar_delete);
+    &:after {
+        background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
+    }
 }
-.color_calendar_no_check{
+
+.color_calendar_no_check {
     color: var(--calendar_no_check);
 }
-.background_calendar_no_check{
+
+.background_calendar_no_check {
+    color: white;
     background: var(--calendar_no_check);
+    &:after {
+        background: linear-gradient(90deg, transparent, var(--calendar_no_check) 80%);
+    }
 }

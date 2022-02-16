@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/js/nav_left.js": "/js/nav_left.js",
+    "/js/menu_right.js": "/js/menu_right.js",
     "/css/reset.css": "/css/reset.css",
     "/css/app.css": "/css/app.css",
     "/css/style.css": "/css/style.css",

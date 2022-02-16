@@ -1,6 +1,14 @@
 @import "variable";
 @import "component";
-
+.button{
+    background: orange;
+    padding: 5px 10px;
+    border-radius: $border_radius;
+    //display: inline-block;
+}
+.hide{
+    display: none;
+}
 body {
     background: var(--color_dark_grey);
     display: grid;

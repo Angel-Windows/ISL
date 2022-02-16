@@ -1,7 +1,7 @@
 <?php
 session_start();
 ?>
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -28,7 +28,8 @@ session_start();
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
     <!-- Scripts -->
-    <script src="{{asset('js/nav_left.js')}}" defer></script>
+    <script defer src="{{asset('js/nav_left.js')}}"></script>
+    <script defer src="{{asset('js/menu_right.js')}}"></script>
 </head>
 <body>
 <nav class="nav">

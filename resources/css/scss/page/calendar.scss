@@ -47,54 +47,14 @@ table.calendar_table {
         flex-direction: column;
         justify-content: center;
         border-radius: 7px;
-        background: var(--calendar_normal);
         font-size: 15px;
 
         p {
             white-space: nowrap;
         }
 
-        &:after {
-            content: "";
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            width: 30px;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
-        }
-
-        &.closed {
-            &:after {
-                background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
-            }
-
-            background: var(--calendar_closed);
-        }
-
-        &.transfer {
-            &:after {
-                background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
-            }
-
-            background: var(--calendar_transfer);
-            color: var(--color_white);
-        }
-
-        &.success {
-            &:after {
-                background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
-            }
-
-            background: var(--calendar_success);
-        }
-
-        &.delete {
-            &:after {
-                background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
-            }
-
-            background: var(--calendar_delete);
-        }
     }
-}
+
+}.no_active{
+     background: var(--color_dark_grey-2);
+ }

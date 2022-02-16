@@ -17,6 +17,7 @@
 }
 
 .background_light_grey {
+  color: white;
   background: var(--color_light_grey);
 }
 
@@ -25,7 +26,11 @@
 }
 
 .background_calendar_normal {
+  color: white;
   background: var(--calendar_normal);
+}
+.background_calendar_normal:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
 }
 
 .color_calendar_closed {
@@ -33,7 +38,11 @@
 }
 
 .background_calendar_closed {
+  color: white;
   background: var(--calendar_closed);
+}
+.background_calendar_closed:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
 }
 
 .color_calendar_transfer {
@@ -41,7 +50,11 @@
 }
 
 .background_calendar_transfer {
+  color: white;
   background: var(--calendar_transfer);
+}
+.background_calendar_transfer:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
 }
 
 .color_calendar_success {
@@ -49,7 +62,11 @@
 }
 
 .background_calendar_success {
+  color: white;
   background: var(--calendar_success);
+}
+.background_calendar_success:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
 }
 
 .color_calendar_delete {
@@ -57,7 +74,11 @@
 }
 
 .background_calendar_delete {
+  color: white;
   background: var(--calendar_delete);
+}
+.background_calendar_delete:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
 }
 
 .color_calendar_no_check {
@@ -65,7 +86,11 @@
 }
 
 .background_calendar_no_check {
+  color: white;
   background: var(--calendar_no_check);
+}
+.background_calendar_no_check:after {
+  background: linear-gradient(90deg, transparent, var(--calendar_no_check) 80%);
 }
 
 .nav {
@@ -357,6 +382,9 @@
   color: var(--color_white);
   margin-bottom: 8px;
 }
+.content_item h2 .button {
+  font-size: 15px;
+}
 .content_item td {
   padding: 4px 0;
   font-family: "Noto Sans", sans-serif;
@@ -376,6 +404,16 @@
   padding: 10px;
   height: 22px;
   width: 22px;
+}
+
+.button {
+  background: orange;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.hide {
+  display: none;
 }
 
 body {
@@ -450,43 +488,12 @@ table.calendar_table .item {
   flex-direction: column;
   justify-content: center;
   border-radius: 7px;
-  background: var(--calendar_normal);
   font-size: 15px;
 }
 table.calendar_table .item p {
   white-space: nowrap;
 }
-table.calendar_table .item:after {
-  content: "";
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 30px;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
-}
-table.calendar_table .item.closed {
-  background: var(--calendar_closed);
-}
-table.calendar_table .item.closed:after {
-  background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
-}
-table.calendar_table .item.transfer {
-  background: var(--calendar_transfer);
-  color: var(--color_white);
-}
-table.calendar_table .item.transfer:after {
-  background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
-}
-table.calendar_table .item.success {
-  background: var(--calendar_success);
-}
-table.calendar_table .item.success:after {
-  background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
-}
-table.calendar_table .item.delete {
-  background: var(--calendar_delete);
-}
-table.calendar_table .item.delete:after {
-  background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
+
+.no_active {
+  background: var(--color_dark_grey-2);
 }

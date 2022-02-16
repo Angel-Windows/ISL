@@ -24,7 +24,7 @@ class CalendarController extends Controller
         //            view()->share('user_site_profile', $user_site_profile);
         //            view()->share('currency', $currency['result_need']);
     }
-    
+
     public function index(Request $request)
     {
 //        $naw = Carbon::create(2022, 1, 29);
@@ -34,11 +34,14 @@ class CalendarController extends Controller
 
         $count_day_week = ($request->input('count_day_week'));
         $start_day_week = ($request->input('start')) ?? 1;
-if (isset($date)){
-    $now_data = $date;
-}else{
-    $now_data = Carbon::now(); //Добавить поиск по дате
-}
+        $filter = ($request->input('filter')) ?? "0,1,2,3,4,5,6";
+        $filter = preg_replace('/[^0-9,","]/', '', $filter);
+        $filter = explode(",", $filter);
+        if (isset($date)) {
+            $now_data = $date;
+        } else {
+            $now_data = Carbon::now(); //Добавить поиск по дате
+        }
         $now_data->addWeeks($page);
         $year = $now_data->year;
         $week = $now_data->week;
@@ -64,7 +67,6 @@ if (isset($date)){
                         $day_week_select = [0, 5, 6];
                         break;
                     case 2:
-
                         break;
                 }
                 break;
@@ -74,7 +76,8 @@ if (isset($date)){
         $data_lesson = Calendar::where(
             $data_filter
         )
-            ->whereNotIn('day_week', $day_week_select??[])
+            ->whereNotIn('day_week', $day_week_select ?? [])
+            ->whereIn('status', $filter)
             ->orderBy('day_week')
             ->orderBy('time_start')
             ->get();
@@ -83,6 +86,7 @@ if (isset($date)){
             ->with('page', $page)
             ->with('now_data', $now_data->format('Y-m-d'))
             ->with('start_day_week', $start_day_week)
+            ->with('filter', $filter)
             ->with('data_lesson', $data_lesson);
     }
 }

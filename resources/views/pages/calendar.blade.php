@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('class_name', "calendar_page")
+
 @section('content')
     <?php
     $count_day_week = session('count_day_week') ?? 7;
@@ -7,8 +8,8 @@
     $temp_data_lesson = $data_lesson;
     $start_temp = $start_day_week;
 
-    $next_page_start = ['page'=>($page+1), 'start'=>1];
-    $back_page_start = ['page'=>($page-1), 'start'=>1];
+    $next_page_start = ['page' => ($page + 1), 'start' => 1];
+    $back_page_start = ['page' => ($page - 1), 'start' => 1];
     if ($count_day_week == 4) {
         if ($start_temp == 1) {
             $next_page_start['start'] = 2;
@@ -20,7 +21,7 @@
             $back_page_start['start'] = 1;
             $back_page_start['page'] = $page;
             $start_temp = 4;
-        }else{
+        } else {
             $next_page_start['start'] = 2;
             $next_page_start['page'] = $page;
             $back_page_start['start'] = 2;
@@ -28,7 +29,29 @@
         }
     }
 
-
+    $data_status = [
+        [
+            'id' => 0,
+            'name' => "Проведенный",
+            'class' => 'background_calendar_success'
+        ], [
+            'id' => 1,
+            'name' => "Постоянный",
+            'class' => 'background_calendar_normal'
+        ], [
+            'id' => 2,
+            'name' => "Перенесенный",
+            'class' => 'background_calendar_transfer'
+        ], [
+            'id' => 3,
+            'name' => "Отмененный",
+            'class' => 'background_calendar_closed'
+        ], [
+            'id' => 4,
+            'name' => "Не отмеченный",
+            'class' => 'background_calendar_no_check'
+        ]
+    ];
 
     $data_day = [1, 2, 3, 4, 5, 6, 0];
     $arr_data_name = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
@@ -65,7 +88,6 @@
     <div class="content calendar">
         <table class="calendar_table">
             <col class="col1 unselectable">
-{{--            <col span=1 class="coln unselectable">--}}
             <thead class="unselectable">
             <tr>
                 <th></th>
@@ -87,36 +109,15 @@
                     $num_day .= ":00"
                     ?>
                     <td class="time unselectable">{{$num_day}}</td>
-
                     @for($j = 0; $j < $count_day_week; $j++)
                         <td class="">
                             @foreach($temp_data_lesson as $key=>$item)
                                 @if($item->day_week == $data_day[$j+$start_temp-1] &&  $item->time_start == $num_day.":00")
-                                    <?php
-                                    $class_names = '';
-                                    switch ((int)$item->status) {
-                                        case 0:
-                                            $class_names = "normal";
-                                            break;
-                                        case 1:
-                                            $class_names = "closed";
-                                            break;
-                                        case 2:
-                                            $class_names = "transfer";
-                                            break;
-                                        case 3:
-                                            $class_names = "success";
-                                            break;
-                                        default :
-                                            $class_names = 'delete';
-                                            break;
-                                    }
-                                    ?>
-                                    <div class="item {{$class_names}}">
+                                    <div class="item {{$data_status[$item->status]['class']}}">
                                         <p>{{$item->student_name}}</p>
                                         <p>{{$num_day}} - {{$i + 1 . ":00"}}</p>
                                     </div>
-                                    <?php unset($temp_data_lesson[$key]); ?>
+                                    <?php unset($temp_data_lesson[$key??0]); ?>
                                 @endif
                             @endforeach
                         </td>
@@ -126,7 +127,7 @@
             </tbody>
         </table>
         <aside class="menu_right">
-          @include('components.left_menu.Info')
+            @include('components.left_menu.Info')
         </aside>
     </div>
 @stop
