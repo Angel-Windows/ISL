@@ -398,6 +398,17 @@
 .content_item .info td:nth-child(2) {
   text-align: end;
 }
+.content_item .filter .mini_img {
+  height: 100%;
+  width: 100%;
+  background-image: url("/res/Dead.svg");
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.content_item .filter .check .mini_img {
+  background-image: url("/res/Check.svg");
+}
 .content_item .filter .img {
   border-radius: 5px;
   margin-right: 20px;

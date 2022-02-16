@@ -27,7 +27,7 @@
         </tr>
         <tr>
             <td>E-mail</td>
-            <td><a href="eliphas.sn@gmail.com">eliphas.sn@gmail.com</a></td>
+            <td><a href="eliphas.sn@gmail.com">{!!"eliphas.sn@gmail.com"!!}</a></td>
         </tr>
         <tr>
             <td>Skype</td>
@@ -41,36 +41,20 @@
         @foreach($data_status as $item)
             <?php
             $class_active = "";
+            $class_checked = "";
             $img_link = asset('res/Check.svg');
 
             if (!in_array($item['id'], $filter)) {
                 $class_active = "no_active";
                 $img_link = asset('res/Dead.svg');
-}
-                ?>
-            <tr onclick="calendar_filter('{{route('calendar.filters')}}', {{$item['id']}})">
+            }
+            ?>
+            <tr onclick="calendar_filter('{{route('calendar.filters')}}', {{$item['id']}}, this)">
                 <td>
-                    <div class="img {{$item['class']}} {{$class_active}}"><img src="{{$img_link}}" alt=""></div>
+                    <div class="img {{$class_checked}} {{$item['class']}} {{$class_active}}"><div class="mini_img"></div></div>
                 </td>
                 <td>{{$item['name']}}</td>
             </tr>
         @endforeach
-        {{--        --}}
-        {{--        <tr>--}}
-        {{--            <td><div class="img background_calendar_transfer"><img src="{{asset('res/Check.svg')}}" alt=""></div></td>--}}
-        {{--            <td><a href="">Постоянный</a></td>--}}
-        {{--        </tr>--}}
-        {{--        <tr>--}}
-        {{--            <td><div class="img background_calendar_normal"><img src="{{asset('res/Check.svg')}}" alt=""></div></td>--}}
-        {{--            <td><a href="">Перенесенный</a></td>--}}
-        {{--        </tr>--}}
-        {{--        <tr>--}}
-        {{--            <td><div class="img background_calendar_closed"><img src="{{asset('res/Check.svg')}}" alt=""></div></td>--}}
-        {{--            <td><a href="">Отмененный</a></td>--}}
-        {{--        </tr>--}}
-        {{--        <tr>--}}
-        {{--            <td><div class="img background_calendar_no_check"><img src="{{asset('res/Check.svg')}}" alt=""></div></td>--}}
-        {{--            <td><a href="">Не отмеченный</a></td>--}}
-        {{--        </tr>--}}
     </table>
 </div>

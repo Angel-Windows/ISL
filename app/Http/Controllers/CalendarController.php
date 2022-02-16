@@ -89,4 +89,12 @@ class CalendarController extends Controller
             ->with('filter', $filter)
             ->with('data_lesson', $data_lesson);
     }
+    public function ajax_filters(Request $request)
+    {
+
+        return json_encode([
+           'code'=> 1,
+           ]
+        );
+    }
 }

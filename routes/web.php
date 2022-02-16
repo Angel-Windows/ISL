@@ -27,5 +27,5 @@ Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 Route::get('/progress', [CalendarController::class, 'index'])->name('progress');
 
 //AJAX
-Route::get('/calendar/filters', [CalendarController::class, ''])->name('calendar.filters');
+Route::post('/calendar/filters', [CalendarController::class, 'ajax_filters'])->name('calendar.filters');
 require __DIR__ . '/auth.php';

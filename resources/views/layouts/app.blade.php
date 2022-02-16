@@ -28,6 +28,7 @@ session_start();
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
     <!-- Scripts -->
+    <script defer src="{{asset('js/global.js')}}"></script>
     <script defer src="{{asset('js/nav_left.js')}}"></script>
     <script defer src="{{asset('js/menu_right.js')}}"></script>
 </head>
