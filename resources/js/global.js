@@ -16,12 +16,14 @@ window.Post=(url, func = ()=>{}, parameters = {})=> {
                 "X-Requested-With": "XMLHttpRequest",
                 "X-CSRF-TOKEN": token
             },
-            body: parameters
+            // body: parameters
+            body: JSON.stringify(parameters)
         });
 
         if (!res.ok) {
             throw new Error(`Не удалось получить ${url}, статус: ${res.status}`);
         }
+        // return await res;
         return await res.json();
     }
 }

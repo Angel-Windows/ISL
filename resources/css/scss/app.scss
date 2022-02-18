@@ -1,5 +1,8 @@
 @import "variable";
 @import "component";
+#body .no_display{
+    display: none;
+}
 .button{
     background: orange;
     padding: 5px 10px;
@@ -20,7 +23,9 @@ h2 {
     color: var(--color_dark_white);
     font-size: 22px;
 }
-
+.relative{
+    position: relative;
+}
 .content {
     padding: 10px 80px 90px;
     display: grid;
@@ -32,4 +37,31 @@ h2 {
     display: grid;
     grid-template-rows: auto 1fr;
 }
+.progress_reload{
+    position: relative;
+    &:before{
+        content: "";
+        position: absolute;
+        height: 70px;
+        width: 70px;
+        background: url("/res/progress.jpg");
+        background-size: cover;
+        z-index: 20;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+    }
+    &:after{
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(120,120,120, .20);
+        z-index: 19;
+
+    }
+}
 @import "page";
+

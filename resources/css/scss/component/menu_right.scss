@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    grid-gap: $grid_gap;
+    //grid-gap: $grid_gap;
 }
 
 .content_item {
@@ -52,8 +52,14 @@
 
         }
 
+        .no_check .img {
+            background: var(--color_dark_grey-2);
+        }
+
         .check .mini_img {
             background-image: url("/res/Check.svg");
+
+
         }
 
         .img {

@@ -5,10 +5,11 @@
     "/js/global.js": "/js/global.js",
     "/css/reset.css": "/css/reset.css",
     "/css/app.css": "/css/app.css",
+    "/css/style.css": "/css/style.css",
     "/res/Check.svg": "/res/Check.svg",
     "/res/Dead.svg": "/res/Dead.svg",
     "/res/Discord.svg": "/res/Discord.svg",
+    "/res/progress.jpg": "/res/progress.jpg",
     "/res/Skype.svg": "/res/Skype.svg",
-    "/res/Telegram.svg": "/res/Telegram.svg",
-    "/css/style.css": "/css/style.css"
+    "/res/Telegram.svg": "/res/Telegram.svg"
 }

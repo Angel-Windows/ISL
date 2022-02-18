@@ -27,7 +27,7 @@ class CalendarSeeder extends Seeder
                 if ($data_endOfYear->week == $now_data->week + $i) {
                     $temps = $data_endOfYear->week;
                 }
-                $data_regular[] = ['student_id' => $item->student_id, 'professor_id' => $item->professor_id, 'status' => rand(0, 3), 'year' => $now_data->year, 'day_week' => $item->day_week, 'week' => $now_data->week + $i - $temps, 'fool_time' => '2022-01-05', 'time_start' => $item->time_start, 'length' => $item->length];
+                $data_regular[] = ['student_id' => $item->student_id, 'professor_id' => $item->professor_id, 'status' => rand(1, 5), 'year' => $now_data->year, 'day_week' => $item->day_week, 'week' => $now_data->week + $i - $temps, 'fool_time' => '2022-01-05', 'time_start' => $item->time_start, 'length' => $item->length];
             }
         }
 

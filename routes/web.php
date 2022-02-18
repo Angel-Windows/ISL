@@ -15,6 +15,8 @@ use App\Http\Controllers\HomeController;
 |
 */
 auth();
+//test
+Route::get('/test', [CalendarController::class, 'ajax_filters'])->name('test');
 
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
@@ -25,6 +27,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/home', [HomeController::class, 'index']);
 Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 Route::get('/progress', [CalendarController::class, 'index'])->name('progress');
+
+
 
 //AJAX
 Route::post('/calendar/filters', [CalendarController::class, 'ajax_filters'])->name('calendar.filters');

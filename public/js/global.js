@@ -891,7 +891,8 @@ window.Post = function (url) {
                   "X-Requested-With": "XMLHttpRequest",
                   "X-CSRF-TOKEN": token
                 },
-                body: parameters
+                // body: parameters
+                body: JSON.stringify(parameters)
               });
 
             case 2:

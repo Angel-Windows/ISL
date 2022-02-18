@@ -43,17 +43,29 @@
             $class_active = "";
             $class_checked = "";
             $img_link = asset('res/Check.svg');
-
-            if (!in_array($item['id'], $filter)) {
-                $class_active = "no_active";
-                $img_link = asset('res/Dead.svg');
+            //            dd($item);
+            //            if (!session()->has('filter')) {
+            //                $class_active = "check";
+            //            }
+            //            else if (in_array($item->id, session("filter"))) {
+            //                $class_active = "check";
+            //            } else {
+            //                $class_active = "no_check";
+            //            }
+            if ($item->display) {
+                $class_active = "check";
+            }else{
+                $class_active = "no_check";
             }
             ?>
-            <tr onclick="calendar_filter('{{route('calendar.filters')}}', {{$item['id']}}, this)">
+            <tr class="{{$class_active}}"
+                onclick="calendar_filter('{{route('calendar.filters')}}', {{$item->id}}, this)">
                 <td>
-                    <div class="img {{$class_checked}} {{$item['class']}} {{$class_active}}"><div class="mini_img"></div></div>
+                    <div class="img {{$class_checked}} {{$item->class}} ">
+                        <div class="mini_img"></div>
+                    </div>
                 </td>
-                <td>{{$item['name']}}</td>
+                <td>{{$item->name}}</td>
             </tr>
         @endforeach
     </table>

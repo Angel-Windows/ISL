@@ -1,5 +1,6 @@
 <?php
 session_start();
+$route = \Request::route()->getName();
 ?>
     <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -32,7 +33,7 @@ session_start();
     <script defer src="{{asset('js/nav_left.js')}}"></script>
     <script defer src="{{asset('js/menu_right.js')}}"></script>
 </head>
-<body>
+<body id="body">
 <nav class="nav">
     <article>
         <div class="logo">
@@ -64,6 +65,39 @@ session_start();
     </footer>
 </nav>
 <section class="section  @yield('class_name')">
+    <aside class="menu_top">
+        <div class="menu_nav">
+            @if($route == "calendar")
+                <div class="today item_menu">
+                    <a href="{{route($route_name, $back_page_start)}}"
+                       class="img"><img draggable="false"
+                                        src="{{asset('res/arrow_left.png')}}" alt=""></a>
+                    <a href="{{route($route_name)}}"><span>Today</span></a>
+                    <a href="{{route($route_name, $next_page_start)}}"
+                       class="img"><img draggable="false"
+                                        src="{{asset('res/arrow_right.png')}}" alt=""></a>
+                </div>
+            @endif
+            <a href="{{route("calendar", ['count_day_week' => 1])}}" class="work item_menu">
+                <div class="img"><img draggable="false" src="{{asset('res/plus.png')}}" alt=""></div>
+                <span>Work</span>
+            </a>
+            <a href="{{route("calendar", ['count_day_week' => 7])}}" class="statistic item_menu">
+                <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
+                <span>Statistic</span>
+            </a>
+            @if($route == "calendar")
+                <h2 class="item_menu">Расписание {{$now_data}}</h2>
+            @endif
+        </div>
+        <div class="menu_profile">
+            <div class="coin">
+                <div class="img"><img draggable="false" src="{{asset('res/sc.png')}}" alt=""></div>
+                <span>15600</span>
+            </div>
+            <div class="profile_avatar img"><img draggable="false" src="{{asset('res/avatara_user.png')}}" alt=""></div>
+        </div>
+    </aside>
     @yield('content')
 </section>
 </body>

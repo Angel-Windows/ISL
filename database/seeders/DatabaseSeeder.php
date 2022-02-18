@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             NavigationSeeder::class,
             RegularLessonsSeeder::class,
             CalendarSeeder::class,
+            ConfigSeeder::class,
 
 //            RegularLessonsSeeder::class,
 //            LessonsSeeder::class,
