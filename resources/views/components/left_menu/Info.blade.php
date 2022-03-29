@@ -43,15 +43,6 @@
             $class_active = "";
             $class_checked = "";
             $img_link = asset('res/Check.svg');
-            //            dd($item);
-            //            if (!session()->has('filter')) {
-            //                $class_active = "check";
-            //            }
-            //            else if (in_array($item->id, session("filter"))) {
-            //                $class_active = "check";
-            //            } else {
-            //                $class_active = "no_check";
-            //            }
             if ($item->display) {
                 $class_active = "check";
             }else{

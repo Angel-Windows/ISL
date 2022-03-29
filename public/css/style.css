@@ -418,6 +418,21 @@
   height: 22px;
   width: 22px;
 }
+.content_item.add_lesson table {
+  width: 10px;
+}
+.content_item.add_lesson input, .content_item.add_lesson select {
+  border-radius: 5px;
+  padding: 5px 7px;
+  box-sizing: border-box;
+  border: none;
+  width: 100%;
+  color: black;
+}
+.content_item.add_lesson .buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
 #body .no_display {
   display: none;

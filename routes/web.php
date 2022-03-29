@@ -23,13 +23,14 @@ Route::get('/test', [CalendarController::class, 'ajax_filters'])->name('test');
 //})->middleware(['auth'])->name('dashboard');
 
 //Page
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/home', [HomeController::class, 'index']);
-Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
-Route::get('/progress', [CalendarController::class, 'index'])->name('progress');
+Route::get('/', [HomeController::class, 'index'])->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar')->middleware('auth');
+Route::get('/progress', [CalendarController::class, 'index'])->name('progress')->middleware('auth');
 
 
 
 //AJAX
 Route::post('/calendar/filters', [CalendarController::class, 'ajax_filters'])->name('calendar.filters');
+Route::post('/calendar/add_lesson', [CalendarController::class, 'add_lesson'])->name('calendar.add_lesson');
 require __DIR__ . '/auth.php';

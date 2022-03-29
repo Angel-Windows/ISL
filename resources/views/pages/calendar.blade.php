@@ -31,36 +31,8 @@
             $start_temp = 1;
         }
     }
-    $data_status = $filter;
-    //    $data_status = [
-    //        [
-    //            'id' => 1,
-    //            'name' => "Проведенный",
-    //            'class' => 'background_calendar_success',
-    //            'display'=> 0,
-    //        ], [
-    //            'id' => 2,
-    //            'name' => "Постоянный",
-    //            'class' => 'background_calendar_normal',
-    //            'display'=> 0,
-    //        ], [
-    //            'id' => 3,
-    //            'name' => "Перенесенный",
-    //            'class' => 'background_calendar_transfer',
-    //            'display'=> 0,
-    //        ], [
-    //            'id' => 4,
-    //            'name' => "Отмененный",
-    //            'class' => 'background_calendar_closed',
-    //            'display'=> 0,
-    //        ], [
-    //            'id' => 5,
-    //            'name' => "Не отмеченный",
-    //            'class' => 'background_calendar_no_check',
-    //            'display'=> 0,
-    //        ]
-    //    ];
 
+    $data_status = $filter;
     $data_day = [1, 2, 3, 4, 5, 6, 0];
     $arr_data_name = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     ?>
@@ -94,10 +66,15 @@
                             @foreach($temp_data_lesson as $key=>$item)
                                 @if($item->day_week == $data_day[$j+$start_temp-1] &&  $item->time_start == $num_day.":00")
                                     <?php
-                                    $class_list_item = $data_status[$item->status-1]->class;
-                                        if (!$data_status[$item->status-1]->display){
+                                    if (count($data_status)){
+                                        $class_list_item = $data_status[$item->status - 1]->class;
+                                        if (!$data_status[$item->status - 1]->display) {
                                             $class_list_item .= " no_display";
                                         }
+                                    }else{
+                                        $class_list_item = "background_calendar_normal";
+                                    }
+
                                     ?>
                                     <div class="item {{$class_list_item}}">
                                         <p>{{$item->student_name}}</p>
@@ -113,7 +90,8 @@
             </tbody>
         </table>
         <aside class="menu_right">
-            @include('components.left_menu.Info')
+{{--            @include('components.left_menu.Info')--}}
+            @include('components.left_menu.add_lesson')
         </aside>
     </div>
 @stop

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use App\Models\Calendar;
 use App\Models\Config;
 use App\Models\Navigation;
@@ -19,6 +19,7 @@ class CalendarController extends Controller
             $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
             view()->share('data_navigation', $data_navigation);
             view()->share('route_name', $route_name);
+            view()->share('date_now', Carbon::now());
             return $next($request);
         });
         //            $user_site_profile = Users_profiles::where('user_id', Auth::id())->first();
@@ -126,6 +127,32 @@ class CalendarController extends Controller
         session(['filter' => $filter]);
         return json_encode([
                 'code' => $arr_s,
+            ]
+        );
+    }
+
+    public function add_lesson(Request $request)
+    {
+        $student_id = $request['student_id'];
+        $date = $request['date'];
+        $time = $request['time'];
+        $length = $request['length'];
+        $naw = Carbon::createFromFormat("Y-m-d", $date);
+        $calendar = new Calendar;
+        $calendar->student_id = $student_id;
+        $calendar->professor_id = Auth::id();
+        $calendar->year = $naw->year;
+        $calendar->week = $naw->week;
+        $calendar->day_week = $naw->dayOfWeek;
+        $calendar->fool_time = $date;
+        $calendar->time_start = $time;
+        $calendar->length = $length;
+        $calendar->save();
+        $data = [];
+        return json_encode([
+                'code' => 1,
+                'message' => "",
+                'data' => $data
             ]
         );
     }

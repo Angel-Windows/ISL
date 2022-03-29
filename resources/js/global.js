@@ -1,5 +1,13 @@
 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+window.PostForm = (form, func)=>{
+    const parameters = {}
+    const temp = [...document.querySelectorAll('input, select')];
+    temp.forEach((item)=>{
+        parameters[item.name] = item.value
+    })
+    Post(form.action, func, parameters);
+}
 window.Post=(url, func = ()=>{}, parameters = {})=> {
     getResource(url, parameters)
         .then(data => {

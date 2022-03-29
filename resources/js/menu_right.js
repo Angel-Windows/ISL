@@ -18,5 +18,10 @@ window.calendar_filter = (url, id, elem) => {
     }
     Post(url, func, parameters);
 }
-
-
+window.add_lesson = (form) => {
+    form.classList.add('progress_reload')
+    const func = (response) => {
+        form.classList.remove('progress_reload')
+    }
+    PostForm(form, func);
+}

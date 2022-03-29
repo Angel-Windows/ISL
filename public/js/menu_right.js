@@ -23,5 +23,15 @@ window.calendar_filter = function (url, id, elem) {
   };
   Post(url, func, parameters);
 };
+
+window.add_lesson = function (form) {
+  form.classList.add('progress_reload');
+
+  var func = function func(response) {
+    form.classList.remove('progress_reload');
+  };
+
+  PostForm(form, func);
+};
 /******/ })()
 ;
