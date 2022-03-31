@@ -5,6 +5,7 @@
     /** @var TYPE_NAME $data_lesson */
     /** @var TYPE_NAME $start_day_week */
     /** @var TYPE_NAME $page */
+    /** @var TYPE_NAME $filter */
 
     $count_day_week = session('count_day_week') ?? 7;
 
@@ -64,21 +65,21 @@
                     @for($j = 0; $j < $count_day_week; $j++)
                         <td class="">
                             @foreach($temp_data_lesson as $key=>$item)
-                                @if($item->day_week == $data_day[$j+$start_temp-1] &&  $item->time_start == $num_day.":00")
+                                @if($item->day_week == $data_day[$j+$start_temp-1] &&  date('H',strtotime($item->time_start)) == date('H',strtotime($num_day)))
                                     <?php
-                                    if (count($data_status)){
-                                        $class_list_item = $data_status[$item->status - 1]->class;
-                                        if (!$data_status[$item->status - 1]->display) {
+                                    if (count($data_status)) {
+                                        $class_list_item = $data_status[$item->status]->class;
+                                        if (!$data_status[$item->status]->display) {
                                             $class_list_item .= " no_display";
                                         }
-                                    }else{
+                                    } else {
                                         $class_list_item = "background_calendar_normal";
                                     }
-
                                     ?>
                                     <div class="item {{$class_list_item}}">
                                         <p>{{$item->student_name}}</p>
-                                        <p>{{$num_day}} - {{$i + 1 . ":00"}}</p>
+                                        <p>{{date('H:i',strtotime($item->time_start))}}
+                                            - {{date('H:i', (strtotime($item->time_start)+3600))}}</p>
                                     </div>
                                     <?php unset($temp_data_lesson[$key ?? 0]); ?>
                                 @endif
@@ -90,8 +91,9 @@
             </tbody>
         </table>
         <aside class="menu_right">
-{{--            @include('components.left_menu.Info')--}}
-            @include('components.left_menu.add_lesson')
+            @include('components.left_menu.Info')
+            {{-- @include('components.left_menu.add_lesson')--}}
+            @include('components.left_menu.lesson_info')
         </aside>
     </div>
 @stop

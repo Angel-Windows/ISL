@@ -15,9 +15,9 @@
                 <td><label for="">Студент</label></td>
                 <td>
                     <select name="student_id" required id="" type="text">
-                        <option value="1">Иванов Иван</option>
-                        <option value="2">Макс Сверида</option>
-                        <option value="3">Асталависта</option>
+                        @foreach($data_students as $key=>$item)
+                            <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}}</option>
+                        @endforeach
                     </select>
                 </td>
             </tr>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\UsersProfile;
 use Auth;
 use App\Models\Calendar;
 use App\Models\Config;
@@ -17,6 +18,9 @@ class CalendarController extends Controller
         $this->middleware(function ($request, $next) {
             $route_name = Route::getFacadeRoot()->current()->uri();
             $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
+            $data_students = UsersProfile::where('id' , "!=", Auth::id())->get();
+
+            view()->share('data_students', $data_students);
             view()->share('data_navigation', $data_navigation);
             view()->share('route_name', $route_name);
             view()->share('date_now', Carbon::now());
@@ -99,6 +103,7 @@ class CalendarController extends Controller
             ->orderBy('day_week')
             ->orderBy('time_start')
             ->get();
+        $oldTime = strtotime($data_lesson[0]->time_start);
         return [...$data_lesson];
     }
 
