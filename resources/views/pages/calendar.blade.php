@@ -45,7 +45,10 @@
             <tr>
                 <th></th>
                 @for($i=0; $i < $count_day_week; $i++)
-                    <th>{{$arr_data_name[$i+$start_temp-1]}}</th>
+                    <th>
+                        {{$arr_data_name[$i+$start_temp-1]}}
+                        <br>
+                    </th>
                 @endfor
             </tr>
             </thead>
@@ -76,8 +79,14 @@
                                         $class_list_item = "background_calendar_normal";
                                     }
                                     ?>
-                                    <div class="item {{$class_list_item}}">
-                                        <p>{{$item->student_name}}</p>
+{{--                                @if($item->id == 57)--}}
+{{--                                    {{dd($item)}}--}}
+{{--                                @endif--}}
+                                    <div onclick="lesson_info_open(this)" id="calendar_{{$item->id}}" class="item {{$class_list_item}}">
+                                        <input type="hidden" name="id" value="{{$item->id}}">
+                                        <input type="hidden" name="url" value="{{route('calendar.get_lesson_info')}}">
+{{--                                        <p>{{$item->student_name}}</p>--}}
+                                        <p>{{$item->first_name}} {{$item->last_name}}</p>
                                         <p>{{date('H:i',strtotime($item->time_start))}}
                                             - {{date('H:i', (strtotime($item->time_start)+3600))}}</p>
                                     </div>
@@ -92,7 +101,7 @@
         </table>
         <aside class="menu_right">
             @include('components.left_menu.Info')
-            {{-- @include('components.left_menu.add_lesson')--}}
+            @include('components.left_menu.add_lesson')
             @include('components.left_menu.lesson_info')
         </aside>
     </div>

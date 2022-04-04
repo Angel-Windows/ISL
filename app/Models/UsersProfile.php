@@ -5,8 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static where()
+ */
 class UsersProfile extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id','first_name','last_name', 'currency'];
+    protected $fillable = ['user_id','first_name','last_name', 'currency', 'balance'];
 }

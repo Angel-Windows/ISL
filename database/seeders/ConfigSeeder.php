@@ -22,7 +22,7 @@ class ConfigSeeder extends Seeder
                 'class' => 'background_calendar_success',
             ], [
                 'id' => 2,
-                'name' => "constant",
+                'name' => "normal",
                 'class' => 'background_calendar_normal',
             ], [
                 'id' => 3,

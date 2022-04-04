@@ -2,7 +2,7 @@
 /** @var TYPE_NAME $item */
 /** @var TYPE_NAME $filter */
 ?>
-<div class="content_item">
+<div class="menu_item content_item info no_display">
     <h2>Статистика</h2>
     <table class="info">
         <tr>
@@ -35,7 +35,7 @@
         </tr>
     </table>
 </div>
-<div class="content_item">
+<div class="menu_item content_item info no_display">
     <h2>Фильтры <a href="" class="button hide">Применить</a></h2>
     <table class="filter">
         @foreach($data_status as $item)

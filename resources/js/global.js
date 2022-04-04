@@ -1,14 +1,15 @@
 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-window.PostForm = (form, func)=>{
+window.PostForm = (form, func) => {
     const parameters = {}
     const temp = [...document.querySelectorAll('input, select')];
-    temp.forEach((item)=>{
+    temp.forEach((item) => {
         parameters[item.name] = item.value
     })
     Post(form.action, func, parameters);
 }
-window.Post=(url, func = ()=>{}, parameters = {})=> {
+window.Post = (url, func = () => {
+}, parameters = {}) => {
     getResource(url, parameters)
         .then(data => {
             func(data)
@@ -34,4 +35,15 @@ window.Post=(url, func = ()=>{}, parameters = {})=> {
         // return await res;
         return await res.json();
     }
+}
+window.create_html = (tag_name, values = {}, parent) => {
+    values.forEach((item) => {
+        const elem = document.createElement(tag_name);
+        if (tag_name === 'input') {
+            elem.type = "hidden"
+            elem.name = item.name
+            elem.value = item.value
+        }
+        parent.appendChild(elem)
+    })
 }

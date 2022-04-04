@@ -12,84 +12,71 @@
   --calendar_no_check: #E67C73;
 }
 
-.color_light_grey {
+body .color_light_grey {
   color: var(--color_light_grey);
 }
-
-.background_light_grey {
+body .background_light_grey {
   color: white;
   background: var(--color_light_grey);
 }
-
-.color_calendar_normal {
+body .color_calendar_normal {
   color: var(--calendar_normal);
 }
-
-.background_calendar_normal {
+body .background_calendar_normal {
   color: white;
   background: var(--calendar_normal);
 }
-.background_calendar_normal:after {
+body .background_calendar_normal:after {
   background: linear-gradient(90deg, transparent, var(--calendar_normal) 80%);
 }
-
-.color_calendar_closed {
+body .color_calendar_closed {
   color: var(--calendar_closed);
 }
-
-.background_calendar_closed {
+body .background_calendar_closed {
   color: white;
   background: var(--calendar_closed);
 }
-.background_calendar_closed:after {
+body .background_calendar_closed:after {
   background: linear-gradient(90deg, transparent, var(--calendar_closed) 80%);
 }
-
-.color_calendar_transfer {
+body .color_calendar_transfer {
   color: var(--calendar_transfer);
 }
-
-.background_calendar_transfer {
+body .background_calendar_transfer {
   color: white;
   background: var(--calendar_transfer);
 }
-.background_calendar_transfer:after {
+body .background_calendar_transfer:after {
   background: linear-gradient(90deg, transparent, var(--calendar_transfer) 80%);
 }
-
-.color_calendar_success {
+body .color_calendar_success {
   color: var(--calendar_success);
 }
-
-.background_calendar_success {
+body .background_calendar_success {
   color: white;
   background: var(--calendar_success);
 }
-.background_calendar_success:after {
+body .background_calendar_success:after {
   background: linear-gradient(90deg, transparent, var(--calendar_success) 80%);
 }
-
-.color_calendar_delete {
+body .color_calendar_delete {
   color: var(--calendar_delete);
 }
-
-.background_calendar_delete {
+body .background_calendar_delete {
   color: white;
   background: var(--calendar_delete);
 }
-.background_calendar_delete:after {
+body .background_calendar_delete:after {
   background: linear-gradient(90deg, transparent, var(--calendar_delete) 80%);
 }
-
-.color_calendar_no_check {
+body .color_calendar_no_check {
   color: var(--calendar_no_check);
 }
-
-.background_calendar_no_check {
+body .background_calendar_no_check {
   color: white;
   background: var(--calendar_no_check);
 }
-.background_calendar_no_check:after {
+body .background_calendar_no_check:after {
   background: linear-gradient(90deg, transparent, var(--calendar_no_check) 80%);
 }
 
@@ -433,6 +420,80 @@
   display: flex;
   justify-content: space-between;
 }
+.content_item .buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  grid-gap: 20px;
+}
+.content_item .buttons button {
+  font-size: 20px;
+}
+.content_item .buttons img {
+  margin: auto;
+  height: 20px;
+}
+.content_item.lesson_info table {
+  width: 100%;
+}
+.content_item.lesson_info td:nth-child(2) {
+  text-align: end;
+}
+.content_item.lesson_info button {
+  padding: 0;
+  width: 2em;
+  height: 2em;
+}
+
+.burger_right {
+  position: fixed;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 80vh;
+  border-radius: 10px 0 0 10px;
+  background: var(--color_light_grey);
+  transition-duration: 50ms;
+}
+.burger_right:hover {
+  width: 15px;
+}
+
+.popup_top {
+  position: fixed;
+  top: 0;
+  right: 20px;
+  padding: 10px 20px;
+  background: green;
+  color: white;
+  transition-duration: 1s;
+  transform: translateY(-100%);
+  opacity: 0;
+  border-radius: 10px 0 5px 5px;
+}
+.popup_top.open {
+  transform: translateY(20px);
+  opacity: 0.85;
+}
+.popup_top:before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -1.9em;
+  font-size: 7px;
+  border: 1em solid transparent;
+  border-right: 1.3em solid green;
+  border-bottom: 1em solid green;
+}
+.popup_top.error {
+  background: red;
+}
+.popup_top.error:before {
+  border: 1em solid transparent;
+  border-right: 1em solid red;
+  border-bottom: 1em solid red;
+}
 
 #body .no_display {
   display: none;
@@ -441,6 +502,7 @@
 .button {
   background: orange;
   padding: 5px 10px;
+  border: none;
   border-radius: 10px;
 }
 

@@ -25,7 +25,7 @@ class CreateCalendarsTable extends Migration
             $table->time('time_start')->index();
             $table->integer('length')->default(60);
             $table->integer('status')->default(0)
-                ->comment('0->RegularLesson, 1->Closed, 2->Transfer, 3->Success, 4->Delete');
+                ->comment('0->Success, 1->constant, 2->postponed, 3->canceled, 4->unmarked');
             $table->integer('theme_id')->nullable();
             $table->timestamps();
         });

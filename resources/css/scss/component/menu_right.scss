@@ -71,10 +71,12 @@
             width: 22px;
         }
     }
-    &.add_lesson{
-        table{
+
+    &.add_lesson {
+        table {
             width: 10px;
         }
+
         input, select {
             border-radius: 5px;
             padding: 5px 7px;
@@ -83,10 +85,99 @@
             width: 100%;
             color: black;
         }
-        .buttons{
+
+        .buttons {
             display: flex;
             justify-content: space-between;
         }
     }
+
+    .buttons {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        grid-gap: 20px;
+
+        button {
+
+            font-size: 20px;
+        }
+
+        img {
+            margin: auto;
+            height: 20px;
+
+        }
+    }
+
+    &.lesson_info {
+        table {
+            width: 100%;
+        }
+
+        td:nth-child(2) {
+            text-align: end;
+        }
+
+        button {
+            padding: 0;
+            width: 2em;
+            height: 2em;
+        }
+
+    }
 }
 
+.burger_right {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 80vh;
+    border-radius: 10px 0 0 10px;
+    background: var(--color_light_grey);
+    transition-duration: 50ms;
+
+    &:hover {
+        width: 15px
+    }
+}
+
+.popup_top {
+    position: fixed;
+    top: 0;
+    right: 20px;
+    padding: 10px 20px;
+    background: green;
+    color: white;
+    transition-duration: 1s;
+    transform: translateY(-100%);
+    opacity: 0;
+    border-radius: 10px 0 5px 5px;
+
+    &.open {
+        transform: translateY(20px);
+        opacity: .85;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: -1.9em;
+        font-size: 7px;
+        border: 1em solid transparent;
+        border-right: 1.3em solid green;
+        border-bottom: 1em solid green;
+    }
+
+    &.error {
+        background: red;
+        &:before {
+            border: 1em solid transparent;
+            border-right: 1em solid red;
+            border-bottom: 1em solid red;
+        }
+    }
+}

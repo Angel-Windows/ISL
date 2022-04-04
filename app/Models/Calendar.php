@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static where(array|array[] $data_filter)
+ * @method static where(mixed $data_filter)
  * @property int|mixed student_id
  * @property int|mixed year
  * @property int|mixed week
- * @property int|mixed day_week
+ * @property int|mixed|string|null day_week
  * @property mixed fool_time
  * @property mixed time_start
  * @property mixed length
@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Calendar extends Model
 {
+    protected $guarded = array('*');
     use HasFactory;
     public function getStudentNameAttribute()
     {

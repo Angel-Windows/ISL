@@ -80,10 +80,10 @@ $route = \Request::route()->getName();
                                         src="{{asset('res/arrow_right.png')}}" alt=""></a>
                 </div>
             @endif
-            <a href="{{route("calendar", ['count_day_week' => 1])}}" class="work item_menu">
+            <div onclick="menu_right_open(2)" class="work item_menu">
                 <div class="img"><img draggable="false" src="{{asset('res/plus.png')}}" alt=""></div>
                 <span>Work</span>
-            </a>
+            </div>
             <a href="{{route("calendar", ['count_day_week' => 7])}}" class="statistic item_menu">
                 <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
                 <span>Statistic</span>
@@ -102,5 +102,7 @@ $route = \Request::route()->getName();
     </aside>
     @yield('content')
 </section>
+<div onclick="menu_right_open(1)" class="burger_right"></div>
+<div onclick="" class="popup_top">Сохранение прошло успешно</div>
 </body>
 </html>

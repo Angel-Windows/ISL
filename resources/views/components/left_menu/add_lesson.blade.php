@@ -2,7 +2,7 @@
 /** @var TYPE_NAME $item */
 /** @var TYPE_NAME $filter */
 ?>
-<div class="content_item add_lesson">
+<div class="menu_item content_item add_lesson no_display">
     <h2>Добавить урок</h2>
     <form
         method="POST"
@@ -44,4 +44,3 @@
         </div>
     </form>
 </div>
-

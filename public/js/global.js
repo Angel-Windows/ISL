@@ -945,6 +945,22 @@ window.Post = function (url) {
     return _getResource.apply(this, arguments);
   }
 };
+
+window.create_html = function (tag_name) {
+  var values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var parent = arguments.length > 2 ? arguments[2] : undefined;
+  values.forEach(function (item) {
+    var elem = document.createElement(tag_name);
+
+    if (tag_name === 'input') {
+      elem.type = "hidden";
+      elem.name = item.name;
+      elem.value = item.value;
+    }
+
+    parent.appendChild(elem);
+  });
+};
 })();
 
 /******/ })()

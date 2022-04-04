@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\UsersProfile;
 use Auth;
 use App\Models\Calendar;
@@ -8,6 +9,7 @@ use App\Models\Config;
 use App\Models\Navigation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use function Sodium\add;
 
@@ -18,7 +20,7 @@ class CalendarController extends Controller
         $this->middleware(function ($request, $next) {
             $route_name = Route::getFacadeRoot()->current()->uri();
             $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
-            $data_students = UsersProfile::where('id' , "!=", Auth::id())->get();
+            $data_students = UsersProfile::where('id', "!=", Auth::id())->get();
 
             view()->share('data_students', $data_students);
             view()->share('data_navigation', $data_navigation);
@@ -45,10 +47,10 @@ class CalendarController extends Controller
         } else if ($count_day_week !== null && ($count_day_week < 1 || $count_day_week > 7)) {
             session(['count_day_week' => 7]);
         }
-
         $data_lesson = $this->get_lesson($page, $start_day_week);
         $filters = Config::where('group_name', 'filters')->get();
         $filter = [];
+
         foreach ($filters as $key => $item) {
             if (!session()->has('filter')) {
                 $display = true;
@@ -60,6 +62,7 @@ class CalendarController extends Controller
             $filter[$key] = json_decode($item['value']);
             $filter[$key]->display = $display;
         }
+
         return view('pages.calendar')
             ->with('page', $page)
             ->with('now_data', $now_data->format('Y-m-d'))
@@ -100,8 +103,10 @@ class CalendarController extends Controller
             $data_filter
         )
             ->whereNotIn('day_week', $day_week_select ?? [])
+            ->leftJoin('users_profiles', 'users_profiles.user_id', 'calendars.student_id')
             ->orderBy('day_week')
             ->orderBy('time_start')
+            ->select('calendars.*', 'users_profiles.first_name', 'users_profiles.last_name',)
             ->get();
         $oldTime = strtotime($data_lesson[0]->time_start);
         return [...$data_lesson];
@@ -158,6 +163,82 @@ class CalendarController extends Controller
                 'code' => 1,
                 'message' => "",
                 'data' => $data
+            ]
+        );
+    }
+
+    public function lesson_info_event(Request $request)
+    {
+        $id = $request['id'];
+        $event = $request['event'];
+        $return = [];
+        switch ($event) {
+            case "0":
+                break;
+            case "1":
+                $return = $this->success_lesson($id);
+                break;
+            case "2":
+                break;
+            default:
+                break;
+        }
+        $data = [];
+        return $return;
+    }
+
+    private function success_lesson($id)
+    {
+        $lesson = Calendar::where('id', $id)->first();
+        if ($lesson->status == 0) {
+            return json_encode([
+                    'code' => 2,
+                    'message' => "This status already exist",
+                    'data' => []
+                ]
+            );
+        } else {
+            $lesson->status = 0;
+            $student = UsersProfile::where('id', $lesson->student_id)->first();
+            $student->decrement('balance', $student->price_lesson);
+            $lesson->save();
+            return json_encode([
+                    'code' => 1,
+                    'message' => "Success save",
+                    'data' => []
+                ]
+            );
+        }
+    }
+
+    public function get_lesson_info(Request $request)
+    {
+        $id = $request->input('id');
+        $lesson = DB::table('calendars')
+            ->where("calendars.id", $id)
+            ->leftJoin('users_profiles', 'users_profiles.user_id', 'calendars.student_id')
+            ->select('calendars.*', 'users_profiles.first_name', 'users_profiles.last_name', 'users_profiles.balance', 'users_profiles.price_lesson')
+            ->first();
+        $time = Carbon::createFromFormat('Y-m-d H:i:s', "2022-01-01 09:00:00");
+        $time->week = $lesson->week;
+        if ($time->dayOfWeek > $lesson->day_week) {
+            $time->addDays($lesson->day_week - $time->dayOfWeek);
+
+        } elseif ($time->dayOfWeek < $lesson->day_week) {
+            $time->addDays($time->dayOfWeek - $lesson->day_week);
+        }
+        return json_encode([
+                'code' => 1,
+                'message' => "",
+                'data' => [
+                    "id" => $lesson->id,
+                    "student_id" => $lesson->student_id,
+                    "name" => $lesson->first_name . " " . $lesson->last_name,
+                    "date" => $time->format("Y-m-d"),
+                    "time" => $time->format("H:m"),
+                    "balance" => $lesson->balance,
+                    "price_lesson" => $lesson->price_lesson,
+                ]
             ]
         );
     }
