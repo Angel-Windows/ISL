@@ -1,0 +1,78 @@
+.transactions {
+    grid-template-rows: auto 1fr;
+    //table{
+    //
+    //    max-height: 100%;
+    //    display: grid;
+    //    border-collapse: collapse;
+    //    overflow: auto;
+    //    grid-template-columns: repeat(7, auto);
+    //    grid-template-rows: repeat(10,  1fr);
+    //}
+    //tr{
+    //    background: red;
+    //    margin: 20px;
+    //}
+    //thead,
+    //tbody,
+    //tr {
+    //    display: contents;
+    //}
+    .list {
+        border-spacing: 0;
+        empty-cells: hide;
+
+        td {
+            padding: 10px 20px;
+            text-align: center;
+            border-bottom: 1px solid #F4EEE8;
+            transition: all 0.5s linear;
+        }
+
+        td:first-child {
+            text-align: left;
+            color: #3D3511;
+            font-weight: bold;
+        }
+
+        th {
+            padding: 10px 20px;
+            color: #3D3511;
+            border-bottom: 1px solid #F4EEE8;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        td {
+            &:nth-child(even) {
+                background: var(--calendar_transfer);
+            }
+
+            &:nth-child(odd) {
+                background: #D1C7BF;
+            }
+        }
+
+        th:nth-child(even) {
+            background: var(--calendar_transfer);
+        }
+
+        th:nth-child(odd) {
+            background: #D1C7BF;
+        }
+
+        .round-top {
+            border-top-left-radius: 5px;
+        }
+
+        .round-bottom {
+            border-bottom-left-radius: 5px;
+        }
+
+        tr:hover td {
+            background: #D1C7BF;
+            font-weight: bold;
+        }
+    }
+
+}

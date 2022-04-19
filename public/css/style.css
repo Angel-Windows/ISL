@@ -444,6 +444,17 @@ body .background_calendar_no_check:after {
   width: 2em;
   height: 2em;
 }
+.content_item.transaction_info table {
+  width: 100%;
+}
+.content_item.transaction_info td:nth-child(2) {
+  text-align: end;
+}
+.content_item.transaction_info button {
+  padding: 0;
+  width: 2em;
+  height: 2em;
+}
 
 .burger_right {
   position: fixed;
@@ -510,7 +521,7 @@ body .background_calendar_no_check:after {
   display: none;
 }
 
-body {
+main {
   background: var(--color_dark_grey);
   display: grid;
   grid-template-columns: auto 1fr;
@@ -562,6 +573,11 @@ h2 {
   bottom: 0;
   background: rgba(120, 120, 120, 0.2);
   z-index: 19;
+}
+
+.disable {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 table.calendar_table {
@@ -616,4 +632,62 @@ table.calendar_table .item {
 }
 table.calendar_table .item p {
   white-space: nowrap;
+}
+
+.transactions {
+  grid-template-rows: auto 1fr;
+}
+.transactions .list {
+  border-spacing: 0;
+  empty-cells: hide;
+}
+.transactions .list td {
+  padding: 10px 20px;
+  text-align: center;
+  border-bottom: 1px solid #F4EEE8;
+  transition: all 0.5s linear;
+}
+.transactions .list td:first-child {
+  text-align: left;
+  color: #3D3511;
+  font-weight: bold;
+}
+.transactions .list th {
+  padding: 10px 20px;
+  color: #3D3511;
+  border-bottom: 1px solid #F4EEE8;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.transactions .list td:nth-child(even) {
+  background: var(--calendar_transfer);
+}
+.transactions .list td:nth-child(odd) {
+  background: #D1C7BF;
+}
+.transactions .list th:nth-child(even) {
+  background: var(--calendar_transfer);
+}
+.transactions .list th:nth-child(odd) {
+  background: #D1C7BF;
+}
+.transactions .list .round-top {
+  border-top-left-radius: 5px;
+}
+.transactions .list .round-bottom {
+  border-bottom-left-radius: 5px;
+}
+.transactions .list tr:hover td {
+  background: #D1C7BF;
+  font-weight: bold;
+}
+
+main {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.section {
+  overflow: scroll;
+  max-height: 100%;
 }

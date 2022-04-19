@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transactions;
 use App\Models\UsersProfile;
 use Auth;
 use App\Models\Calendar;
@@ -202,6 +203,17 @@ class CalendarController extends Controller
             $student = UsersProfile::where('id', $lesson->student_id)->first();
             $student->decrement('balance', $student->price_lesson);
             $lesson->save();
+
+            $transactions = new Transactions();
+            $transactions->student_id = $student->id;
+            $transactions->professor_id = $lesson->professor_id;
+            $transactions->lesson_id = $lesson->id;
+            $transactions->new_balance = $student->balance;
+            $transactions->amount = $student->price_lesson;
+            $transactions->status = 0;
+            $transactions->type = 0;
+            $transactions->save();
+
             return json_encode([
                     'code' => 1,
                     'message' => "Success save",

@@ -126,6 +126,20 @@
         }
 
     }
+    &.transaction_info{
+        table {
+            width: 100%;
+        }
+
+        td:nth-child(2) {
+            text-align: end;
+        }
+        button {
+            padding: 0;
+            width: 2em;
+            height: 2em;
+        }
+    }
 }
 
 .burger_right {

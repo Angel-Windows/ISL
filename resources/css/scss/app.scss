@@ -1,19 +1,23 @@
 @import "variable";
 @import "component";
-#body .no_display{
+
+#body .no_display {
     display: none;
 }
-.button{
+
+.button {
     background: orange;
     padding: 5px 10px;
     border: none;
     border-radius: $border_radius;
     //display: inline-block;
 }
-.hide{
+
+.hide {
     display: none;
 }
-body {
+
+main {
     background: var(--color_dark_grey);
     display: grid;
     grid-template-columns: auto 1fr;
@@ -24,9 +28,11 @@ h2 {
     color: var(--color_dark_white);
     font-size: 22px;
 }
-.relative{
+
+.relative {
     position: relative;
 }
+
 .content {
     padding: 10px 80px 90px;
     display: grid;
@@ -38,9 +44,11 @@ h2 {
     display: grid;
     grid-template-rows: auto 1fr;
 }
-.progress_reload{
+
+.progress_reload {
     position: relative;
-    &:before{
+
+    &:before {
         content: "";
         position: absolute;
         height: 70px;
@@ -50,19 +58,33 @@ h2 {
         z-index: 20;
         left: 50%;
         top: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
     }
-    &:after{
+
+    &:after {
         content: "";
         position: absolute;
         left: 0;
         right: 0;
         top: 0;
         bottom: 0;
-        background: rgba(120,120,120, .20);
+        background: rgba(120, 120, 120, .20);
         z-index: 19;
-
     }
 }
-@import "page";
+.disable{
+    pointer-events: none;
+    opacity: .5;
 
+}
+@import "page";
+main{
+    height: 100vh;
+    overflow: hidden;
+
+
+}
+.section {
+    overflow: scroll;
+    max-height: 100%;
+}

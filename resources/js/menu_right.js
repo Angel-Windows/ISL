@@ -37,20 +37,20 @@ window.lesson_info_events = (e, form_name) => {
     ]
     create_html("input", new_input, form)
     const func = (res) => {
-       const calendar_item = document.querySelector('#calendar_'+id)
-        if (res.code === 1){
+        const calendar_item = document.querySelector('#calendar_' + id)
+        if (res.code === 1) {
             calendar_item.className = "item background_calendar_success";
             popup_top.classList.remove('error')
-        }else {
+        } else {
             calendar_item.className = "item background_calendar_success";
             popup_top.classList.add('error')
         }
         popup_top.innerHTML = res.message;
         popup_top.classList.add("open")
         clearTimeout(timeout_popup);
-        timeout_popup = setTimeout(()=>{
+        timeout_popup = setTimeout(() => {
             popup_top.classList.remove("open")
-        },3000);
+        }, 3000);
     }
     PostForm(form, func);
 }
@@ -67,6 +67,9 @@ window.change_menu_right = () => {
             break;
         case "3":
             right_menu_active = document.querySelectorAll(".lesson_info");
+            break;
+        case "4":
+            right_menu_active = document.querySelectorAll(".transaction_info");
             break;
         default:
             console.log("no active " + localStorage.getItem("menu_right"))
@@ -105,6 +108,27 @@ window.lesson_info_open = (e) => {
         'id': e.querySelector("input[name='id']").value
     }
     Post(url, func, parameters);
+}
+
+window.transaction_info_open = (from) => {
+    const transaction_info = document.querySelector('.transaction_info');
+    target_menu_right(4)
+    const balance = transaction_info.querySelector('.balance');
+    balance.innerHTML = from.querySelector('.amount').innerHTML;
+    const func = (response) => {
+        // const {price_lesson} = response.data;
+        // lesson_infos.querySelector('.id').innerHTML = response.data.id
+        // lesson_infos.querySelector('.name').innerHTML = response.data.name
+        // lesson_infos.querySelector('.date').innerHTML = response.data.date
+        // lesson_infos.querySelector('.time').innerHTML = response.data.time
+        // balance.title = price_lesson
+        // lesson_infos.classList.remove('progress_reload')
+        // localStorage.setItem('menu_right', 1);
+    }
+    // const parameters = {
+    //     'id': e.querySelector("input[name='id']").value
+    // }
+    // Post(url, func, parameters);
 }
 
 window.target_menu_right = (target) => {

@@ -100,6 +100,10 @@ window.change_menu_right = function () {
       right_menu_active = document.querySelectorAll(".lesson_info");
       break;
 
+    case "4":
+      right_menu_active = document.querySelectorAll(".transaction_info");
+      break;
+
     default:
       console.log("no active " + localStorage.getItem("menu_right"));
       return false;
@@ -141,6 +145,27 @@ window.lesson_info_open = function (e) {
     'id': e.querySelector("input[name='id']").value
   };
   Post(url, func, parameters);
+};
+
+window.transaction_info_open = function (from) {
+  var transaction_info = document.querySelector('.transaction_info');
+  target_menu_right(4);
+  var balance = transaction_info.querySelector('.balance');
+  balance.innerHTML = from.querySelector('.amount').innerHTML;
+
+  var func = function func(response) {// const {price_lesson} = response.data;
+    // lesson_infos.querySelector('.id').innerHTML = response.data.id
+    // lesson_infos.querySelector('.name').innerHTML = response.data.name
+    // lesson_infos.querySelector('.date').innerHTML = response.data.date
+    // lesson_infos.querySelector('.time').innerHTML = response.data.time
+    // balance.title = price_lesson
+    // lesson_infos.classList.remove('progress_reload')
+    // localStorage.setItem('menu_right', 1);
+  }; // const parameters = {
+  //     'id': e.querySelector("input[name='id']").value
+  // }
+  // Post(url, func, parameters);
+
 };
 
 window.target_menu_right = function (target) {
