@@ -9,6 +9,7 @@ use App\Models\Calendar;
 use App\Models\Config;
 use App\Models\Navigation;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -63,10 +64,17 @@ class CalendarController extends Controller
             $filter[$key] = json_decode($item['value']);
             $filter[$key]->display = $display;
         }
-
+        $data_day_time = [];
+        $day_time__ = Carbon::now();
+        $day_time__->addWeeks($page);
+        $day_time__->startOfWeek();
+        for ($i = 0; $i < 7; $i++) {
+            $data_day_time[] = $day_time__->addDay()->format('m-d');
+        }
         return view('pages.calendar')
             ->with('page', $page)
             ->with('now_data', $now_data->format('Y-m-d'))
+            ->with('data_day_time', $data_day_time)
             ->with('start_day_week', $start_day_week)
             ->with('filter', $filter)
             ->with('data_lesson', $data_lesson);
@@ -74,6 +82,7 @@ class CalendarController extends Controller
 
     private function get_lesson($page, $start_day_week): array
     {
+
         $now_data = Carbon::now();
         $now_data->addWeeks($page);
         $year = $now_data->year;
@@ -82,6 +91,10 @@ class CalendarController extends Controller
             ['year', $year],
             ['week', $week],
         ];
+
+
+//        dd($data_day_time);
+//        dd($now_data->startOfWeek());
         switch (session('count_day_week')) {
             case 1:
                 $data_filter[] = [[
@@ -128,12 +141,16 @@ class CalendarController extends Controller
     public function ajax_filters(Request $request)
     {
         $id = $request['id'];
-        $filter = session('filter') ?? [];
+        $filter = session('filter') ?? [1, 2, 3, 4, 5];
+
         $arr_s = array_search($id, $filter);
         if ($arr_s === false) {
             array_push($filter, $id);
         } else {
             unset($filter[$arr_s]);
+        }
+        if (count($filter) == 0) {
+            $filter = [1, 2, 3, 4, 5,];
         }
         session(['filter' => $filter]);
         return json_encode([
@@ -175,29 +192,64 @@ class CalendarController extends Controller
         $return = [];
         switch ($event) {
             case "0":
+                $return = 0;
                 break;
             case "1":
                 $return = $this->success_lesson($id);
                 break;
-            case "2":
+            case "3":
+                $return = $this->back_lesson($id);
                 break;
             default:
                 break;
         }
-        $data = [];
-        return $return;
+        $return['type'] = (int)$event;
+        return json_encode($return);
     }
 
-    private function success_lesson($id)
+    private function back_lesson($id): array
     {
         $lesson = Calendar::where('id', $id)->first();
         if ($lesson->status == 0) {
-            return json_encode([
-                    'code' => 2,
-                    'message' => "This status already exist",
-                    'data' => []
-                ]
-            );
+            $student = UsersProfile::where('id', $lesson->student_id)->first();
+            $student->increment('balance', $student->price_lesson);
+        } elseif ($lesson->status == 1 || $lesson->status == 2) {
+            return [
+                'code' => 2,
+                'message' => "Return nothing",
+                'data' => []
+            ];
+        }
+        $lesson->status = 2;
+        $lesson->save();
+
+        $transactions = new Transactions();
+        $transactions->student_id = $student->id;
+        $transactions->professor_id = $lesson->professor_id;
+        $transactions->lesson_id = $lesson->id;
+        $transactions->new_balance = $student->balance;
+        $transactions->amount = $student->price_lesson;
+        $transactions->status = 1;
+        $transactions->type = 1;
+        $transactions->save();
+
+        return [
+            'code' => 1,
+            'message' => "Success back",
+            'data' => []
+        ];
+    }
+
+    private function success_lesson($id): array
+    {
+        $lesson = Calendar::where('id', $id)->first();
+        if ($lesson->status == 0) {
+
+            return [
+                'code' => 2,
+                'message' => "This status already exist",
+                'data' => []
+            ];
         } else {
             $lesson->status = 0;
             $student = UsersProfile::where('id', $lesson->student_id)->first();
@@ -210,16 +262,15 @@ class CalendarController extends Controller
             $transactions->lesson_id = $lesson->id;
             $transactions->new_balance = $student->balance;
             $transactions->amount = $student->price_lesson;
-            $transactions->status = 0;
+            $transactions->status = 1;
             $transactions->type = 0;
             $transactions->save();
 
-            return json_encode([
-                    'code' => 1,
-                    'message' => "Success save",
-                    'data' => []
-                ]
-            );
+            return [
+                'code' => 1,
+                'message' => "Success save",
+                'data' => []
+            ];
         }
     }
 

@@ -31,7 +31,7 @@
                     <td class="student_name">{{$item->student_first_name}} {{$item->student_last_name}}</td>
                     <td class="professor_name">{{$item->professor_first_name}} {{$item->professor_last_name}}</td>
                     <td class="amount" title="Сумма: {{$item->new_balance}}">{{$item->amount}}</td>
-                    <td class="type">{{$data_status[$item->type]}}</td>
+                    <td class="type">{{$data_type[$item->type]}}</td>
                     <td class="status">{{$data_status[$item->status]}}</td>
                     <td class="created_at">{{$item->created_at}}</td>
                 </tr>

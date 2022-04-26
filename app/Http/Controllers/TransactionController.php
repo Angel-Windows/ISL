@@ -38,7 +38,7 @@ class TransactionController extends Controller
                 "student.first_name as student_first_name", "student.last_name as student_last_name",
                 "professor.first_name as professor_first_name", "professor.last_name as professor_last_name",
             )
-            ->orderBy('transactions.id')
+            ->orderBy('transactions.id', 'desc')
             ->paginate(10);
         $data_students = UsersProfile::where('id', "!=", Auth::id())->get();
         return view('pages.transactions')

@@ -22,6 +22,8 @@ window.calendar_filter = (url, id, elem) => {
 
 window.add_lesson = (form) => {
     form.classList.add('progress_reload')
+
+
     const func = () => {
         form.classList.remove('progress_reload')
     }
@@ -39,10 +41,20 @@ window.lesson_info_events = (e, form_name) => {
     const func = (res) => {
         const calendar_item = document.querySelector('#calendar_' + id)
         if (res.code === 1) {
-            calendar_item.className = "item background_calendar_success";
+            switch (res.type) {
+                case 1: {
+                    fresh_buttons("success")
+                    calendar_item.className = "item background_calendar_success";
+                    break;
+                }
+                case 3: {
+                    fresh_buttons("normal")
+                    calendar_item.className = "item background_calendar_transfer";
+                    break;
+                }
+            }
             popup_top.classList.remove('error')
         } else {
-            calendar_item.className = "item background_calendar_success";
             popup_top.classList.add('error')
         }
         popup_top.innerHTML = res.message;
@@ -54,7 +66,19 @@ window.lesson_info_events = (e, form_name) => {
     }
     PostForm(form, func);
 }
-
+const fresh_buttons = (news) => {
+    const button_fool = document.querySelectorAll(`.lesson_info .button`);
+    if (news === "transfer") {
+        news = "normal";
+    }
+    const button_new = document.querySelectorAll(`.lesson_info .${news}`);
+    button_fool.forEach((item) => {
+        item.classList.add('no_display')
+    })
+    button_new.forEach((item) => {
+        item.classList.remove('no_display')
+    })
+}
 window.change_menu_right = () => {
     let right_menu_active;
     const menu_right_fool = document.querySelectorAll(".menu_item")
@@ -92,6 +116,7 @@ window.lesson_info_open = (e) => {
     const lesson_infos = document.querySelector('.lesson_info');
     lesson_infos.classList.add('progress_reload')
     const func = (response) => {
+        fresh_buttons(e.className.replace(/item background_calendar_/g, ""))
         target_menu_right(3)
         const balance = lesson_infos.querySelector('.balance');
         const {price_lesson} = response.data;

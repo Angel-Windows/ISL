@@ -48,6 +48,7 @@
                     <th>
                         {{$arr_data_name[$i+$start_temp-1]}}
                         <br>
+                        <div class="data">{{$data_day_time[$i]}}</div>
                     </th>
                 @endfor
             </tr>

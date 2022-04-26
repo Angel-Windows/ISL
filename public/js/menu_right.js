@@ -65,10 +65,24 @@ window.lesson_info_events = function (e, form_name) {
     var calendar_item = document.querySelector('#calendar_' + id);
 
     if (res.code === 1) {
-      calendar_item.className = "item background_calendar_success";
+      switch (res.type) {
+        case 1:
+          {
+            fresh_buttons("success");
+            calendar_item.className = "item background_calendar_success";
+            break;
+          }
+
+        case 3:
+          {
+            fresh_buttons("normal");
+            calendar_item.className = "item background_calendar_transfer";
+            break;
+          }
+      }
+
       popup_top.classList.remove('error');
     } else {
-      calendar_item.className = "item background_calendar_success";
       popup_top.classList.add('error');
     }
 
@@ -81,6 +95,22 @@ window.lesson_info_events = function (e, form_name) {
   };
 
   PostForm(form, func);
+};
+
+var fresh_buttons = function fresh_buttons(news) {
+  var button_fool = document.querySelectorAll(".lesson_info .button");
+
+  if (news === "transfer") {
+    news = "normal";
+  }
+
+  var button_new = document.querySelectorAll(".lesson_info .".concat(news));
+  button_fool.forEach(function (item) {
+    item.classList.add('no_display');
+  });
+  button_new.forEach(function (item) {
+    item.classList.remove('no_display');
+  });
 };
 
 window.change_menu_right = function () {
@@ -128,6 +158,7 @@ window.lesson_info_open = function (e) {
   lesson_infos.classList.add('progress_reload');
 
   var func = function func(response) {
+    fresh_buttons(e.className.replace(/item background_calendar_/g, ""));
     target_menu_right(3);
     var balance = lesson_infos.querySelector('.balance');
     var price_lesson = response.data.price_lesson;

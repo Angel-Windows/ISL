@@ -3,23 +3,23 @@
         <table>
             <tr>
                 <td>id</td>
-                <td>#<span class="id">1</span></td>
+                <td>#<span class="id"></span></td>
             </tr>
             <tr>
                 <td>Имя</td>
-                <td class="name">Софа Селеменева</td>
+                <td class="name"></td>
             </tr>
             <tr>
                 <td>Дата</td>
-                <td class="date">31.03.2022</td>
+                <td class="date"></td>
             </tr>
             <tr>
                 <td>Время</td>
-                <td class="time">20:00</td>
+                <td class="time"></td>
             </tr>
             <tr>
                 <td>Баланс</td>
-                <td class="balance" title="150">400</td>
+                <td class="balance" title="150"></td>
             </tr>
         </table>
         <div class="buttons">
@@ -33,8 +33,9 @@
                 <input type="hidden" name="calendar_id" value="1">
 {{--                <input type="hidden" name="" value="">--}}
             </form>
-            <button onclick="lesson_info_events(0, 'lesson_info_event')" class="button " type="submit"><img src="{{asset("res/pencil-solid.svg")}}" alt=""></button>
-            <button onclick="lesson_info_events(1, 'lesson_info_event')" class="button background_calendar_success"><img src="{{asset("res/Check.svg")}}" alt=""></button>
-            <button onclick="lesson_info_events(2, 'lesson_info_event')" class="button background_calendar_no_check"><img src="{{asset("res/Dead.svg")}}" alt=""></button>
+            <button onclick="lesson_info_events(3, 'lesson_info_event')" class="button success"><img src="{{asset("res/arrow-rotate-left-solid.svg")}}" alt=""></button>
+            <button onclick="lesson_info_events(0, 'lesson_info_event')" class="button normal" type="submit"><img src="{{asset("res/pencil-solid.svg")}}" alt=""></button>
+            <button onclick="lesson_info_events(1, 'lesson_info_event')" class="button normal background_calendar_success"><img src="{{asset("res/Check.svg")}}" alt=""></button>
+            <button onclick="lesson_info_events(2, 'lesson_info_event')" class="button normal success background_calendar_no_check"><img src="{{asset("res/Dead.svg")}}" alt=""></button>
         </div>
 </div>

@@ -8,13 +8,15 @@ table.calendar_table {
     font-weight: 400;
     font-size: 20px;
     color: var(--color_dark_white);
+    .data{
+        font-size: 12px;
+    }
     th{
 
         color: var(--color_dark_white);
         font-size: 22px;
     }
     td {
-
         position: relative;
         border-right: 0.1px solid var(--color_light_grey);
         border-bottom: 0.1px solid var(--color_light_grey);
@@ -33,7 +35,13 @@ table.calendar_table {
             width: 20px;
             background: var(--color_dark_grey);
         }
+
     }
+    p{
+        font-size: 13px;
+        font-weight: 200;
+    }
+
     .item {
         position: absolute;
         overflow: hidden;

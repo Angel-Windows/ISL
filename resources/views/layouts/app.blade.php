@@ -81,14 +81,14 @@ $page_get = $_GET['page'] ?? 1;
                            class="img"><img draggable="false"
                                             src="{{asset('res/arrow_right.png')}}" alt=""></a>
                     </div>
-                @else
+                @elseif($route == "transaction")
                     <?php
                     $page_nav_left_class = "";
                     $page_nav_right_class = "";
                     if ($page_get <= 1) {
                         $page_nav_left_class = "disable";
                         }
-                    if (count($data_transactions) < 10) {
+                    if (count($data_transactions??[]) < 10) {
                         $page_nav_right_class = "disable";
                     }
                     ?>

@@ -591,6 +591,9 @@ table.calendar_table {
   font-size: 20px;
   color: var(--color_dark_white);
 }
+table.calendar_table .data {
+  font-size: 12px;
+}
 table.calendar_table th {
   color: var(--color_dark_white);
   font-size: 22px;
@@ -614,6 +617,10 @@ table.calendar_table td.time:after {
   height: 4px;
   width: 20px;
   background: var(--color_dark_grey);
+}
+table.calendar_table p {
+  font-size: 13px;
+  font-weight: 200;
 }
 table.calendar_table .item {
   position: absolute;
@@ -685,9 +692,4 @@ table.calendar_table .item p {
 main {
   height: 100vh;
   overflow: hidden;
-}
-
-.section {
-  overflow: scroll;
-  max-height: 100%;
 }
