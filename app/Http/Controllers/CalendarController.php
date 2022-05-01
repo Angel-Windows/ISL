@@ -38,9 +38,19 @@ class CalendarController extends Controller
 
     public function index(Request $request)
     {
-        $now_data = Carbon::now();
 
+        $now_data = Carbon::now();
         $page = (int)$request->input('page');
+
+        $data_day_time = [];
+        $day_time__ = Carbon::now();
+        $day_time__->addWeeks($page);
+        $day_time__->startOfWeek();
+        for ($i = 0; $i < 7; $i++) {
+            $data_day_time[] = $day_time__->format('m-d');
+            $day_time__->addDay();
+        }
+
         $count_day_week = ($request->input('count_day_week'));
         $start_day_week = ($request->input('start')) ?? 1;
 
@@ -49,7 +59,7 @@ class CalendarController extends Controller
         } else if ($count_day_week !== null && ($count_day_week < 1 || $count_day_week > 7)) {
             session(['count_day_week' => 7]);
         }
-        $data_lesson = $this->get_lesson($page, $start_day_week);
+        $data_lesson = $this->get_lesson($page, $start_day_week, $data_day_time);
         $filters = Config::where('group_name', 'filters')->get();
         $filter = [];
 
@@ -64,37 +74,26 @@ class CalendarController extends Controller
             $filter[$key] = json_decode($item['value']);
             $filter[$key]->display = $display;
         }
-        $data_day_time = [];
-        $day_time__ = Carbon::now();
-        $day_time__->addWeeks($page);
-        $day_time__->startOfWeek();
-        for ($i = 0; $i < 7; $i++) {
-            $data_day_time[] = $day_time__->addDay()->format('m-d');
-        }
+
+
         return view('pages.calendar')
             ->with('page', $page)
             ->with('now_data', $now_data->format('Y-m-d'))
             ->with('data_day_time', $data_day_time)
             ->with('start_day_week', $start_day_week)
             ->with('filter', $filter)
-            ->with('data_lesson', $data_lesson);
+            ->with('data_lesson', json_encode($data_lesson));
     }
 
-    private function get_lesson($page, $start_day_week): array
+    private function get_lesson($page, $start_day_week, $data_day_time): array
     {
-
         $now_data = Carbon::now();
         $now_data->addWeeks($page);
         $year = $now_data->year;
-        $week = $now_data->week;
-        $data_filter = [
-            ['year', $year],
-            ['week', $week],
-        ];
-
-
-//        dd($data_day_time);
-//        dd($now_data->startOfWeek());
+        for ($i = 0; $i < count($data_day_time); $i++) {
+            $data_day_time[$i] = $year . "-" . $data_day_time[$i];
+        }
+        $data_filter = [];
         switch (session('count_day_week')) {
             case 1:
                 $data_filter[] = [[
@@ -113,30 +112,26 @@ class CalendarController extends Controller
             default:
                 $start_day_week = 1;
         }
-        $data_lesson = Calendar::where(
-            $data_filter
-        )
-            ->whereNotIn('day_week', $day_week_select ?? [])
+        $data_lesson = Calendar::whereIn('fool_time', $data_day_time)
+//            ->whereNotIn('day_week', $day_week_select ?? [])
             ->leftJoin('users_profiles', 'users_profiles.user_id', 'calendars.student_id')
-            ->orderBy('day_week')
+            ->orderBy('fool_time')
             ->orderBy('time_start')
             ->select('calendars.*', 'users_profiles.first_name', 'users_profiles.last_name',)
             ->get();
-        $oldTime = strtotime($data_lesson[0]->time_start);
         return [...$data_lesson];
     }
 
-    private function get_table($page, $start_day_week)
-    {
-
-        $get_lesson = $this->get_lesson($page, $start_day_week);
-        $count_day_week = session('count_day_week') ?? 7;
-        return view(('components.calendar.table'))
-            ->with('page', $page)
-            ->with('count_day_week', $count_day_week)
-            ->with('start_day_week', $start_day_week)
-            ->with('data_lesson', $get_lesson);
-    }
+//    private function get_table($page, $start_day_week)
+//    {
+//        $get_lesson = $this->get_lesson($page, $start_day_week);
+//        $count_day_week = session('count_day_week') ?? 7;
+//        return view(('components.calendar.table'))
+//            ->with('page', $page)
+//            ->with('count_day_week', $count_day_week)
+//            ->with('start_day_week', $start_day_week)
+//            ->with('data_lesson', $get_lesson);
+//    }
 
     public function ajax_filters(Request $request)
     {
@@ -297,7 +292,8 @@ class CalendarController extends Controller
                     "id" => $lesson->id,
                     "student_id" => $lesson->student_id,
                     "name" => $lesson->first_name . " " . $lesson->last_name,
-                    "date" => $time->format("Y-m-d"),
+//                    "date" => $time->format("Y-m-d"),
+                    "date" => $lesson->fool_time,
                     "time" => $time->format("H:m"),
                     "balance" => $lesson->balance,
                     "price_lesson" => $lesson->price_lesson,

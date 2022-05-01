@@ -37,6 +37,14 @@
     $data_day = [1, 2, 3, 4, 5, 6, 0];
     $arr_data_name = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     ?>
+    <div onclick="lesson_info_open(this)" id="calendar_"
+         class="item no_display">
+        <input type="hidden" name="id" value="s">
+        <input type="hidden" name="url"
+               value="{{route('calendar.get_lesson_info')}}">
+        <p class="student_name"></p>
+        <p class="time_lesson"></p>
+    </div>
 
     <div class="content calendar">
         <table class="calendar_table">
@@ -54,7 +62,6 @@
             </tr>
             </thead>
             <tbody>
-
             @for($i = 9; $i<=22;$i++)
                 <tr class="">
                     <?php
@@ -63,37 +70,13 @@
                     } else {
                         $num_day = $i;
                     }
+                    $num_day_elem = $num_day;
                     $num_day .= ":00"
                     ?>
                     <td class="time unselectable">{{$num_day}}</td>
                     @for($j = 0; $j < $count_day_week; $j++)
-                        <td class="">
-                            @foreach($temp_data_lesson as $key=>$item)
-                                @if($item->day_week == $data_day[$j+$start_temp-1] &&  date('H',strtotime($item->time_start)) == date('H',strtotime($num_day)))
-                                    <?php
-                                    if (count($data_status)) {
-                                        $class_list_item = $data_status[$item->status]->class;
-                                        if (!$data_status[$item->status]->display) {
-                                            $class_list_item .= " no_display";
-                                        }
-                                    } else {
-                                        $class_list_item = "background_calendar_normal";
-                                    }
-                                    ?>
-{{--                                @if($item->id == 57)--}}
-{{--                                    {{dd($item)}}--}}
-{{--                                @endif--}}
-                                    <div onclick="lesson_info_open(this)" id="calendar_{{$item->id}}" class="item {{$class_list_item}}">
-                                        <input type="hidden" name="id" value="{{$item->id}}">
-                                        <input type="hidden" name="url" value="{{route('calendar.get_lesson_info')}}">
-{{--                                        <p>{{$item->student_name}}</p>--}}
-                                        <p>{{$item->first_name}} {{$item->last_name}}</p>
-                                        <p>{{date('H:i',strtotime($item->time_start))}}
-                                            - {{date('H:i', (strtotime($item->time_start)+3600))}}</p>
-                                    </div>
-                                    <?php unset($temp_data_lesson[$key ?? 0]); ?>
-                                @endif
-                            @endforeach
+                        <td>
+                            <div class="calendar_item d{{$data_day_time[$j]}} t{{$num_day_elem}}"></div>
                         </td>
                     @endfor
                 </tr>
@@ -106,4 +89,8 @@
             @include('components.left_menu.lesson_info')
         </aside>
     </div>
+    <script src="{{asset('js/calendar.js')}}"></script>
+    <script>
+        calendar_fill(<?php echo($data_lesson) ?>, @json($data_status));
+    </script>
 @stop

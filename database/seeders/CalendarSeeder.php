@@ -16,21 +16,29 @@ class CalendarSeeder extends Seeder
      */
     public function run()
     {
+        $temp_data = 0;
         DB::statement('truncate table calendars');
         $regular_lessons = RegularLesson::all();
         $data_regular = [];
-        $now_data = Carbon::now();
-        $data_endOfYear = Carbon::now()->endOfYear()->addWeeks(-1);
-        $temps = 0;
         for ($i = 0; $i < 20; $i++) {
             foreach ($regular_lessons as $item) {
-                if ($data_endOfYear->week == $now_data->week + $i) {
-                    $temps = $data_endOfYear->week;
-                }
-                $data_regular[] = ['student_id' => $item->student_id, 'professor_id' => $item->professor_id, 'status' => rand(0, 4), 'year' => $now_data->year, 'day_week' => $item->day_week, 'week' => $now_data->week + $i - $temps, 'fool_time' => '2022-01-05', 'time_start' => $item->time_start, 'length' => $item->length];
+                $now_data = Carbon::now();
+                $now_data->startOfWeek();
+                $now_data->addDays($item->day_week - 1);
+                $now_data->addWeeks($i);
+                $data_regular[] = [
+                    'student_id' => $item->student_id,
+                    'professor_id' => $item->professor_id,
+                    'status' => rand(0, 3), 'year' => $now_data->year,
+                    'day_week' => $item->day_week,
+                    'week' => $now_data->week,
+                    'fool_time' => $now_data->format('Y-m-d'),
+                    'time_start' => $item->time_start,
+                    'length' => $item->length,
+                ];
             }
+            $temp_data++;
         }
-
         DB::table('calendars')->insert($data_regular);
     }
 }

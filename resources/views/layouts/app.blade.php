@@ -13,24 +13,24 @@ $page_get = $_GET['page'] ?? 1;
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Display:wght@200;300;500;600&display=swap"
-        rel="stylesheet">
+{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+{{--    <link--}}
+{{--        href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Display:wght@200;300;500;600&display=swap"--}}
+{{--        rel="stylesheet">--}}
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+{{--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">--}}
 
     <!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/reset.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
     <!-- Scripts -->
-    <script src="https://kit.fontawesome.com/55683bb2a9.js" crossorigin="anonymous"></script>
+{{--    <script src="https://kit.fontawesome.com/55683bb2a9.js" crossorigin="anonymous"></script>--}}
 
     <script defer src="{{asset('js/global.js')}}"></script>
     <script defer src="{{asset('js/nav_left.js')}}"></script>

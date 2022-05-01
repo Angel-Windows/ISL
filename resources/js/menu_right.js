@@ -124,6 +124,7 @@ window.lesson_info_open = (e) => {
         lesson_infos.querySelector('.name').innerHTML = response.data.name
         lesson_infos.querySelector('.date').innerHTML = response.data.date
         lesson_infos.querySelector('.time').innerHTML = response.data.time
+        console.log(response.data)
         balance.innerHTML = response.data.balance;
         balance.title = price_lesson
         lesson_infos.classList.remove('progress_reload')

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static where(mixed $data_filter)
+ * @method static whereIn(string $string, $data_day_time)
  * @property int|mixed student_id
  * @property int|mixed year
  * @property int|mixed week

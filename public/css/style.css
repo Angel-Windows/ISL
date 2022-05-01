@@ -640,6 +640,10 @@ table.calendar_table .item {
 table.calendar_table .item p {
   white-space: nowrap;
 }
+table.calendar_table .calendar_item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
 
 .transactions {
   grid-template-rows: auto 1fr;
