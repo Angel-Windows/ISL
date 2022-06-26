@@ -6,11 +6,12 @@
 }
 
 .content_item {
-
+    box-sizing: border-box;
     background: var(--color_light_grey);
     border-radius: $border_radius;
     min-width: $right_size;
-    width: $right_size;
+    //width: $right_size;
+    width: var(--nav_size);
     padding: $default_padding;
 
     h2 {
@@ -160,6 +161,7 @@
 
 .popup_top {
     position: fixed;
+    z-index: 110;
     top: 0;
     right: 20px;
     padding: 10px 20px;

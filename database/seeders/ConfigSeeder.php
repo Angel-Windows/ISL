@@ -15,32 +15,53 @@ class ConfigSeeder extends Seeder
     public function run()
     {
         DB::statement('truncate table configs');
-        $data_status = [
+        $filters_calendar = [
             [
                 'id' => 1,
-                'name' => "success",
+                'name' => "Проведен",
                 'class' => 'background_calendar_success',
             ], [
                 'id' => 2,
-                'name' => "normal",
+                'name' => "Запланирован",
                 'class' => 'background_calendar_normal',
             ], [
                 'id' => 3,
-                'name' => "postponed",
+                'name' => "Перенесен",
                 'class' => 'background_calendar_transfer',
             ], [
                 'id' => 4,
-                'name' => "canceled",
+                'name' => "Отменен",
                 'class' => 'background_calendar_closed',
             ], [
                 'id' => 5,
-                'name' => "unmarked",
+                'name' => "Удален",
                 'class' => 'background_calendar_no_check',
             ]
         ];
-        foreach ($data_status as $key=>$item) {
+        $filters_transactions = [
+            [
+                'id' => 0,
+                'name' => "Урок",
+                'class' => 'background_calendar_success',
+            ], [
+                'id' => 1,
+                'name' => "Отмена",
+                'class' => 'background_calendar_normal',
+            ], [
+                'id' => 2,
+                'name' => "Пополнение",
+                'class' => 'background_calendar_transfer',
+            ]
+        ];
+        foreach ($filters_calendar as $key=>$item) {
             DB::table('configs')->insert([
-                    ['name'=> $item['name'], 'group_name' => 'filters', 'value' => json_encode($item)],
+                    ['name'=> $item['name'], 'group_name' => 'filters_calendar', 'value' => json_encode($item)],
+                ]
+            );
+        }
+        foreach ($filters_transactions as $key=>$item) {
+            DB::table('configs')->insert([
+                    ['name'=> $item['name'], 'group_name' => 'filters_transaction', 'value' => json_encode($item)],
                 ]
             );
         }

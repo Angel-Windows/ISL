@@ -4,7 +4,8 @@ $route = \Request::route()->getName();
 $page_get = $_GET['page'] ?? 1;
 ?>
     <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="ru">
+{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
 <head>
     <meta charset="utf-8">
     <meta name="viewport"
@@ -12,25 +13,26 @@ $page_get = $_GET['page'] ?? 1;
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="url_info" content="{{ route('calendar.get_lesson_info') }}">
 
-{{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
-{{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
-{{--    <link--}}
-{{--        href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Display:wght@200;300;500;600&display=swap"--}}
-{{--        rel="stylesheet">--}}
+    {{--    <link rel="preconnect" href="https://fonts.googleapis.com">--}}
+    {{--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>--}}
+    {{--    <link--}}
+    {{--        href="https://fonts.googleapis.com/css2?family=Noto+Sans&family=Noto+Sans+Display:wght@200;300;500;600&display=swap"--}}
+    {{--        rel="stylesheet">--}}
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-{{--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">--}}
+    {{--    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">--}}
 
-    <!-- Styles -->
+<!-- Styles -->
     <link rel="stylesheet" href="{{asset('css/reset.css')}}">
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
-
+    <link rel="icon" type="image/x-icon" href="{{asset("res/favicon.svg")}}">
     <!-- Scripts -->
-{{--    <script src="https://kit.fontawesome.com/55683bb2a9.js" crossorigin="anonymous"></script>--}}
+    {{--    <script src="https://kit.fontawesome.com/55683bb2a9.js" crossorigin="anonymous"></script>--}}
 
     <script defer src="{{asset('js/global.js')}}"></script>
     <script defer src="{{asset('js/nav_left.js')}}"></script>
@@ -71,15 +73,24 @@ $page_get = $_GET['page'] ?? 1;
     <section class="section  @yield('class_name')">
         <aside class="menu_top">
             <div class="menu_nav">
-                @if($route == "calendar")
+                @if($route == "calendar" || $route == "home"|| empty($_GET["page"]))
+                    <?php if (empty($_GET["page"])) {
+                        $_GET["page"] = 0;
+                    } ?>
                     <div class="today item_menu">
-                        <a href="{{route($route_name, $back_page_start)}}"
-                           class="img"><img draggable="false"
-                                            src="{{asset('res/arrow_left.png')}}" alt=""></a>
-                        <a href="{{route($route_name)}}"><span>Today</span></a>
-                        <a href="{{route($route_name, $next_page_start)}}"
-                           class="img"><img draggable="false"
-                                            src="{{asset('res/arrow_right.png')}}" alt=""></a>
+                        <div class="item_container">
+                            <a href="{{route($route_name, ['page' =>$_GET["page"]-1])}}"
+                               class="img"><img draggable="false"
+                                                src="{{asset('res/arrow_left.png')}}" alt=""></a>
+                        </div>
+                        <div class="item_container">
+                            <a href="{{route($route_name)}}"><span>Today</span></a>
+                        </div>
+                        <div class="item_container">
+                            <a href="{{route($route_name, ['page' =>$_GET["page"]+1])}}"
+                               class="img"><img draggable="false"
+                                                src="{{asset('res/arrow_right.png')}}" alt=""></a>
+                        </div>
                     </div>
                 @elseif($route == "transaction")
                     <?php
@@ -87,19 +98,26 @@ $page_get = $_GET['page'] ?? 1;
                     $page_nav_right_class = "";
                     if ($page_get <= 1) {
                         $page_nav_left_class = "disable";
-                        }
-                    if (count($data_transactions??[]) < 10) {
+                    }
+                    if (count($data_transactions ?? []) < 10) {
                         $page_nav_right_class = "disable";
                     }
                     ?>
                     <div class="today item_menu">
-                        <a href="{{route($route_name, ['page'=>$page_get-1])}}" class="img {{$page_nav_left_class}}">
-                            <img draggable="false" src="{{asset('res/arrow_left.png')}}" alt="">
-                        </a>
-                        <a href="{{route($route_name, ['page'=>1])}}"><span>Начало</span></a>
-                        <a href="{{route($route_name, ['page'=>$page_get+1])}}"
-                           class="img {{$page_nav_right_class}}"><img draggable="false"
-                                            src="{{asset('res/arrow_right.png')}}" alt=""></a>
+                        <div class="item_container">
+                            <a href="{{route($route_name, ['page'=>$page_get-1])}}"
+                               class="img {{$page_nav_left_class}}">
+                                <img draggable="false" src="{{asset('res/arrow_left.png')}}" alt="">
+                            </a>
+                        </div>
+                        <div class="item_container">
+                            <a href="{{route($route_name, ['page'=>1])}}"><span>Начало</span></a>
+                        </div>
+                        <div class="item_container">
+                            <a href="{{route($route_name, ['page'=>$page_get+1])}}"
+                               class="img {{$page_nav_right_class}}"><img draggable="false"
+                                                                          src="{{asset('res/arrow_right.png')}}" alt=""></a>
+                        </div>
                     </div>
                 @endif
                 <div onclick="menu_right_open(2)" class="work item_menu">
@@ -110,24 +128,42 @@ $page_get = $_GET['page'] ?? 1;
                     <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
                     <span>Statistic</span>
                 </a>
-                @if($route == "calendar")
+                @if($route == "calendar" || $route == "home")
                     <h2 class="item_menu">Расписание {{$now_data}}</h2>
                 @endif
             </div>
             <div class="menu_profile">
                 <div class="coin">
                     <div class="img"><img draggable="false" src="{{asset('res/sc.png')}}" alt=""></div>
-                    <span>15600</span>
+                    <span>{{$user->balance}}</span>
                 </div>
                 <div class="profile_avatar img"><img draggable="false" src="{{asset('res/avatara_user.png')}}" alt="">
+                    <ul class="menu_list">
+                        <li><a href="#">Настройки</a></li>
+                        <li><a href="#">Трансакции</a></li>
+                        <li><a href="#">Полезные материалы</a></li>
+                        <li><a href="#">Выйти</a></li>
+                    </ul>
                 </div>
+
             </div>
         </aside>
-        @yield('content')
+        {{--        <div class="content">--}}
+        <div class="content @yield('page_name')">
+            @yield('content')
+            <aside class="menu_right">
+                @include('components.left_menu.Info')
+                @include('components.left_menu.add_lesson')
+                @yield('aside')
+            </aside>
+
+
+        </div>
     </section>
+
 </main>
 <div onclick="menu_right_open(1)" class="burger_right"></div>
 <div onclick="" class="popup_top">Сохранение прошло успешно</div>
-
+@yield('script')
 </body>
 </html>

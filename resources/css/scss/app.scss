@@ -34,7 +34,7 @@ h2 {
 }
 
 .content {
-    padding: 10px 80px 90px;
+    padding: 10px $padding_wrapper 90px;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-gap: $grid_gap;
@@ -72,15 +72,81 @@ h2 {
         z-index: 19;
     }
 }
-.disable{
+
+.disable {
     pointer-events: none;
     opacity: .5;
 
 }
+
 @import "page";
-main{
+main {
     height: 100vh;
     overflow: hidden;
 
 
+}
+
+.rozetka .list {
+    font-family: BlinkMacSystemFont, -apple-system, Arial, "Segoe UI", Roboto, Helvetica, sans-serif;
+    display: grid;
+    grid-template-columns: repeat(6, auto);
+    justify-content: center;
+    font-weight: 400;
+    .card {
+        width: 166px;
+        padding: 16px;
+        border-bottom: 1px solid rgb(233, 233, 233);
+        border-right: 1px solid rgb(233, 233, 233);
+        position: relative;
+    }
+    .mess{
+        grid-column: 6;
+        border-left: 1px solid rgb(233, 233, 233);
+        font-size: 14px;
+        color: blue;
+    }
+    .like {
+        font-size: 24px;
+        color: #ffa900;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
+    .img {
+        width: 100%;
+        img{
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    h3 {
+        font-size: 14px;
+        font-weight: 400;
+        padding-bottom: 8px;
+    }
+    p{
+        color: rgb(51, 51, 51);
+    }
+    .old_price{
+        color: rgb(166, 165, 165);
+        text-decoration: line-through;
+        font-size: 14px;
+        height: 14px;
+    }
+    .price {
+        color: rgb(34, 31, 31);
+
+        font-size: 24px;
+
+    }
+
+    em {
+        font-size: 12px;
+        color: rgb(121, 120, 120);
+        font-style: normal;
+
+    }
 }

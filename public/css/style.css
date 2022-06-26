@@ -80,6 +80,10 @@ body .background_calendar_no_check:after {
   background: linear-gradient(90deg, transparent, var(--calendar_no_check) 80%);
 }
 
+:root {
+  --nav_size: 300px;
+}
+
 .nav {
   overflow: hidden;
   display: flex;
@@ -87,7 +91,7 @@ body .background_calendar_no_check:after {
   justify-content: space-between;
   background: var(--color_light_grey);
   color: var(--color_white);
-  width: 290px;
+  width: var(--nav_size);
   height: 100vh;
   box-sizing: border-box;
   padding: 40px 20px;
@@ -95,14 +99,18 @@ body .background_calendar_no_check:after {
   border-radius: 0 50px 50px 0;
 }
 .nav .logo {
-  font-size: 30px;
+  font-size: 25px;
   text-align: center;
   margin-bottom: 60px;
 }
 .nav .logo .img {
-  height: 110px;
-  width: 110px;
+  height: 100px;
+  width: 100px;
   margin: 0 auto 30px;
+  border-radius: 50%;
+  background: rgba(128, 128, 128, 0.6);
+  padding: 20px;
+  box-shadow: 0 0 2px 2px rgba(134, 133, 133, 0.6);
 }
 .nav .nav_list a {
   color: white;
@@ -121,7 +129,7 @@ body .background_calendar_no_check:after {
   height: 20px;
 }
 .nav .nav_list a em {
-  font-size: 25px;
+  font-size: 20px;
   color: var(--color_dark_white);
 }
 .nav .nav_list a.active {
@@ -210,9 +218,6 @@ body .background_calendar_no_check:after {
 }
 
 @media all and (max-height: 800px) {
-  .nav {
-    width: 250px;
-  }
   .nav .logo .img {
     height: 80px;
     width: 80px;
@@ -240,20 +245,21 @@ body .background_calendar_no_check:after {
   }
 }
 .menu_top {
-  padding: 35px 80px;
+  padding: 35px 40px;
   display: flex;
   grid-gap: 50px;
   justify-content: space-between;
   color: white;
 }
 .menu_top span {
-  font-size: 22px;
   color: var(--color_white);
 }
 .menu_top .menu_nav, .menu_top .menu_profile {
   display: flex;
   align-content: center;
-  padding: 10px 30px;
+  align-items: center;
+  height: 65px;
+  padding: 0 20px;
   background: var(--color_light_grey);
   border-radius: 10px;
 }
@@ -261,13 +267,35 @@ body .background_calendar_no_check:after {
   width: 100%;
 }
 .menu_top .item_menu {
+  font-size: 22px;
   display: flex;
   grid-gap: 13px;
-  align-items: center;
-  margin-right: 20px;
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+.menu_top .item_menu:hover {
+  background: var(--color_dark_grey);
 }
 .menu_top .today {
-  grid-gap: 7px;
+  grid-gap: 0;
+  padding: 0;
+}
+.menu_top .today .item_container {
+  padding: 10px 5px;
+  height: 1.15em;
+}
+.menu_top .today .item_container:nth-child(1) {
+  border-radius: 10px 0 0 10px;
+}
+.menu_top .today .item_container:nth-child(2) {
+  border-left: 1px dashed var(--color_light_grey);
+  border-right: 1px dashed var(--color_light_grey);
+}
+.menu_top .today .item_container:nth-child(3) {
+  border-radius: 0 10px 10px 0;
+}
+.menu_top .today .item_container:hover {
+  background: var(--color_light_grey);
 }
 .menu_top .img {
   height: 15px;
@@ -287,7 +315,34 @@ body .background_calendar_no_check:after {
   font-weight: 500;
 }
 .menu_top .menu_profile {
+  cursor: pointer;
+  width: var(--nav_size);
+  box-sizing: border-box;
   grid-gap: 88px;
+  position: relative;
+  z-index: 99;
+}
+.menu_top .menu_profile .menu_list {
+  background: var(--color_light_grey);
+  padding: 0 30px;
+  position: absolute;
+  transform: translateY(100%);
+  left: 0;
+  right: 0;
+  transition-duration: 0.4s;
+  height: auto;
+  max-height: 0;
+  overflow: hidden;
+  bottom: 10px;
+}
+.menu_top .menu_profile .menu_list li {
+  margin-bottom: 5px;
+}
+.menu_top .menu_profile .profile_avatar:hover .menu_list {
+  max-height: 200px;
+  padding: 10px 30px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 .menu_top .profile_avatar {
   height: 53px;
@@ -358,10 +413,11 @@ body .background_calendar_no_check:after {
 }
 
 .content_item {
+  box-sizing: border-box;
   background: var(--color_light_grey);
   border-radius: 10px;
   min-width: 260px;
-  width: 260px;
+  width: var(--nav_size);
   padding: 10px 30px;
 }
 .content_item h2 {
@@ -473,6 +529,7 @@ body .background_calendar_no_check:after {
 
 .popup_top {
   position: fixed;
+  z-index: 110;
   top: 0;
   right: 20px;
   padding: 10px 20px;
@@ -538,7 +595,7 @@ h2 {
 }
 
 .content {
-  padding: 10px 80px 90px;
+  padding: 10px 40px 90px;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 50px;
@@ -599,6 +656,7 @@ table.calendar_table th {
   font-size: 22px;
 }
 table.calendar_table td {
+  width: 220px;
   position: relative;
   border-right: 0.1px solid var(--color_light_grey);
   border-bottom: 0.1px solid var(--color_light_grey);
@@ -645,18 +703,148 @@ table.calendar_table .calendar_item {
   grid-template-columns: 1fr 1fr;
 }
 
+.calendar_new {
+  overflow-y: scroll;
+  overflow-x: auto;
+  height: calc(100vh - 70px - 70px - 50px);
+  --lesson_item_height: 45px;
+  display: flex;
+}
+.calendar_new::-webkit-scrollbar {
+  width: 0px;
+}
+.calendar_new .day {
+  position: relative;
+  width: 100%;
+}
+.calendar_new .day .day_name {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  text-align: center;
+  height: 50px;
+  font-size: 22px;
+  color: var(--color_dark_white);
+  z-index: 5;
+}
+.calendar_new .day .day_name p:nth-child(2) {
+  font-size: 12px;
+}
+.calendar_new .day:hover > .time_item, .calendar_new .day:hover > .day_name {
+  transition-duration: 0.2s;
+  background: rgba(236, 232, 246, 0.02);
+}
+.calendar_new .day.sub_day .day_name {
+  background: none;
+}
+.calendar_new .lesson_item {
+  color: white;
+  height: calc(var(--lesson_item_height) - 1px);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+  top: 45px;
+  left: 1px;
+  right: 1px;
+  overflow: hidden;
+  padding: 5px;
+  border-radius: 10px;
+}
+.calendar_new .lesson_item .count {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: var(--color_dark_grey);
+  font-size: 12px;
+  font-weight: 700;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  border-radius: 50%;
+  text-align: center;
+}
+.calendar_new .lesson_item p {
+  font-size: 12px;
+}
+.calendar_new .lesson_item p.name {
+  margin-bottom: 1px;
+}
+.calendar_new .time_item {
+  box-sizing: border-box;
+  padding: 1px;
+  padding-right: 12px;
+  height: var(--lesson_item_height);
+  border-left: 1px solid var(--color_light_grey);
+  border-bottom: 1px solid var(--color_light_grey);
+}
+.calendar_new .sub_day {
+  border-left: none;
+  width: 442px;
+}
+.calendar_new .sub_day .time_item {
+  position: relative;
+  border: none;
+}
+.calendar_new .sub_day .time_item span {
+  color: rgba(217, 217, 217, 0.85);
+  position: absolute;
+  top: -0.5em;
+  line-height: -22em;
+}
+.calendar_new .sub_day .time_item:after {
+  content: "";
+  display: block;
+  border-bottom: 1px solid var(--color_light_grey);
+  width: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.calendar_new .item {
+  height: 100%;
+  background: rebeccapurple;
+}
+
 .transactions {
-  grid-template-rows: auto 1fr;
+  display: block;
 }
 .transactions .list {
   border-spacing: 0;
   empty-cells: hide;
 }
+.transactions .list tr {
+  height: 40px;
+}
+.transactions .list tr.active td {
+  background: lightblue;
+}
 .transactions .list td {
-  padding: 10px 20px;
   text-align: center;
   border-bottom: 1px solid #F4EEE8;
   transition: all 0.5s linear;
+}
+.transactions .list td.id {
+  padding-left: 10px;
+  padding-right: 15px;
+}
+.transactions .list td.student_name, .transactions .list td.professor_name {
+  width: 200px;
+}
+.transactions .list td.amount {
+  width: 82px;
+}
+.transactions .list td.type {
+  width: 110px;
+}
+.transactions .list td.status {
+  width: 150px;
+}
+.transactions .list td.created_at {
+  width: 200px;
 }
 .transactions .list td:first-child {
   text-align: left;
@@ -696,4 +884,62 @@ table.calendar_table .calendar_item {
 main {
   height: 100vh;
   overflow: hidden;
+}
+
+.rozetka .list {
+  font-family: BlinkMacSystemFont, -apple-system, Arial, "Segoe UI", Roboto, Helvetica, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  justify-content: center;
+  font-weight: 400;
+}
+.rozetka .list .card {
+  width: 166px;
+  padding: 16px;
+  border-bottom: 1px solid #e9e9e9;
+  border-right: 1px solid #e9e9e9;
+  position: relative;
+}
+.rozetka .list .mess {
+  grid-column: 6;
+  border-left: 1px solid #e9e9e9;
+  font-size: 14px;
+  color: blue;
+}
+.rozetka .list .like {
+  font-size: 24px;
+  color: #ffa900;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.rozetka .list .img {
+  width: 100%;
+}
+.rozetka .list .img img {
+  width: 100%;
+  height: auto;
+}
+.rozetka .list h3 {
+  font-size: 14px;
+  font-weight: 400;
+  padding-bottom: 8px;
+}
+.rozetka .list p {
+  color: #333333;
+}
+.rozetka .list .old_price {
+  color: #a6a5a5;
+  text-decoration: line-through;
+  font-size: 14px;
+  height: 14px;
+}
+.rozetka .list .price {
+  color: #221f1f;
+  font-size: 24px;
+}
+.rozetka .list em {
+  font-size: 12px;
+  color: #797878;
+  font-style: normal;
 }

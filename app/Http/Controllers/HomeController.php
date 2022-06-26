@@ -25,7 +25,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('layouts.app');
+        return view('rozetka');
 
 //        $data = Navigation::whereIn('group', [0, 1, 2])->get();
 //        return view('pages.calendar')

@@ -873,6 +873,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+window.url_info = document.querySelector('meta[name="url_info"]').getAttribute('content');
 
 window.PostForm = function (form, func) {
   var parameters = {};

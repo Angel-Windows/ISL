@@ -18,7 +18,7 @@ class NavigationSeeder extends Seeder
         DB::table('navigations')->insert([
                 ['group'=> 0,'name'=> 'Главная', 'link' => 'home', 'icon' => 'fas fa-home', 'sort' => 10],
                 ['group'=> 1,'name'=> 'Календарь', 'link' => 'calendar', 'icon' => 'far fa-calendar-alt', 'sort' => 20],
-                ['group'=> 0,'name'=> 'Прогресс', 'link' => 'transaction', 'icon' => 'far fa-list-alt', 'sort' => 30],
+                ['group'=> 0,'name'=> 'Трансакции', 'link' => 'transaction', 'icon' => 'far fa-list-alt', 'sort' => 30],
                 ['group'=> 3,'name'=> 'Админ', 'link' => 'admin', 'icon' => 'fas fa-laptop-house', 'sort' => 40],
             ]
         );

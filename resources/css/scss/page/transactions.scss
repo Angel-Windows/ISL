@@ -1,5 +1,6 @@
 .transactions {
-    grid-template-rows: auto 1fr;
+    //grid-template-rows: auto 1fr;
+    display: block;
     //table{
     //
     //    max-height: 100%;
@@ -21,12 +22,39 @@
     .list {
         border-spacing: 0;
         empty-cells: hide;
+        tr{
+            height: 40px;
+            &.active{
+                td{
+                    background: lightblue;
+                }
+            }
+        }
 
         td {
-            padding: 10px 20px;
             text-align: center;
             border-bottom: 1px solid #F4EEE8;
             transition: all 0.5s linear;
+            &.id{
+                padding-left: 10px;
+                padding-right: 15px;
+            }
+            &.student_name, &.professor_name{
+                width: 200px;
+            }
+            &.amount{
+                width: 82px;
+            }
+            &.type{
+                width: 110px;
+            }
+            &.status{
+                width: 150px;
+            }
+
+            &.created_at{
+                width: 200px;
+            }
         }
 
         td:first-child {

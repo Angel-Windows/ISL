@@ -13,16 +13,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        $this->call([
-//            UsersSeeder::class,
-//            UsersProfilesSeeder::class,
-//            TransactionSeeder::class
-//]);
         $this->call([
-//            NavigationSeeder::class,
+            UsersSeeder::class,
+            UsersProfilesSeeder::class,
+            TransactionSeeder::class
+        ]);
+        $this->call([
+            NavigationSeeder::class,
             RegularLessonsSeeder::class,
             CalendarSeeder::class,
-//            ConfigSeeder::class,
+            ConfigSeeder::class,
 
 
 

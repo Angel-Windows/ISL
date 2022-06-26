@@ -38,8 +38,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'first_name' => ['required', 'string', 'max:255'],
-            'last_name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+//            'last_name' => ['required', 'string', 'max:255'],
             'currency' => ['required', 'integer', 'max:10', 'min:0'],
         ]);
 
@@ -51,8 +51,8 @@ class RegisteredUserController extends Controller
 
         $user_profile = UsersProfile::create([
             'user_id' => $user->id,
-            'first_name' => $request->first_name,
-            'last_name' =>  $request->last_name,
+            'name' => $request->first,
+//            'last_name' =>  $request->last_name,
             'currency' =>  $request->currency,
         ]);
 

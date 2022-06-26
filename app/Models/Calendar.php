@@ -25,10 +25,11 @@ class Calendar extends Model
     {
         $get_name = UsersProfile::where('user_id' , $this->student_id)
             ->select([
-                'first_name',
-                'last_name'
+                'name',
+//                'last_name'
             ])
             ->first();
-        return $get_name->first_name . ' ' . $get_name->last_name;
+        return $get_name->name;
+//        return $get_name->first_name . ' ' . $get_name->last_name;
     }
 }

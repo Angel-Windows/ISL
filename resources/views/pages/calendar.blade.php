@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('class_name', "calendar_page")
+@section('page_name', "calendar")
+
 @section('content')
     <?php
     /** @var TYPE_NAME $data_lesson */
@@ -45,8 +47,7 @@
         <p class="student_name"></p>
         <p class="time_lesson"></p>
     </div>
-
-    <div class="content calendar">
+    <div class="calendar_wrapper">
         <table class="calendar_table">
             <col class="col1 unselectable">
             <thead class="unselectable">
@@ -83,12 +84,18 @@
             @endfor
             </tbody>
         </table>
-        <aside class="menu_right">
-            @include('components.left_menu.Info')
-            @include('components.left_menu.add_lesson')
-            @include('components.left_menu.lesson_info')
-        </aside>
     </div>
+
+
+
+
+
+@stop
+@section('aside')
+    @include('components.left_menu.lesson_info')
+@stop
+
+@section('script')
     <script src="{{asset('js/calendar.js')}}"></script>
     <script>
         calendar_fill(<?php echo($data_lesson) ?>, @json($data_status));

@@ -2,7 +2,7 @@
     <h2>Информация о уроке</h2>
         <table>
             <tr>
-                <td>id</td>
+                <td>№</td>
                 <td>#<span class="id"></span></td>
             </tr>
             <tr>
@@ -33,7 +33,7 @@
                 <input type="hidden" name="calendar_id" value="1">
 {{--                <input type="hidden" name="" value="">--}}
             </form>
-            <button onclick="lesson_info_events(3, 'lesson_info_event')" class="button success"><img src="{{asset("res/arrow-rotate-left-solid.svg")}}" alt=""></button>
+            <button onclick="lesson_info_events(3, 'lesson_info_event')" class="button success closed"><img src="{{asset("res/arrow-rotate-left-solid.svg")}}" alt=""></button>
             <button onclick="lesson_info_events(0, 'lesson_info_event')" class="button normal" type="submit"><img src="{{asset("res/pencil-solid.svg")}}" alt=""></button>
             <button onclick="lesson_info_events(1, 'lesson_info_event')" class="button normal background_calendar_success"><img src="{{asset("res/Check.svg")}}" alt=""></button>
             <button onclick="lesson_info_events(2, 'lesson_info_event')" class="button normal success background_calendar_no_check"><img src="{{asset("res/Dead.svg")}}" alt=""></button>

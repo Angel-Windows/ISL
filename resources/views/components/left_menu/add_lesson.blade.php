@@ -16,7 +16,7 @@
                 <td>
                     <select name="student_id" required id="" type="text">
                         @foreach($data_students as $key=>$item)
-                            <option value="{{$item->id}}">{{$item->first_name}} {{$item->last_name}}</option>
+                            <option value="{{$item->id}}">{{$item->name}} {{$item->last_name}}</option>
                         @endforeach
                     </select>
                 </td>
@@ -40,7 +40,7 @@
         </table>
         <div class="buttons">
             <button class="button" type="submit">Подтвердить</button>
-            <button class="success">Отменить</button>
+            <button type="button" class="success">Отменить</button>
         </div>
     </form>
 </div>

@@ -2,20 +2,20 @@
 /** @var TYPE_NAME $item */
 /** @var TYPE_NAME $filter */
 ?>
-<div class="menu_item content_item info no_display">
+<div class="menu_item content_item content_info no_display">
     <h2>Статистика</h2>
     <table class="info">
         <tr>
             <td>ID</td>
-            <td>#DE3SAS5</td>
+            <td>#{{$user->hash}}</td>
         </tr>
         <tr>
             <td>Всего уроков</td>
-            <td>233</td>
+            <td>{{$count_lesson}}</td>
         </tr>
         <tr>
             <td>Баланс</td>
-            <td>233</td>
+            <td>{{$user->balance}}</td>
         </tr>
     </table>
     <div class="hr hr_horizontal"></div>
@@ -35,11 +35,12 @@
         </tr>
     </table>
 </div>
-<div class="menu_item content_item info no_display">
+<div class="menu_item content_item content_info no_display">
     <h2>Фильтры <a href="" class="button hide">Применить</a></h2>
     <table class="filter">
-        @foreach($data_status as $item)
+        @foreach($data_status ?? $filter ?? [] as $item)
             <?php
+//            dd($item);
             $class_active = "";
             $class_checked = "";
             $img_link = asset('res/Check.svg');
@@ -50,7 +51,7 @@
             }
             ?>
             <tr class="{{$class_active}}"
-                onclick="calendar_filter('{{route('calendar.filters')}}', {{$item->id}}, this)">
+                onclick="calendar_filter('{{route('calendar.filters_calendar', ['filter_name'=>"filters_" . $route_name])}}', {{$item->id}}, this)">
                 <td>
                     <div class="img {{$class_checked}} {{$item->class}} ">
                         <div class="mini_img"></div>

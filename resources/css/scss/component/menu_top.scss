@@ -1,19 +1,21 @@
 .menu_top {
-    padding: 35px 80px;
+    padding: 35px $padding_wrapper;
     display: flex;
     grid-gap: 50px;
     justify-content: space-between;
     color: white;
 
     span {
-        font-size: 22px;
+
         color: var(--color_white)
     }
 
     .menu_nav, .menu_profile {
         display: flex;
         align-content: center;
-        padding: 10px 30px;
+        align-items: center;
+        height: 65px;
+        padding: 0 20px;
         background: var(--color_light_grey);
         border-radius: 10px;
     }
@@ -23,14 +25,50 @@
     }
 
     .item_menu {
+        font-size: 22px;
         display: flex;
         grid-gap: 13px;
-        align-items: center;
-        margin-right: 20px;
+        //align-items: center;
+        //align-content: center;
+        //justify-content: center;
+        //justify-items: center;
+        padding: 10px 15px;
+        border-radius: $border_radius;
+
+        &:hover {
+            background: var(--color_dark_grey);
+        }
     }
 
     .today {
-        grid-gap: 7px;
+        grid-gap: 0;
+        padding: 0;
+
+        .item_container {
+            padding: 10px 5px;
+            height: 1.15em;
+
+            &:nth-child(1) {
+                border-radius: $border_radius 0 0 $border_radius;
+            }
+
+            &:nth-child(2) {
+                border-left: 1px dashed var(--color_light_grey);
+                border-right: 1px dashed var(--color_light_grey);
+            }
+
+            &:nth-child(3) {
+                border-radius: 0 $border_radius $border_radius 0;
+            }
+
+            &:hover {
+                background: var(--color_light_grey);
+            }
+        }
+
+        &:hover {
+
+        }
     }
 
     .img {
@@ -56,7 +94,37 @@
     }
 
     .menu_profile {
+        cursor: pointer;
+        width: var(--nav_size);
+        box-sizing: border-box;
         grid-gap: 88px;
+        position: relative;
+        z-index: 99;
+
+        .menu_list {
+            background: var(--color_light_grey);
+            padding: 0 30px;
+            position: absolute;
+            transform: translateY(100%);
+            left: 0;
+            right: 0;
+            transition-duration: .4s;
+            height: auto;
+            max-height: 0;
+            overflow: hidden;
+            bottom: $border_radius;
+
+            li {
+                margin-bottom: 5px;
+            }
+        }
+
+        .profile_avatar:hover .menu_list {
+            max-height: 200px;
+            padding: 10px 30px;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
     }
 
     .profile_avatar {
@@ -66,54 +134,60 @@
         overflow: hidden;
     }
 }
-@media all and (max-width: 1225px){
-    .menu_top h2.item_menu{
+
+@media all and (max-width: 1225px) {
+    .menu_top h2.item_menu {
         display: none;
     }
 }
-@media all and (max-width: 964px){
+
+@media all and (max-width: 964px) {
     .menu_top .menu_nav {
         width: auto;
-        .item_menu span{
+
+        .item_menu span {
             display: none;
         }
 
     }
-    .item_menu.statistic{
+    .item_menu.statistic {
         margin: 0;
     }
 }
-@media all and (max-width: 730px){
-    .menu_top, body .content{
+
+@media all and (max-width: 730px) {
+    .menu_top, body .content {
         padding: 20px 30px;
     }
 }
-@media all and (max-width: 610px){
 
-    .coin .img{
+@media all and (max-width: 610px) {
+
+    .coin .img {
         display: none;
     }
-    .menu_top .profile_avatar{
+    .menu_top .profile_avatar {
         height: 40px;
         width: 40px;
     }
 }
-@media all and (max-width: 540px){
-    .menu_top .menu_profile{
+
+@media all and (max-width: 540px) {
+    .menu_top .menu_profile {
         background: none;
         padding: 0;
     }
-    .menu_top .coin{
+    .menu_top .coin {
         display: none;
     }
-    .menu_top .profile_avatar{
+    .menu_top .profile_avatar {
         height: 50px;
         width: 50px;
     }
-    .menu_top{
+    .menu_top {
         grid-gap: 20px;
     }
-    .menu_top .menu_nav{
+    .menu_top .menu_nav {
         padding: 0 15px;
     }
 }

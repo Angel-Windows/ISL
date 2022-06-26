@@ -40,13 +40,11 @@ body em, body .img, body img {
 .hr{
     /*height: 0;*/
     /*width: 100%;*/
-    margin: 20px 0;
+    margin: 10px 0;
     padding: 0;
     border: none;
     /*border-bottom: 1px dashed var(--color_dark_white);*/
-
     height: 2px;
-
     background: linear-gradient(to right, transparent 50%, var(--color_light_grey) 50%), var(--color_dark_white);
     background-size: 16px 2px, 100% 2px;
 }

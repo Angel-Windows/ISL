@@ -18,8 +18,8 @@ class CreateUsersProfilesTable extends Migration
             $table->integer('user_id');
             $table->float('balance')->default(0);
             $table->float('temp_balance')->default(0);
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('name');
+//            $table->string('last_name');
             $table->text('avatar')->nullable();
             $table->integer('gender')->default(0);
             $table->integer('currency')->default('1')->nullable();

@@ -1,4 +1,5 @@
-let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+window.url_info = document.querySelector('meta[name="url_info"]').getAttribute('content');
 
 window.PostForm = (form, func) => {
     const parameters = {}
