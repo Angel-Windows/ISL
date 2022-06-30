@@ -295,7 +295,7 @@ body .background_calendar_no_check:after {
   border-radius: 0 10px 10px 0;
 }
 .menu_top .today .item_container:hover {
-  background: var(--color_light_grey);
+  background: #555555;
 }
 .menu_top .img {
   height: 15px;
