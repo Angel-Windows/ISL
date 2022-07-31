@@ -86,10 +86,6 @@
         </table>
     </div>
 
-
-
-
-
 @stop
 @section('aside')
     @include('components.left_menu.lesson_info')
