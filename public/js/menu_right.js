@@ -16,7 +16,6 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 var popup_top = document.querySelector('.popup_top');
-var timeout_popup;
 
 window.calendar_filter = function (url, id, elem) {
   var table = document.querySelector('.transactions');
@@ -129,46 +128,32 @@ window.lesson_info_events = function (e, form_name) {
 
   var func = function func(res) {
     var calendar_item = document.querySelector('#id' + id);
+    var balance = document.querySelector(".lesson_info .balance");
 
-    if (res.code === 1) {
-      var balance = document.querySelector(".lesson_info .balance");
+    switch (res.type) {
+      case 1:
+        {
+          fresh_buttons("success");
+          balance.innerHTML = Number(balance.innerHTML) - Number(balance.title);
+          calendar_item.className = "lesson_item background_calendar_success";
+          break;
+        }
 
-      switch (res.type) {
-        case 1:
-          {
-            fresh_buttons("success");
-            balance.innerHTML = Number(balance.innerHTML) - Number(balance.title);
-            calendar_item.className = "lesson_item background_calendar_success";
-            break;
-          }
+      case 2:
+        {
+          fresh_buttons("closed");
+          calendar_item.className = "lesson_item background_calendar_closed";
+          break;
+        }
 
-        case 2:
-          {
-            fresh_buttons("closed");
-            calendar_item.className = "lesson_item background_calendar_closed";
-            break;
-          }
-
-        case 3:
-          {
-            fresh_buttons("normal");
-            balance.innerHTML = Number(balance.innerHTML) + Number(balance.title);
-            calendar_item.className = "lesson_item background_calendar_transfer";
-            break;
-          }
-      }
-
-      popup_top.classList.remove('error');
-    } else {
-      popup_top.classList.add('error');
+      case 3:
+        {
+          fresh_buttons("normal");
+          balance.innerHTML = Number(balance.innerHTML) + Number(balance.title);
+          calendar_item.className = "lesson_item background_calendar_transfer";
+          break;
+        }
     }
-
-    popup_top.innerHTML = res.message;
-    popup_top.classList.add("open");
-    clearTimeout(timeout_popup);
-    timeout_popup = setTimeout(function () {
-      popup_top.classList.remove("open");
-    }, 3000);
   };
 
   PostForm(form, func);

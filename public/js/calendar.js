@@ -57,8 +57,10 @@ window.calendar_add_item = function (item, data_status) {
   var calendar_day = calendar.querySelectorAll('.day')[array_elem[item.day_week]];
   var new_lesson_item = calendar.querySelector('.lesson_item').cloneNode(true);
 
-  if (!data_status[item.status].display) {
-    new_lesson_item.classList.add('no_display');
+  if (data_status) {
+    if (!data_status[item.status].display) {
+      new_lesson_item.classList.add('no_display');
+    }
   }
 
   new_lesson_item.classList.add(data_status[item.status]["class"]);
