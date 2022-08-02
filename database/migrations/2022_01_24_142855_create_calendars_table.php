@@ -24,7 +24,7 @@ class CreateCalendarsTable extends Migration
             $table->date('fool_time')->index();
             $table->time('time_start')->index();
             $table->integer('length')->default(60);
-            $table->integer('status')->default(0)
+            $table->integer('status')->default(1)
                 ->comment('0->Success, 1->constant, 2->postponed, 3->canceled, 4->unmarked');
             $table->integer('theme_id')->nullable();
             $table->timestamps();

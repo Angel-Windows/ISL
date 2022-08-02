@@ -34,8 +34,6 @@ window.calendar_item_fill = ((item, data_status) => {
     }
     calendar_item.appendChild(calendar_new)
 })
-
-
 window.calendar_add_item = (item, data_status) => {
     const time = item.time_start.split(":");
     const array_elem = [7, 1, 2, 3, 4, 5, 6];
@@ -46,9 +44,12 @@ window.calendar_add_item = (item, data_status) => {
     }
     const calendar_day = calendar.querySelectorAll('.day')[array_elem[item.day_week]];
     const new_lesson_item = calendar.querySelector('.lesson_item').cloneNode(true);
-    if (!data_status[item.status].display) {
-        new_lesson_item.classList.add('no_display')
+    if (data_status){
+        if (!data_status[item.status].display) {
+            new_lesson_item.classList.add('no_display')
+        }
     }
+
     new_lesson_item.classList.add(data_status[item.status].class);
     new_lesson_item.style.top = (time[0] * 45) + 50 + "px";
     new_lesson_item.id = "id" + item.id;

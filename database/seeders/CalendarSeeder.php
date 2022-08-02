@@ -20,7 +20,7 @@ class CalendarSeeder extends Seeder
         DB::statement('truncate table calendars');
         $regular_lessons = RegularLesson::all();
         $data_regular = [];
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 0; $i++) {
             foreach ($regular_lessons as $item) {
                 $now_data = Carbon::now();
                 $now_data->startOfWeek();

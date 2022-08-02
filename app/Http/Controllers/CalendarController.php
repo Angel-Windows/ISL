@@ -3,82 +3,37 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transactions;
-use App\Models\User;
 use App\Models\UsersProfile;
-use App\Repositories\LessonRepository;
+use App\Repositories\CalendarRepository;
+use App\Repositories\GlobalRepository;
 use Auth;
 use App\Models\Calendar;
-use App\Models\Config;
-use App\Models\Navigation;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Route;
-use function Sodium\add;
 
 class CalendarController extends Controller
 {
-    private $lessonsRepository;
-//    public function __construct()
-//    {
-//        $this->lessonsRepository = app(LessonRepository::class);
-//
-//        $this->middleware(function ($request, $next) {
-//            $this->lessonsRepository = app(LessonRepository::class);
-//            $id = Auth::id();
-//            $route_name = Route::getFacadeRoot()->current()->uri();
-//            $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
-//            $data_students = UsersProfile::where('id', "!=", $id)->get();
-//            $count_lesson = Calendar::where('student_id', $id)
-//                ->where('status', 0)
-//                ->orWhere('professor_id', $id)
-//                ->where('status', 0)
-//                ->count();
-//            $user = User::where('users.id', $id)
-//                ->leftJoin('users_profiles', 'users_profiles.user_id', 'users.id')
-//                ->first();
-//            view()->share('count_lesson', $count_lesson);
-//            view()->share('data_students', $data_students);
-//            view()->share('data_navigation', $data_navigation);
-//            view()->share('route_name', $route_name);
-//            view()->share('user', $user);
-//            view()->share('date_now', Carbon::now());
-//            return $next($request);
-//        });
-//        //            $user_site_profile = Users_profiles::where('user_id', Auth::id())->first();
-//        //            $currency = CurrencyConverter::isCurrency(1, $user_site_profile->currency, $user_site_profile->currency);
-//        //            view()->share('user_site_profile', $user_site_profile);
-//        //            view()->share('currency', $currency['result_need']);
-//    }
+    private $globalRepository;
+    private $calendarRepository;
 
-
-
+    public function __construct()
+    {
+        $this->globalRepository = app(GlobalRepository::class);
+        $this->calendarRepository = app(CalendarRepository::class);
+    }
 
     public function add_lesson(Request $request)
     {
-
+        $is_regular = $request->input('is_regular');
         $student_id = $request['student_id'];
         $date = $request['date'];
         $time = $request['time'];
         $length = $request['length'];
-        $naw = Carbon::createFromFormat("Y-m-d", $date);
-        $calendar = new Calendar;
-        $calendar->student_id = $student_id;
-        $calendar->professor_id = Auth::id();
-        $calendar->year = $naw->year;
+        $professor_id = Auth::id();
+        $calendar = $this->calendarRepository->fill_regular_transaction($student_id,$professor_id, $date, $time, $length, $is_regular);
 
-        $calendar->week = $naw->week;
-        $calendar->day_week = $naw->dayOfWeek;
-        $calendar->fool_time = $date;
-        $calendar->time_start = $time;
-        $calendar->length = $length;
-
-        $calendar->save();
         $data = [];
-//        $filters = $this->get_filters();
-//        $data["filters"] = $filters;
-
 
         $data_lesson = Calendar::where('calendars.id', $calendar->id)
 //            ->whereNotIn('day_week', $day_week_select ?? [])
@@ -88,10 +43,14 @@ class CalendarController extends Controller
 //            ->select('calendars.*', 'users_profiles.first_name', 'users_profiles.last_name',)
             ->select('calendars.*', 'users_profiles.name')
             ->first();
+
         $data["item"] = $data_lesson;
+        $data["filters"] = $this->globalRepository->get_filter('filters_calendar');
         return json_encode([
                 'code' => 1,
-                'message' => "",
+                'message' => 'Успешно.' .
+                    "$data_lesson->name <br/>" .
+                    "$date $time",
                 'data' => $data
             ]
         );
@@ -151,13 +110,13 @@ class CalendarController extends Controller
                 'message' => "Return nothing",
                 'data' => []
             ];
-        }elseif ($lesson->status != 1 && $lesson->status != 2){
+        } elseif ($lesson->status != 1 && $lesson->status != 2) {
             return [
                 'code' => 2,
                 'message' => "Error type",
                 'data' => []
             ];
-        }else{
+        } else {
             $lesson->status = 3;
             $lesson->save();
             $transactions = new Transactions();

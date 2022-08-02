@@ -49,6 +49,7 @@ class PageControler extends Controller
         //            view()->share('user_site_profile', $user_site_profile);
         //            view()->share('currency', $currency['result_need']);
     }
+
     public function home(Request $request){
         return view('pages.home')
 //        return view('pages.calendar')

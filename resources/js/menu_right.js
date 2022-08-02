@@ -1,5 +1,4 @@
 const popup_top = document.querySelector('.popup_top')
-let timeout_popup;
 window.calendar_filter = (url, id, elem) => {
     let table = document.querySelector('.transactions')
     if (!table) {
@@ -75,7 +74,6 @@ window.add_lesson = (form) => {
     const func = (request) => {
         form.classList.remove('progress_reload')
         calendar_add_item(request.data.item, request.data.filters);
-
     }
     PostForm(form, func);
 }
@@ -101,7 +99,6 @@ window.lesson_info_events = (e, form_name) => {
     create_html("input", new_input, form)
     const func = (res) => {
         const calendar_item = document.querySelector('#id' + id)
-        if (res.code === 1) {
             const balance = document.querySelector(".lesson_info .balance");
             switch (res.type) {
                 case 1: {
@@ -122,16 +119,6 @@ window.lesson_info_events = (e, form_name) => {
                     break;
                 }
             }
-            popup_top.classList.remove('error')
-        } else {
-            popup_top.classList.add('error')
-        }
-        popup_top.innerHTML = res.message;
-        popup_top.classList.add("open")
-        clearTimeout(timeout_popup);
-        timeout_popup = setTimeout(() => {
-            popup_top.classList.remove("open")
-        }, 3000);
     }
     PostForm(form, func);
 }
