@@ -142,7 +142,7 @@ $page_get = $_GET['page'] ?? 1;
                         <li><a href="#">Настройки</a></li>
                         <li><a href="#">Трансакции</a></li>
                         <li><a href="#">Полезные материалы</a></li>
-                        <li><a href="#">Выйти</a></li>
+                        <li><a href="{{route('logout')}}">Выйти</a></li>
                     </ul>
                 </div>
 

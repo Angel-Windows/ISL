@@ -7,7 +7,7 @@
     <form
         method="POST"
         action="{{route('calendar.add_lesson')}}"
-{{--        onsubmit='add_lesson(this); return false'--}}
+        onsubmit='add_lesson(this); return false'
     >
         @csrf
         <table>

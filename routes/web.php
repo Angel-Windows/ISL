@@ -6,6 +6,8 @@ use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GlobalController;
+use App\Http\Controllers\UserController;
+use App\Helpers\Telegram;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -19,13 +21,13 @@ use App\Http\Controllers\HomeController;
 |
 */
 auth();
+Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+
 //test
 Route::get('/test', [CalendarController::class, 'lesson_info_event'])->name('test');
 
 //Page
-Route::get('/rozetka', function (){
-    return view('welcome');
-})->name('rozetka');
 Route::get('/', function (){
     return redirect(\route('home'));
 });
@@ -42,5 +44,24 @@ Route::post('/calendar/get_lesson_info', [CalendarController::class, 'get_lesson
 
 Route::get('/transaction/info', [TransactionController::class, 'get_info'])->name('transaction.get_info')->middleware('auth');
 Route::post('/transaction/transaction_info_event', [TransactionController::class, 'transaction_info_event'])->name('transaction.transaction_info_event');
+
+
+
+Route::get('/bot', function (Telegram $telegram) {
+    $buttons = [
+        'inline_keyboard'=> [
+            [
+                [
+                    'text'=>'button1',
+                    'callback_data'=> 1
+                ]
+            ]
+        ]
+    ];
+    $sendButton = $telegram->set_button(324428256, 'test', );
+//    $telegram = new Telegram();
+//    $telegram->send_message(324428256,'sdsdss');
+})->name('transaction.get_info');
+
 
 require __DIR__ . '/auth.php';

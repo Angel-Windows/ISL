@@ -31,8 +31,15 @@ class CalendarController extends Controller
         $time = $request['time'];
         $length = $request['length'];
         $professor_id = Auth::id();
-        $calendar = $this->calendarRepository->fill_regular_transaction($student_id,$professor_id, $date, $time, $length, $is_regular);
-
+        $calendar = $this->calendarRepository->fill_regular_transaction($student_id, $professor_id, $date, $time, $length, $is_regular);
+        if (!$calendar) {
+            return json_encode([
+                    'code' => 2,
+                    'message' => 'False',
+                    'data' => []
+                ]
+            );
+        }
         $data = [];
 
         $data_lesson = Calendar::where('calendars.id', $calendar->id)
@@ -55,25 +62,6 @@ class CalendarController extends Controller
             ]
         );
     }
-
-//    private function get_filters()
-//    {
-//        $filters = Config::where('group_name', 'filters_calendar')->get();
-//        $filter = [];
-//
-//        foreach ($filters as $key => $item) {
-//            if (!session()->has('filters_calendar')) {
-//                $display = true;
-//            } else if (in_array($item->id, session('filters_calendar'))) {
-//                $display = true;
-//            } else {
-//                $display = false;
-//            }
-//            $filter[$key] = json_decode($item['value']);
-//            $filter[$key]->display = $display;
-//        }
-//        return $filter;
-//    }
 
     public function lesson_info_event(Request $request)
     {
@@ -243,4 +231,5 @@ class CalendarController extends Controller
             ]
         );
     }
+
 }
