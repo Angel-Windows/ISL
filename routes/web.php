@@ -28,7 +28,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/test', [CalendarController::class, 'lesson_info_event'])->name('test');
 
 //Page
-Route::get('/', function (){
+Route::get('/', function () {
     return redirect(\route('home'));
 });
 Route::get('/home', [PageControler::class, 'home'])->name('home')->middleware('auth');
@@ -46,21 +46,26 @@ Route::get('/transaction/info', [TransactionController::class, 'get_info'])->nam
 Route::post('/transaction/transaction_info_event', [TransactionController::class, 'transaction_info_event'])->name('transaction.transaction_info_event');
 
 
-
 Route::get('/bot', function (Telegram $telegram) {
     $buttons = [
-        'inline_keyboard'=> [
+        'inline_keyboard' => [
             [
                 [
-                    'text'=>'button1',
-                    'callback_data'=> 1
-                ]
+                    'text' => 'button1',
+                    'callback_data' => '1'
+                ],
+                [
+                    'text' => 'button1sss',
+                    'callback_data' => '12'
+                ],
             ]
         ]
     ];
-    $sendButton = $telegram->set_button(324428256, 'test', );
-//    $telegram = new Telegram();
-//    $telegram->send_message(324428256,'sdsdss');
+    $sendButton = $telegram->set_button(324428256, "asdfadsfasadfasdfasdfasdff", json_encode($buttons), 20);
+//    $sendButton = $telegram->get_button(324428256, "sdfdf", json_encode($buttons));
+    $sendButton = json_decode($sendButton);
+    dd($sendButton);
+
 })->name('transaction.get_info');
 
 
