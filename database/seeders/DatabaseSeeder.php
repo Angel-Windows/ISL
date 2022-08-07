@@ -16,35 +16,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersSeeder::class,
             UsersProfilesSeeder::class,
-            TransactionSeeder::class
+            TransactionSeeder::class,
+            RegularLessonsSeeder::class,
+            CalendarSeeder::class,
+            ReferalSeeder::class,
         ]);
         $this->call([
             NavigationSeeder::class,
-            RegularLessonsSeeder::class,
-            CalendarSeeder::class,
             ConfigSeeder::class,
-
-
-
-//            RegularLessonsSeeder::class,
-//            LessonsSeeder::class,
-//            NavigationSeeder::class,
-//            LinkingStudentsSeeder::class,
-//            ServiceSeeder::class,
-//            ThemesSeeder::class,
-//            UserThemesSeeder::class,
-//            UserRoleSeeder::class,
-//            CountrySeeder::class,
-//            UsersCountrySeeder::class,
-//            PhoneSeeder::class,
-//            TagsSeeder::class,
-//            UsersTagsSeeder::class,
-//            ChatSeeder::class,
-//            ChatMessageSeeder::class,
-//            CurrencySeeder::class,
-//            UsersCurrencySeeder::class,
-//            LayoutsSeeder::class,
-//            UsersLayoutSeeder::class,
         ]);
     }
 }

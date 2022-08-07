@@ -10,7 +10,7 @@
         const data_status = ['Ожидание', "Подтверждено", 'Отменено'];
         const data_type = ['Урок', "Отмена", 'Пополнение'];
     </script>
-    <div class="content transactions">
+    <div class="contents transactions">
         <table class="list">
             <thead>
             <tr class="round-top">
@@ -44,7 +44,7 @@
                 ?>
                 <tr onclick="transaction_info_open(this)" >
                     <td class="{{$round_top ?? ""}} id">{{$item->id}}</td>
-                    <td class="student_name">{{$item->student_name}}</td>
+                    <td class="student_name">{{$item->student_name?? "Я"}}</td>
 {{--                    <td class="student_name">{{$item->student_first_name}} {{$item->student_last_name}}</td>--}}
                     <td class="professor_name">{{$item->professor_name}}</td>
 {{--                    <td class="professor_name">{{$item->professor_first_name}} {{$item->professor_last_name}}</td>--}}
@@ -52,7 +52,7 @@
                     <td class="type">{{$data_type[$item->type]}}</td>
                     <td class="status">{{$data_statuss[$item->status]}}</td>
                     <td class="created_at">{{$item->created_at}}</td>
-                    <td class="no_display balance">{{$item->new_balance}}</td>
+                    <td class="no_display balance">{{$item->balance}}</td>
                 </tr>
             @endforeach
             </tbody>

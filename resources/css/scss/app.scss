@@ -1,6 +1,13 @@
 @import "variable";
 @import "component";
 
+.body{
+    height: 100vh;
+}
+.overflow-hidden{
+    overflow: hidden;
+}
+
 #body .no_display {
     display: none;
 }

@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td><label for="time">Время</label></td>
-                <td><input name="time" value="{{$date_now->format("h")}}:00" id="time" type="time" required></td>
+                <td><input name="time" value="{{$date_now->timezone(3)->format("h")}}:00" id="time" type="time" required></td>
             </tr>
             <tr>
                 <td><label for="length">Длительность</label></td>

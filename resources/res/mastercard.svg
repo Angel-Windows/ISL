@@ -1,0 +1,42 @@
+<svg id="Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96.81 79.82">
+  <defs>
+    <style>
+      .cls-1, .cls-3 {
+        fill: #ff0;
+      }
+
+      .cls-2 {
+        fill: red;
+      }
+
+      .cls-3 {
+        opacity: 0.63;
+      }
+
+      .cls-4 {
+        font-size: 19.88px;
+        font-family: MyriadPro-Regular, Myriad Pro;
+      }
+
+      .cls-5 {
+        letter-spacing: -0.01em;
+      }
+
+      .cls-6 {
+        letter-spacing: 0em;
+      }
+
+      .cls-7 {
+        letter-spacing: -0.01em;
+      }
+
+      .cls-8 {
+        letter-spacing: -0.01em;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="68.66" cy="28.14" r="28.14"/>
+  <circle class="cls-2" cx="28.14" cy="29.12" r="28.14"/>
+  <circle class="cls-3" cx="68.66" cy="28.14" r="28.14"/>
+  <text class="cls-4" transform="translate(0 74.85) scale(1.04 1)">mas<tspan class="cls-5" x="34.03" y="0">t</tspan><tspan class="cls-6" x="40.49" y="0">e</tspan><tspan class="cls-7" x="50.45" y="0">r</tspan><tspan x="56.75" y="0">ca</tspan><tspan class="cls-8" x="75.24" y="0">r</tspan><tspan x="81.54" y="0">d</tspan></text>
+</svg>

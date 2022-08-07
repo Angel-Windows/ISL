@@ -3,27 +3,27 @@
     <table>
         <tr>
             <td>№</td>
-            <td>#<span class="id">1</span></td>
+            <td>#<span class="id"> ... </span></td>
         </tr>
         <tr>
             <td>Студент</td>
-            <td class="student_name">Софа Селеменева</td>
+            <td class="student_name"> ... </td>
         </tr>
         <tr>
             <td>Тип</td>
-            <td class="type">Проведение урока</td>
+            <td class="type"> ... </td>
         </tr>
         <tr>
             <td>Статус</td>
-            <td class="status">Подтверждено</td>
+            <td class="status"> ... </td>
         </tr>
         <tr>
             <td>Баланс</td>
-            <td class="balance" title="150">400</td>
+            <td class="balance" title="150"> ... </td>
         </tr>
         <tr>
             <td>Сума</td>
-            <td class="amount">400</td>
+            <td class="amount"> ... </td>
         </tr>
     </table>
     <div class="buttons">
@@ -33,7 +33,7 @@
             method="post"
         >
             @csrf
-            <input type="hidden" name="id" value="1">
+            <input type="hidden" name="id" value="id">
             <input type="hidden" name="calendar_id" value="1">
             {{--                <input type="hidden" name="" value="">--}}
         </form>

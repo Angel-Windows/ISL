@@ -11,27 +11,27 @@ class Telegram
     protected $bot;
     const url = 'https://api.tlgr.org/bot';
 
-    public function __construct(Http $http, $bbb)
+    public function __construct(Http $http)
     {
         $this->http = $http;
-        $this->bot = $bbb;
+        $this->bot = config('bots.bot');
     }
 
     public function send_message($chat_id, $message)
     {
-        $this->http::post(self::url.$this->bot.'/sendMessage', [
-            'chat_id' => $chat_id,
-            'text' => (string)$message,
-            'parse_mode' => 'html'
-        ]);
+//        $this->http::post(self::url.$this->bot.'/sendMessage', [
+//            'chat_id' => $chat_id,
+//            'text' => (string)$message,
+//            'parse_mode' => 'html'
+//        ]);
     }
     public function set_button($chat_id, $message, $buttons){
-        $this->http::post(self::url.$this->bot.'/sendMessage', [
-            'chat_id' => $chat_id,
-            'text' => (string)$message,
-            'parse_mode' => 'html',
-            'replay_markup' => $buttons,
-
-        ]);
+//        $this->http::post(self::url.$this->bot.'/sendMessage', [
+//            'chat_id' => $chat_id,
+//            'text' => (string)$message,
+//            'parse_mode' => 'html',
+//            'replay_markup' => $buttons,
+//
+//        ]);
     }
 }

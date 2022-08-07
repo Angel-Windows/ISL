@@ -47,6 +47,7 @@ class TransactionRepository extends BaseRepository
             ->select('transactions.*',
                 "student.name as student_name",
                 "professor.name as professor_name",
+                "student.balance as balance",
             )
 //            ->select('transactions.*',
 //                "student.first_name as student_first_name", "student.last_name as student_last_name",

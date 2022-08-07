@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Calendar;
 use App\Models\Navigation;
+use App\Models\Referal;
 use App\Models\User;
 use App\Models\UsersProfile;
 use App\Repositories\GlobalRepository;
@@ -25,7 +26,9 @@ class PageControler extends Controller
             $id = Auth::id();
             $route_name = Route::getFacadeRoot()->current()->uri();
             $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
-            $data_students = UsersProfile::where('id', "!=", $id)->get();
+            $data_students = Referal::where('user_1', $id)
+                ->leftJoin('users_profiles', 'users_profiles.user_id', 'referals.user_2')
+                ->get();
             $count_lesson = Calendar::where('student_id', $id)
                 ->where('status', 0)
                 ->orWhere('professor_id', $id)
@@ -59,8 +62,6 @@ class PageControler extends Controller
     {
 //        dd($this->lessonsRepository->transaction_add());
 //        $return = $this->lessonsRepository->transaction_add();
-
-
         $page = (int)$request->input('page');
 
         $data_day_time = [];
@@ -96,14 +97,9 @@ class PageControler extends Controller
     {
         $filter = $this->globalRepository->get_filter('filters_transaction');
         $data_transactions = $this->transactionRepository->get_list($filter);
-        $data_students = UsersProfile::where('id', "!=", Auth::id())->get();
-
-
-//        dd($status_list);
         return view('pages.transactions')
             ->with('data_transactions', $data_transactions)
-            ->with('filter', $filter)
-            ->with('data_students', $data_students);
+            ->with('filter', $filter);
     }
 
 
@@ -144,6 +140,9 @@ class PageControler extends Controller
 //            ->select('calendars.*', 'users_profiles.first_name', 'users_profiles.last_name',)
             ->get();
         return [...$data_lesson];
+    }
+    public function payed(Request $request){
+        return view('pages.payed');
     }
 
 }

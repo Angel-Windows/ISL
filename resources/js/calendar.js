@@ -38,13 +38,13 @@ window.calendar_add_item = (item, data_status) => {
     const time = item.time_start.split(":");
     const array_elem = [7, 1, 2, 3, 4, 5, 6];
     const calendar = document.querySelector('.calendar_new');
-    if (!calendar){
+    if (!calendar) {
         console.warn("Calendar is not defined")
         return null;
     }
     const calendar_day = calendar.querySelectorAll('.day')[array_elem[item.day_week]];
     const new_lesson_item = calendar.querySelector('.lesson_item').cloneNode(true);
-    if (data_status){
+    if (data_status) {
         if (!data_status[item.status].display) {
             new_lesson_item.classList.add('no_display')
         }
@@ -56,7 +56,9 @@ window.calendar_add_item = (item, data_status) => {
     new_lesson_item.querySelector('.name').innerHTML = item['name'];
     // new_lesson_item.querySelector('.name').innerHTML = item['first_name'] + " " + item['last_name'];
     new_lesson_item.querySelector('.lessons_time').innerHTML = `${time[0]}:00 - ${Number(time[0]) + 1}:00`;
-
+    new_lesson_item.addEventListener("click", function () {
+        lesson_info_open(this);
+    })
     if (global_count[item.day_week][time[0]]) {
         const default_element = global_count[item.day_week][time[0]].item.querySelector('.count');
         global_count[item.day_week][time[0]].count++;
@@ -78,12 +80,12 @@ window.calendar_fill_new = (data, data_status) => {
     data.forEach((item) => {
         calendar_add_item(item, data_status);
     })
-    global_count.forEach((items) => {
-        items.forEach((item) => {
-            item.item.addEventListener("click", function () {
-                lesson_info_open(this);
-            })
-        })
-    })
+    // global_count.forEach((items) => {
+    //     items.forEach((item) => {
+    //         item.item.addEventListener("click", function () {
+    //             lesson_info_open(this);
+    //         })
+    //     })
+    // })
 }
 

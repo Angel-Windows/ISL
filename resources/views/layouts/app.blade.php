@@ -70,7 +70,7 @@ $page_get = $_GET['page'] ?? 1;
             </ul>
         </footer>
     </nav>
-    <section class="section  @yield('class_name')">
+    <section class="section overflow-hidden  @yield('class_name')">
         <aside class="menu_top">
             <div class="menu_nav">
                 @if($route == "calendar" || $route == "home"|| empty($_GET["page"]))
@@ -128,8 +128,30 @@ $page_get = $_GET['page'] ?? 1;
                     <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
                     <span>Statistic</span>
                 </a>
-                @if($route == "calendar" || $route == "home")
-                    <h2 class="item_menu">Расписание {{$now_data}}</h2>
+                    <div onclick="target_menu_right(5)" class="statistic item_menu">
+                        <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
+                        <span>Пополнить</span>
+                    </div>
+                    <?php
+                    $naw_item_menu = false;
+                    switch($route){
+                        case "calendar" :
+                            $naw_item_menu = 'Расписание на ' . $now_data;
+                            break;
+                        case "home" :
+                            $naw_item_menu = 'Главная страница';
+                            break;
+                        case "transaction" :
+                            $naw_item_menu = 'Транзакции страница: ' . $_GET["page"];
+                            break;
+                            case "payed" :
+                            $naw_item_menu = 'Пополнение';
+                            break;
+                    }
+
+                    ?>
+                @if($naw_item_menu)
+                    <h2 class="item_menu">{{$naw_item_menu}}</h2>
                 @endif
             </div>
             <div class="menu_profile">
@@ -140,24 +162,23 @@ $page_get = $_GET['page'] ?? 1;
                 <div class="profile_avatar img"><img draggable="false" src="{{asset('res/avatara_user.png')}}" alt="">
                     <ul class="menu_list">
                         <li><a href="#">Настройки</a></li>
+                        <li><a href="{{route('payed')}}">Пополнение</a></li>
                         <li><a href="#">Трансакции</a></li>
                         <li><a href="#">Полезные материалы</a></li>
                         <li><a href="{{route('logout')}}">Выйти</a></li>
                     </ul>
                 </div>
-
             </div>
         </aside>
         {{--        <div class="content">--}}
-        <div class="content @yield('page_name')">
+        <div class="content overflow-hidden @yield('page_name')">
             @yield('content')
             <aside class="menu_right">
                 @include('components.left_menu.Info')
                 @include('components.left_menu.add_lesson')
+                @include('components.left_menu.payed')
                 @yield('aside')
             </aside>
-
-
         </div>
     </section>
 

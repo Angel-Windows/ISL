@@ -7,11 +7,14 @@ use App\Models\Config;
 class GlobalRepository extends BaseRepository
 {
     private $transactionRepository;
+
     public function __construct()
     {
         $this->transactionRepository = app(TransactionRepository::class);
     }
-    public function change_filters($request){
+
+    public function change_filters($request)
+    {
         $filter_name = $request['filter_name'] ?? 'filters_calendar';
         $id = $request['id'];
 
@@ -30,13 +33,13 @@ class GlobalRepository extends BaseRepository
         session([$filter_name => $filter]);
 
     }
-    public function get_filter($filter_name){
+
+    public function get_filter($filter_name)
+    {
         $filters = Config::where('group_name', $filter_name)->get();
         $filter_data = [];
         foreach ($filters as $key => $item) {
             $json_filters = json_decode($item->value);
-
-//            dd(session($filter_name));
             if (!session()->has($filter_name)) {
                 $display = true;
             } else if (in_array($json_filters->id, session($filter_name))) {

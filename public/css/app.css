@@ -681,6 +681,9 @@ select {
 .grid {
   display: grid;
 }
+.contents {
+  display: contents;
+}
 .hidden {
   display: none;
 }
@@ -1328,4 +1331,5 @@ select {
     padding-right: 2rem;
   }
 }
+
 

@@ -2,6 +2,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    .payed_naw {
+        input, select {
+            display: block;
+            width: 100%;
+            color: black;
+        }
+    }
+
     //grid-gap: $grid_gap;
 }
 
@@ -9,7 +18,7 @@
     box-sizing: border-box;
     background: var(--color_light_grey);
     border-radius: $border_radius;
-    min-width: $right_size;
+    //min-width: $right_size;
     //width: $right_size;
     width: var(--nav_size);
     padding: $default_padding;
@@ -127,7 +136,8 @@
         }
 
     }
-    &.transaction_info{
+
+    &.transaction_info {
         table {
             width: 100%;
         }
@@ -135,6 +145,7 @@
         td:nth-child(2) {
             text-align: end;
         }
+
         button {
             padding: 0;
             width: 2em;
@@ -190,10 +201,12 @@
 
     &.error {
         background: red;
+
         &:before {
             border: 1em solid transparent;
             border-right: 1em solid red;
             border-bottom: 1em solid red;
         }
     }
+
 }

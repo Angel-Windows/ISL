@@ -1,0 +1,64 @@
+.payed{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    h2{
+        margin-bottom: 20px;
+    }
+    .card_input{
+        box-sizing: border-box;
+        display: grid;
+        grid-template-rows: 1fr auto auto;
+        border-radius: 10px;
+        padding: 20px;
+        height: 200px;
+        width: 310px;
+        color: white;
+        background: url("/res/Smurf.jpg");
+        //background-size: cover;
+    }
+    .header_input{
+        display: flex;
+        justify-content: space-between;
+        h3{
+            font-size: 15px;
+            font-weight: 700;
+        }
+        p{
+            font-size: 13px;
+        }
+    }
+    .numbers{
+        margin: 15px 0;
+        display: flex;
+        justify-content: space-between;
+        input{
+
+            //background: none;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid white;
+            text-align: center;
+            width: 3em;
+        }
+    }
+    .data{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        input{
+            border: none;
+            color: black;
+            font-size: 13px;
+            text-align: center;
+            width: 2em;
+        }
+        .data_name{
+            font-size: 10px;
+        }
+    }
+    .logo_card{
+        height: 50px;
+    }
+}
+

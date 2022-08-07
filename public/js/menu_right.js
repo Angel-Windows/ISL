@@ -86,6 +86,16 @@ function fill_transaction(request) {
   });
 }
 
+window.add_payed = function (form) {
+  form.classList.add('progress_reload');
+
+  var func = function func(request) {
+    form.classList.remove('progress_reload');
+  };
+
+  PostForm(form, func);
+};
+
 window.add_lesson = function (form) {
   form.classList.add('progress_reload');
 
@@ -175,7 +185,7 @@ var fresh_buttons = function fresh_buttons(news) {
   });
 };
 
-window.change_menu_right = function () {
+var change_menu_right = function change_menu_right() {
   var right_menu_active;
   var menu_right_fool = document.querySelectorAll(".menu_item");
 
@@ -194,6 +204,10 @@ window.change_menu_right = function () {
 
     case "4":
       right_menu_active = document.querySelectorAll(".transaction_info");
+      break;
+
+    case "5":
+      right_menu_active = document.querySelectorAll(".payed_naw");
       break;
 
     default:
@@ -254,6 +268,7 @@ window.transaction_info_open = function (from) {
   function change_modal(modal_name) {
     var id = transaction_info.querySelector(".".concat(modal_name));
     id.innerHTML = from.querySelector(".".concat(modal_name)).innerHTML;
+    console.log(from);
   }
 
   from.classList.add("active");

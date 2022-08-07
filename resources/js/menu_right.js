@@ -33,9 +33,9 @@ function split_teg_ajax(tegs, modal_name) {
     let test;
     if (modal_name === 'created_at') {
         test = tegs[1][modal_name].replace(/[A-z]/g, ' ').substr(0, 19)
-    }else if (modal_name === 'type') {
+    } else if (modal_name === 'type') {
         test = data_type[tegs[1][modal_name]]
-    }else if (modal_name === 'status') {
+    } else if (modal_name === 'status') {
         test = data_status[tegs[1][modal_name]]
     } else {
         test = tegs[1][modal_name];
@@ -69,10 +69,17 @@ function fill_transaction(request) {
     })
 }
 
-window.add_lesson = (form) => {
-    form.classList.add('progress_reload')
+window.add_payed = (form) => {
+    form.classList.add('progress_reload');
     const func = (request) => {
-        form.classList.remove('progress_reload')
+        form.classList.remove('progress_reload');
+    }
+    PostForm(form, func);
+}
+window.add_lesson = (form) => {
+    form.classList.add('progress_reload');
+    const func = (request) => {
+        form.classList.remove('progress_reload');
         calendar_add_item(request.data.item, request.data.filters);
     }
     PostForm(form, func);
@@ -84,8 +91,10 @@ window.info_events = (e, form_name) => {
         {name: "event", value: e},
         {name: "id", value: id},
     ]
+
     create_html("input", new_input, form)
     const func = (res) => {
+
     }
     PostForm(form, func);
 }
@@ -99,26 +108,26 @@ window.lesson_info_events = (e, form_name) => {
     create_html("input", new_input, form)
     const func = (res) => {
         const calendar_item = document.querySelector('#id' + id)
-            const balance = document.querySelector(".lesson_info .balance");
-            switch (res.type) {
-                case 1: {
-                    fresh_buttons("success")
-                    balance.innerHTML = Number(balance.innerHTML) - Number(balance.title);
-                    calendar_item.className = "lesson_item background_calendar_success";
-                    break;
-                }
-                case 2: {
-                    fresh_buttons("closed")
-                    calendar_item.className = "lesson_item background_calendar_closed";
-                    break;
-                }
-                case 3: {
-                    fresh_buttons("normal")
-                    balance.innerHTML = Number(balance.innerHTML) + Number(balance.title);
-                    calendar_item.className = "lesson_item background_calendar_transfer";
-                    break;
-                }
+        const balance = document.querySelector(".lesson_info .balance");
+        switch (res.type) {
+            case 1: {
+                fresh_buttons("success")
+                balance.innerHTML = Number(balance.innerHTML) - Number(balance.title);
+                calendar_item.className = "lesson_item background_calendar_success";
+                break;
             }
+            case 2: {
+                fresh_buttons("closed")
+                calendar_item.className = "lesson_item background_calendar_closed";
+                break;
+            }
+            case 3: {
+                fresh_buttons("normal")
+                balance.innerHTML = Number(balance.innerHTML) + Number(balance.title);
+                calendar_item.className = "lesson_item background_calendar_transfer";
+                break;
+            }
+        }
     }
     PostForm(form, func);
 }
@@ -135,7 +144,7 @@ const fresh_buttons = (news) => {
         item.classList.remove('no_display')
     })
 }
-window.change_menu_right = () => {
+const change_menu_right = () => {
     let right_menu_active;
     const menu_right_fool = document.querySelectorAll(".menu_item")
     switch (localStorage.getItem("menu_right")) {
@@ -150,6 +159,9 @@ window.change_menu_right = () => {
             break;
         case "4":
             right_menu_active = document.querySelectorAll(".transaction_info");
+            break;
+        case "5":
+            right_menu_active = document.querySelectorAll(".payed_naw");
             break;
         default:
             console.warn("no active " + localStorage.getItem("menu_right"))
@@ -205,6 +217,7 @@ window.transaction_info_open = (from) => {
     function change_modal(modal_name) {
         const id = transaction_info.querySelector(`.${modal_name}`);
         id.innerHTML = from.querySelector(`.${modal_name}`).innerHTML;
+        console.log(from);
     }
 
     from.classList.add("active");

@@ -22,14 +22,14 @@ class CalendarRepository extends BaseRepository
         $naw = Carbon::createFromFormat("Y-m-d", $date);
         $day_week = $naw->dayOfWeek;
         $count_for = 1;
-        if($is_regular){
+        if ($is_regular) {
             $count_for = 20;
             $regular_lessons_count = RegularLesson::where('student_id', $student_id)
                 ->where('day_week', $day_week)
                 ->where('time_start', $time)
                 ->count();
 //            dd($regular_lessons_count);
-            if (!$regular_lessons_count){
+            if (!$regular_lessons_count) {
                 $regular_lessons = new RegularLesson();
                 $regular_lessons->student_id = $student_id;
                 $regular_lessons->professor_id = $professor_id;
@@ -48,14 +48,17 @@ class CalendarRepository extends BaseRepository
             $now_data->startOfWeek();
             $now_data->addDays($day_week - 1);
             $now_data->addWeeks($i);
+            if (!$day_week) {
+                $now_data->addWeek();
+            }
             $lessons_count = Calendar::where('student_id', $student_id)
                 ->where('week', $now_data->week)
                 ->where('day_week', $day_week)
                 ->where('time_start', $time)
                 ->first();
-            if ($lessons_count){
+            if ($lessons_count) {
                 $temp++;
-            }else{
+            } else {
                 $temp++;
                 $calendar = new Calendar();
                 $calendar->student_id = $student_id;
@@ -73,9 +76,9 @@ class CalendarRepository extends BaseRepository
             }
 
         }
-        if (!$temp_data){
+        if (!$temp_data) {
             return false;
-        }else{
+        } else {
             return $data_item[0];
 
         }

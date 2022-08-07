@@ -58,10 +58,12 @@ Route::get('/bot', function (Telegram $telegram) {
             ]
         ]
     ];
-    $sendButton = $telegram->set_button(324428256, 'test', );
+//    $sendButton = $telegram->set_button(324428256, 'test');
 //    $telegram = new Telegram();
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
 
+Route::get('/payed', [PageControler::class, "payed"])->name('payed');
+Route::post('/payed/store', [TransactionController::class, "payed_store"])->name('payed.store');
 
 require __DIR__ . '/auth.php';

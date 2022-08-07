@@ -69,6 +69,9 @@ window.calendar_add_item = function (item, data_status) {
   new_lesson_item.querySelector('.name').innerHTML = item['name']; // new_lesson_item.querySelector('.name').innerHTML = item['first_name'] + " " + item['last_name'];
 
   new_lesson_item.querySelector('.lessons_time').innerHTML = "".concat(time[0], ":00 - ").concat(Number(time[0]) + 1, ":00");
+  new_lesson_item.addEventListener("click", function () {
+    lesson_info_open(this);
+  });
 
   if (global_count[item.day_week][time[0]]) {
     var default_element = global_count[item.day_week][time[0]].item.querySelector('.count');
@@ -90,14 +93,13 @@ window.calendar_fill_new = function (data, data_status) {
   document.querySelector('.calendar_new').scrollTo(0, 1000);
   data.forEach(function (item) {
     calendar_add_item(item, data_status);
-  });
-  global_count.forEach(function (items) {
-    items.forEach(function (item) {
-      item.item.addEventListener("click", function () {
-        lesson_info_open(this);
-      });
-    });
-  });
+  }); // global_count.forEach((items) => {
+  //     items.forEach((item) => {
+  //         item.item.addEventListener("click", function () {
+  //             lesson_info_open(this);
+  //         })
+  //     })
+  // })
 };
 /******/ })()
 ;
