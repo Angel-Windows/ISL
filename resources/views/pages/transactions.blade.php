@@ -44,7 +44,7 @@
                 ?>
                 <tr onclick="transaction_info_open(this)" >
                     <td class="{{$round_top ?? ""}} id">{{$item->id}}</td>
-                    <td class="student_name">{{$item->student_name?? "Я"}}</td>
+                    <td class="student_name">{{$item->student_name ?? "Я"}}</td>
 {{--                    <td class="student_name">{{$item->student_first_name}} {{$item->student_last_name}}</td>--}}
                     <td class="professor_name">{{$item->professor_name}}</td>
 {{--                    <td class="professor_name">{{$item->professor_first_name}} {{$item->professor_last_name}}</td>--}}

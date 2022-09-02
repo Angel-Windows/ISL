@@ -128,7 +128,7 @@ $page_get = $_GET['page'] ?? 1;
                     <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
                     <span>Statistic</span>
                 </a>
-                    <div onclick="target_menu_right(5)" class="statistic item_menu">
+                    <div onclick="target_menu_right(5 )" class="statistic item_menu">
                         <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
                         <span>Пополнить</span>
                     </div>

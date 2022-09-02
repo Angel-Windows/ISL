@@ -800,9 +800,10 @@ table.calendar_table .calendar_item {
   border: none;
 }
 .calendar_new .sub_day .time_item span {
+  transform: translateY(-50%);
   color: rgba(217, 217, 217, 0.85);
   position: absolute;
-  top: -0.5em;
+  top: 50%;
   line-height: -22em;
 }
 .calendar_new .sub_day .time_item:after {

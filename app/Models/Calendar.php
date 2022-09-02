@@ -22,6 +22,7 @@ class Calendar extends Model
 {
     protected $guarded = array('*');
     use HasFactory;
+
     public function getStudentNameAttribute()
     {
         $get_name = UsersProfile::where('user_id' , $this->student_id)

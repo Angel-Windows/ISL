@@ -40,7 +40,6 @@ window.Post = (url, func = () => {
         .then(data => {
             openPopupAlert(data)
             func(data)
-
         })
         .catch(error => console.error(error));
 

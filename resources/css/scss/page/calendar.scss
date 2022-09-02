@@ -111,7 +111,8 @@ table.calendar_table {
             font-size: 22px;
             color: var(--color_dark_white);
             z-index: 5;
-            p:nth-child(2){
+
+            p:nth-child(2) {
                 font-size: 12px;
             }
         }
@@ -182,6 +183,7 @@ table.calendar_table {
     }
 
     .sub_day {
+
         border-left: none;
         //width: 56px;
         width: 442px;
@@ -191,10 +193,10 @@ table.calendar_table {
             border: none;
 
             span {
-                //transform: translateY(-0.5em);
+                transform: translateY(-50%);
                 color: rgba(217, 217, 217, 0.85);
                 position: absolute;
-                top: -0.5em;
+                top: 50%;
                 line-height: -22em;
             }
 

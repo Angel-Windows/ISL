@@ -37,8 +37,10 @@
             <input type="hidden" name="calendar_id" value="1">
             {{--                <input type="hidden" name="" value="">--}}
         </form>
-        <button onclick="info_events(0, 'transaction_info_event')" class="button " type="submit"><img
-                src="{{asset("res/pencil-solid.svg")}}" alt=""></button>
+        <button onclick="info_events(0, 'transaction_info_event')" class="button background_calendar_info" type="submit"><img
+                src="{{asset("res/info_icon.png")}}" alt=""></button>
+{{--        <button onclick="info_events(0, 'transaction_info_event')" class="button background_calendar_success"><img--}}
+{{--                src="{{asset("res/Check.svg")}}" alt=""></button>--}}
         <button onclick="info_events(1, 'transaction_info_event')" class="button background_calendar_success"><img
                 src="{{asset("res/Check.svg")}}" alt=""></button>
         <button onclick="info_events(2, 'transaction_info_event')" class="button background_calendar_no_check"><img

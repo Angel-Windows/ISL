@@ -22,7 +22,14 @@ class CalendarController extends Controller
         $this->globalRepository = app(GlobalRepository::class);
         $this->calendarRepository = app(CalendarRepository::class);
     }
-
+    private function transaction_add($data = [])
+    {
+        $transactions = new Transactions();
+        foreach ($data as $key=>$item) {
+            $transactions->$key = $item;
+        }
+        $transactions->save();
+    }
     public function add_lesson(Request $request)
     {
 
@@ -108,15 +115,16 @@ class CalendarController extends Controller
         } else {
             $lesson->status = 3;
             $lesson->save();
-            $transactions = new Transactions();
-            $transactions->student_id = $student->id;
-            $transactions->professor_id = $lesson->professor_id;
-            $transactions->lesson_id = $lesson->id;
-            $transactions->new_balance = $student->balance;
-            $transactions->amount = $student->price_lesson;
-            $transactions->status = 1;
-            $transactions->type = 1;
-            $transactions->save();
+            $data = [
+                'student_id' => $student->id,
+                'professor_id' => $lesson->professor_id,
+                'lesson_id' => $lesson->id,
+                'new_balance' => $student->balance,
+                'amount' => $student->price_lesson,
+                'status' => 1,
+                'type' => 1,
+            ];
+            $this->transaction_add($data);
         }
 
 
@@ -131,7 +139,6 @@ class CalendarController extends Controller
     {
         $lesson = Calendar::where('id', $id)->first();
         $student = UsersProfile::where('id', $lesson->student_id)->first();
-        $transactions = new Transactions();
         if ($lesson->status == 0) {
             $student->increment('balance', $student->price_lesson);
         } elseif ($lesson->status == 1 || $lesson->status == 2) {
@@ -140,26 +147,26 @@ class CalendarController extends Controller
                 'message' => "Return nothing",
                 'data' => []
             ];
-        } elseif ($lesson->status == 3) {
-
         }
         $lesson->status = 2;
         $lesson->save();
-        $transactions->student_id = $student->id;
-        $transactions->professor_id = $lesson->professor_id;
-        $transactions->lesson_id = $lesson->id;
-        $transactions->new_balance = $student->balance;
-        $transactions->amount = $student->price_lesson;
-        $transactions->status = 1;
-        $transactions->type = 1;
-        $transactions->save();
-
+        $data = [
+            'student_id' => $student->id,
+            'professor_id' => $lesson->professor_id,
+            'lesson_id' => $lesson->id,
+            'new_balance' => $student->balance,
+            'amount' => $student->price_lesson,
+            'status' => 1,
+            'type' => 1,
+        ];
+        $this->transaction_add($data);
         return [
             'code' => 1,
             'message' => "Success back",
             'data' => []
         ];
     }
+
 
     private function success_lesson($id): array
     {
@@ -178,16 +185,16 @@ class CalendarController extends Controller
             $lesson->save();
             $professor = UsersProfile::where('id', $lesson->professor_id)->first();
             $professor->increment('balance', $student->price_lesson);
-            $transactions = new Transactions();
-            $transactions->student_id = $student->id;
-            $transactions->professor_id = $lesson->professor_id;
-            $transactions->lesson_id = $lesson->id;
-            $transactions->new_balance = $student->balance;
-            $transactions->amount = $student->price_lesson;
-            $transactions->status = 1;
-            $transactions->type = 0;
-            $transactions->save();
-
+            $data = [
+                'student_id' => $student->id,
+                'professor_id' => $lesson->professor_id,
+                'lesson_id' => $lesson->id,
+                'new_balance' => $student->balance,
+                'amount' => $student->price_lesson,
+                'status' => 1,
+                'type' => 0,
+            ];
+            $this->transaction_add($data);
             return [
                 'code' => 1,
                 'message' => "Success save",

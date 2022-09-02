@@ -47,22 +47,24 @@ Route::post('/transaction/transaction_info_event', [TransactionController::class
 
 
 Route::get('/bot', function (Telegram $telegram) {
+    $key = base64_encode(md5(uniqid()));
     $buttons = [
         'inline_keyboard' => [
             [
                 [
                     'text' => 'button1',
-                    'callback_data' => '1'
+                    'callback_data' => '1|' . $key
                 ],
                 [
                     'text' => 'button1sss',
-                    'callback_data' => '12'
+                    'callback_data' => '1' . $key,
+
                 ],
             ]
         ]
     ];
-//    $sendButton = $telegram->set_button(324428256, 'test');
 //    $telegram = new Telegram();
+    $sendButton = $telegram->get_button(324428256, 'test', $buttons);
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
 
