@@ -8,7 +8,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserController;
 use App\Helpers\Telegram;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,5 +70,8 @@ Route::get('/bot', function (Telegram $telegram) {
 
 Route::get('/payed', [PageControler::class, "payed"])->name('payed');
 Route::post('/payed/store', [TransactionController::class, "payed_store"])->name('payed.store');
+
+
+Route::get('/crone', [AdminController::class, "crone"])->name('crone');
 
 require __DIR__ . '/auth.php';
