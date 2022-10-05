@@ -10,6 +10,7 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     protected $telegram;
+
     public function __construct(Container $container, Telegram $telegram)
     {
         parent::__construct($container);
@@ -47,15 +48,24 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
     public function report(Throwable $e)
     {
-        $data = [
-            'description'=> $e->getMessage(),
-            'file'=> $e->getFile(),
-            'line'=> $e->getLine(),
+        $data_onerror = ['Unauthenticated.'];
+        if ($e->getMessage() === "Unauthenticated.") {
 
-        ];
+            $data = ['description' => "Ктото неавторизованный",
+                'file' => $_SERVER['REMOTE_ADDR'],
+                'line' => $e->getLine(),];
+        } else {
+            $data = ['description' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),];
+        }
+
+
         $this->telegram->send_message(324428256, view('templates.report', $data));
         return parent::report($e);
+
     }
 }
