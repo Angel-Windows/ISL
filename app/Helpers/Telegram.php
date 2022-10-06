@@ -40,6 +40,14 @@ class Telegram
 
         ]);
     }
+    public function sendButtons($chat_id, $message, $button){
+        return  $this->http::post(self::url.$this->bot.'/sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => $message,
+            'parse_mode' => 'html',
+            'reply_markup' => $button
+        ]);
+    }
     public function set_button($chat_id, $message, $buttons, $message_id){
         return $this->http::post(self::url.$this->bot.'/editMessageText', [
             'chat_id' => $chat_id,

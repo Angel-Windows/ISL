@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property mixed length
  * @property int|mixed|string|null professor_id
  * @property int|mixed status
+ * @property mixed $id
  */
 class Calendar extends Model
 {

@@ -64,7 +64,7 @@ Route::get('/bot', function (Telegram $telegram) {
         ]
     ];
 //    $telegram = new Telegram();
-    $sendButton = $telegram->get_button(324428256, 'test', $buttons);
+    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
 

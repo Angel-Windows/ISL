@@ -64,7 +64,7 @@ class Handler extends ExceptionHandler
         }
 
 
-        $this->telegram->send_message(324428256, view('templates.report', $data));
+        $this->telegram->send_message(env('REPORT_TELEGRAM_ID', "324428256"), view('bot_messages.report', $data));
         return parent::report($e);
 
     }

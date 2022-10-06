@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LessonStart;
 use App\Helpers\Telegram;
+use App\Models\Calendar;
 use Illuminate\Contracts\Container\Container;
 
 class AdminController extends Controller
@@ -13,11 +15,10 @@ class AdminController extends Controller
     {
         $this->telegram = $telegram;
     }
+
     public function crone()
     {
-        $data = ['description' => "Crone start",
-            'file' => $_SERVER['REMOTE_ADDR'],
-            'line' => 23];
-        $this->telegram->send_message(324428256, view('templates.report', $data));
+        $calendar = Calendar::first();
+        event(new LessonStart($calendar));
     }
 }
