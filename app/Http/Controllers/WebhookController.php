@@ -72,16 +72,11 @@ class WebhookController extends Controller
             'day' => $calendar->fool_time,
             'time' => $calendar->time_start,
         ];
-//        $this->telegram->editButtons(
-//            env('REPORT_TELEGRAM_ID', "324428256"),
-//            (string)view('bot_messages.lesson_check', $data),
-//            $reply_markup,
-//            explode('|', $request->input('callback_query')['message']['message_id'])
-//        );
-        $this->telegram->get_button(
+        $this->telegram->editButtons(
             env('REPORT_TELEGRAM_ID', "324428256"),
             (string)view('bot_messages.lesson_check', $data),
-            $reply_markup
+            $reply_markup,
+            $request->input('callback_query')['message']['message_id']
         );
         return response()->json(true, 200);
     }
