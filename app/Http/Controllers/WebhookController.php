@@ -62,22 +62,15 @@ class WebhookController extends Controller
             default:
                 return response()->json(true, 200);
         }
-//        $calendar_new = Calendar::where('id', $lesson_id)->first();
-//        $data = [
-//            'id' => $calendar_new->id,
-//            'professor' => $calendar_new->professor_id,
-//            'student' => $calendar_new->student_id,
-//            'day' => $calendar_new->fool_time,
-//            'time' => $calendar_new->time_start,
-//        ];
         $data = [
-            'id' => 1,
-            'professor' => 1,
-            'student' => 1,
-            'day' => 1,
-            'time' => $request->input('message'),
+            'id' => $calendar->id,
+            'professor' => $calendar->professor_id,
+            'student' => $calendar->student_id,
+            'day' => $calendar->fool_time,
+            'time' => $calendar->time_start,
         ];
-        $this->telegram->editButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data, 1), $reply_markup, explode('|', $request->input('message')['message_id']));
+
+        $this->telegram->editButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data, 1), $reply_markup, explode('|', $request->input('callback_query')['message']['message_id']));
         return response()->json(true, 200);
     }
 }
