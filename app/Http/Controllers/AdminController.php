@@ -31,6 +31,8 @@ class AdminController extends Controller
 
     public function webhook()
     {
-        dd("webhook");
+        $calendar = Calendar::last();
+        event(new LessonStart($calendar));
+        return true;
     }
 }
