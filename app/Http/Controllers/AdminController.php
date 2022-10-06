@@ -20,7 +20,7 @@ class AdminController extends Controller
     public function crone()
     {
         $calendar = Calendar::first();
-        $http = Http::get('https://api.tlgr.org/bot/'.env('REPORT_TELEGRAM_ID') .config('bots.bot') . '/setWebhook?url=https://new.it-schoollearn.com/crone');
+        $http = Http::get('https://api.tlgr.org/bot'.env('REPORT_TELEGRAM_ID') .config('bots.bot') . '/setWebhook?url=https://new.it-schoollearn.com/crone');
         dd(json_decode($http->body()));
         event(new LessonStart($calendar));
     }
