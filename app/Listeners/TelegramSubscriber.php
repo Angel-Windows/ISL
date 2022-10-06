@@ -37,11 +37,11 @@ class TelegramSubscriber
                     [
                         [
                             'text' => 'Принять',
-                            'callback_data' => '1|' . $event->calendar->secret_key,
+                            'callback_data' => '1|' . $event->calendar->id,
                         ],
                         [
                             'text' => 'Отклонить',
-                            'callback_data' => '0|' . $event->calendar->secret_key,
+                            'callback_data' => '0|' . $event->calendar->id,
                         ],
                     ]
                 ]
