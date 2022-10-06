@@ -17,13 +17,18 @@ class AdminController extends Controller
         $this->telegram = $telegram;
     }
 
+    public function setWebhook()
+    {
+        $http = Http::get('https://api.tlgr.org/bot' . env('REPORT_TELEGRAM_ID') . config('bots.bot') . '/setWebhook?url=https://new.it-schoollearn.com/webhook');
+        dd(json_decode($http->body()));
+    }
+
     public function crone()
     {
-//        $calendar = Calendar::first();
-        $http = Http::get('https://api.tlgr.org/bot'.env('REPORT_TELEGRAM_ID') .config('bots.bot') . '/setWebhook?url=https://new.it-schoollearn.com/webhook');
-        dd(json_decode($http->body()));
+        $calendar = Calendar::first();
         event(new LessonStart($calendar));
     }
+
     public function webhook()
     {
         dd("webhook");

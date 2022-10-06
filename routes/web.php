@@ -74,7 +74,7 @@ Route::post('/payed/store', [TransactionController::class, "payed_store"])->name
 
 Route::get('/crone', [AdminController::class, "crone"])->name('crone');
 
-Route::get('/webhook', [AdminController::class, "webhook"])->name('webhook');
+Route::post('/webhook', [AdminController::class, "webhook"])->name('webhook');
 
 
 
