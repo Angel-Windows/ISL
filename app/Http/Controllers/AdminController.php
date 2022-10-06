@@ -24,4 +24,8 @@ class AdminController extends Controller
         dd(json_decode($http->body()));
         event(new LessonStart($calendar));
     }
+    public function webhook()
+    {
+        dd("webhook");
+    }
 }
