@@ -18,7 +18,7 @@ class WebhookController extends Controller
         $data_request = explode('|', $request->input('callback_query')['data']);
         $action = $data_request[0];
         $lesson_id = $data_request[1];
-        $lesson = Calendar::where('id', $lesson_id)->first();
+        $calendar = Calendar::where('id', $lesson_id)->first();
 
         switch ($action){
             case "1":
@@ -37,8 +37,8 @@ class WebhookController extends Controller
                             ]
                         ]
                 ];
-                $lesson->status = 0;
-                $lesson->save();
+                $calendar->status = 0;
+                $calendar->save();
                 break;
             case "2":
                 $reply_markup = [
@@ -56,16 +56,16 @@ class WebhookController extends Controller
                             ]
                         ]
                 ];
-                $lesson->status = 3;
-                $lesson->save();
+                $calendar->status = 3;
+                $calendar->save();
                 break;
         }
         $data = [
-            'id' => $event->calendar->id,
-            'professor' => $event->calendar->professor_id,
-            'student' => $event->calendar->student_id,
-            'day' => $event->calendar->fool_time,
-            'time' => $event->calendar->time_start,
+            'id' => $calendar->id,
+            'professor' => $calendar->professor_id,
+            'student' => $calendar->student_id,
+            'day' => $calendar->fool_time,
+            'time' => $calendar->time_start,
         ];
 
         $this->telegram->editButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data, 1), $reply_markup, explode('|', $request->input('message')['message_id']));
