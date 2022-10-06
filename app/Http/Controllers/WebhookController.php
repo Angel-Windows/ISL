@@ -22,7 +22,7 @@ class WebhookController extends Controller
         $action = $data_request[0];
         $lesson_id = $data_request[1];
         $calendar = Calendar::where('id', $lesson_id)->first();
-
+        $reply_markup = null;
         switch ($action) {
             case "1":
                 $reply_markup = [
@@ -30,11 +30,11 @@ class WebhookController extends Controller
                         [
                             [
                                 [
-                                    'text' => '✓ Принять',
+                                    'text' => '✓ Принятьaaa',
                                     'callback_data' => '1|' . $lesson_id,
                                 ],
                                 [
-                                    'text' => 'Отклонить',
+                                    'text' => 'Отклонитьaaa',
                                     'callback_data' => '2|' . $lesson_id,
                                 ],
                             ]
@@ -49,11 +49,11 @@ class WebhookController extends Controller
                         [
                             [
                                 [
-                                    'text' => 'Принять',
+                                    'text' => 'Принятьdd',
                                     'callback_data' => '1|' . $lesson_id,
                                 ],
                                 [
-                                    'text' => '✓ Отклонить',
+                                    'text' => '✓ Отклонитьddd',
                                     'callback_data' => '2|' . $lesson_id,
                                 ],
                             ]
@@ -78,7 +78,11 @@ class WebhookController extends Controller
 //            $reply_markup,
 //            explode('|', $request->input('callback_query')['message']['message_id'])
 //        );
-        $this->telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', (string)view('bot_messages.lesson_check', $data));
+        $this->telegram->get_button(
+            env('REPORT_TELEGRAM_ID', "324428256"),
+            (string)view('bot_messages.lesson_check', $data),
+            $reply_markup
+        );
         return response()->json(true, 200);
     }
 }
