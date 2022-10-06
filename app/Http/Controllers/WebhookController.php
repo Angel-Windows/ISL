@@ -18,66 +18,69 @@ class WebhookController extends Controller
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $data_request = explode('|', $request->input('callback_query')['data']);
-        $action = $data_request[0];
-        $lesson_id = $data_request[1];
-        $calendar = Calendar::where('id', $lesson_id)->first();
-        $reply_markup = null;
-        switch ($action) {
-            case "1":
-                $reply_markup = [
-                    'inline_keyboard' =>
-                        [
+        $callback_data = $request->input('callback_query')['data'];
+        if (strripos($callback_data, '|')) {
+            $data_request = explode('|', $callback_data);
+            $action = $data_request[0] ?? 0;
+            $lesson_id = $data_request[1] ?? 0;
+            $calendar = Calendar::where('id', $lesson_id)->first();
+            switch ($action) {
+                case "1":
+                    $reply_markup = [
+                        'inline_keyboard' =>
                             [
                                 [
-                                    'text' => '✓ Принятьaaa',
-                                    'callback_data' => '1|' . $lesson_id,
-                                ],
-                                [
-                                    'text' => 'Отклонитьaaa',
-                                    'callback_data' => '2|' . $lesson_id,
-                                ],
+                                    [
+                                        'text' => '✓ Принять',
+                                        'callback_data' => '1|' . $lesson_id,
+                                    ],
+                                    [
+                                        'text' => 'Отклонить',
+                                        'callback_data' => '2|' . $lesson_id,
+                                    ],
+                                ]
                             ]
-                        ]
-                ];
-                $calendar->status = 0;
-                $calendar->save();
-                break;
-            case "2":
-                $reply_markup = [
-                    'inline_keyboard' =>
-                        [
+                    ];
+                    $calendar->status = 0;
+                    $calendar->save();
+                    break;
+                case "2":
+                    $reply_markup = [
+                        'inline_keyboard' =>
                             [
                                 [
-                                    'text' => 'Принятьdd',
-                                    'callback_data' => '1|' . $lesson_id,
-                                ],
-                                [
-                                    'text' => '✓ Отклонитьddd',
-                                    'callback_data' => '2|' . $lesson_id,
-                                ],
+                                    [
+                                        'text' => 'Принять',
+                                        'callback_data' => '1|' . $lesson_id,
+                                    ],
+                                    [
+                                        'text' => '✓ Отклонить',
+                                        'callback_data' => '2|' . $lesson_id,
+                                    ],
+                                ]
                             ]
-                        ]
-                ];
-                $calendar->status = 3;
-                $calendar->save();
-                break;
-            default:
-                return response()->json(true, 200);
+                    ];
+                    $calendar->status = 3;
+                    $calendar->save();
+                    break;
+                default:
+                    return response()->json(true, 200);
+            }
+
+            $data = [
+                'id' => $calendar->id,
+                'professor' => $calendar->professor_id,
+                'student' => $calendar->student_id,
+                'day' => $calendar->fool_time,
+                'time' => $calendar->time_start,
+            ];
+            $this->telegram->editButtons(
+                env('REPORT_TELEGRAM_ID', "324428256"),
+                (string)view('bot_messages.lesson_check', $data),
+                $reply_markup,
+                $request->input('callback_query')['message']['message_id']
+            );
+            return response()->json(true, 200);
         }
-        $data = [
-            'id' => $calendar->id,
-            'professor' => $calendar->professor_id,
-            'student' => $calendar->student_id,
-            'day' => $calendar->fool_time,
-            'time' => $calendar->time_start,
-        ];
-        $this->telegram->editButtons(
-            env('REPORT_TELEGRAM_ID', "324428256"),
-            (string)view('bot_messages.lesson_check', $data),
-            $reply_markup,
-            $request->input('callback_query')['message']['message_id']
-        );
-        return response()->json(true, 200);
     }
 }
