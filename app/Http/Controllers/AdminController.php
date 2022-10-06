@@ -27,12 +27,15 @@ class AdminController extends Controller
     {
         $calendar = Calendar::first();
         event(new LessonStart($calendar));
+
+        $http = Http::get('https://api.tlgr.org/bot' . env('REPORT_TELEGRAM_ID') . config('bots.bot') . '/getWebhookInfo');
+        dd(json_decode($http->body()));
     }
 
     public function webhook()
     {
-        $calendar = Calendar::last();
-        event(new LessonStart($calendar));
-        return true;
+//        $calendar = Calendar::last();
+//        event(new LessonStart($calendar));
+        return response()->json(true, 200);
     }
 }
