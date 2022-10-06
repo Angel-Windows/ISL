@@ -11,10 +11,10 @@ class Telegram
     protected $bot;
     const url = 'https://api.tlgr.org/bot';
 
-    public function __construct(Http $http)
+    public function __construct(Http $http, $bot)
     {
         $this->http = $http;
-        $this->bot = config('bots.bot');
+        $this->bot = $bot;
     }
 
     public function send_message($chat_id, $message)

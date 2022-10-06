@@ -19,6 +19,7 @@ class AdminController extends Controller
     public function crone()
     {
         $calendar = Calendar::first();
+        dd($calendar);
         event(new LessonStart($calendar));
     }
 }
