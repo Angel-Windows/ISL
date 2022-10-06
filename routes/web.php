@@ -9,6 +9,7 @@ use App\Http\Controllers\GlobalController;
 use App\Http\Controllers\UserController;
 use App\Helpers\Telegram;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,7 +75,7 @@ Route::post('/payed/store', [TransactionController::class, "payed_store"])->name
 
 Route::get('/crone', [AdminController::class, "crone"])->name('crone');
 
-Route::post('/webhook', [AdminController::class, "webhook"])->name('webhook');
+Route::post('/webhook', [WebhookController::class, "index"])->name('webhook');
 
 
 

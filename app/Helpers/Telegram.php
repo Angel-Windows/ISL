@@ -3,6 +3,7 @@
 
 namespace App\Helpers;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 class Telegram
@@ -11,10 +12,10 @@ class Telegram
     protected $bot;
     const url = 'https://api.tlgr.org/bot';
 
-    public function __construct(Http $http, $bot)
+    public function __construct(Http $http)
     {
         $this->http = $http;
-        $this->bot = $bot;
+        $this->bot = config('bots.bot');
     }
 
     public function send_message($chat_id, $message)
