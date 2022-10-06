@@ -41,7 +41,7 @@ class TelegramSubscriber
                         ],
                         [
                             'text' => 'Отклонить',
-                            'callback_data' => '0|' . $event->calendar->id,
+                            'callback_data' => '2|' . $event->calendar->id,
                         ],
                     ]
                 ]
