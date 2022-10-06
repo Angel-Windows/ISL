@@ -25,15 +25,17 @@ class Telegram
 //            'text' => (string)$message,
 //            'parse_mode' => 'html'
 //        ]);
-       return $this->http::post(self::url.$this->bot.'/sendMessage', [
+        return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
             'text' => (string)$message,
             'parse_mode' => 'html'
         ]);
     }
-    public function get_button($chat_id, $message, $buttons){
+
+    public function get_button($chat_id, $message, $buttons)
+    {
 //        dd(self::url . $this->bot . '/sendButtons');
-        return $this->http::post(self::url.$this->bot.'/sendMessage', [
+        return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
             'text' => (string)$message,
             'parse_mode' => 'html',
@@ -41,23 +43,25 @@ class Telegram
 
         ]);
     }
-    public function sendButtons($chat_id, $message, $button){
-        return  $this->http::post(self::url.$this->bot.'/sendMessage', [
+
+    public function sendButtons($chat_id, $message, $button)
+    {
+        return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
             'text' => $message,
             'parse_mode' => 'html',
             'reply_markup' => $button
         ]);
     }
-    public function set_button($chat_id, $message, $buttons, $message_id){
-        return $this->http::post(self::url.$this->bot.'/editMessageText', [
+
+    public function editButtons($chat_id, $message, $button, $message_id): \Illuminate\Http\Client\Response
+    {
+        return $this->http::post(self::url . $this->bot . '/editMessageText', [
             'chat_id' => $chat_id,
-            'text' => (string)$message,
+            'text' => $message,
             'parse_mode' => 'html',
-            'reply_markup' => $buttons,
+            'reply_markup' => $button,
             'message_id' => $message_id,
-
-
         ]);
     }
 }
