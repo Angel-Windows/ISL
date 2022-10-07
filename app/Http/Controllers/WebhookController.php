@@ -44,7 +44,7 @@ class WebhookController extends Controller
                                 ]
                             ]
                     ];
-                    $this->calendarRepository->success_lesson();
+                    $this->calendarRepository->success_lesson($lesson_id);
                     break;
                 case "2":
                     $reply_markup = [
@@ -58,7 +58,7 @@ class WebhookController extends Controller
                                 ]
                             ]
                     ];
-                    $this->calendarRepository->closed_lesson();
+                    $this->calendarRepository->closed_lesson($lesson_id);
                     break;
                 case "3":
                     $reply_markup = [
@@ -76,7 +76,7 @@ class WebhookController extends Controller
                                 ]
                             ]
                     ];
-                    $this->calendarRepository->back_lesson();
+                    $this->calendarRepository->back_lesson($lesson_id);
                     break;
                 default:
                     return response()->json(true, 200);
