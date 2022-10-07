@@ -78,7 +78,7 @@ class WebhookController extends Controller
             );
             return response()->json(true, 200);
         } elseif ($message) {
-            $message_id = $message['chat'];
+            $message_id = json_encode($message['chat']);
             Log::debug("Text:" . $message_id);
         }
         return response()->json(true, 200);
