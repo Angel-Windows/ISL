@@ -80,6 +80,12 @@ class WebhookController extends Controller
         } elseif ($message) {
             $message_id = json_encode($message['chat']['id']);
             $message_text = json_encode($message['text']);
+
+            $this->telegram->send_message(
+                $message_id,
+                "Привет пупсик. пообщаемся?"
+            );
+
             Log::debug("Message id:" . $message_id);
             Log::debug("Message text:" . $message_text);
         }
