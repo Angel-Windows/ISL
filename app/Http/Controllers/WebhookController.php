@@ -13,13 +13,13 @@ use Illuminate\Support\Facades\Log;
 class WebhookController extends Controller
 {
     private $telegram;
-    private $globalRepository;
+//    private $globalRepository;
     private $calendarRepository;
 
     public function __construct(Telegram $telegram)
     {
         $this->telegram = $telegram;
-        $this->globalRepository = app(GlobalRepository::class);
+//        $this->globalRepository = app(GlobalRepository::class);
         $this->calendarRepository = app(CalendarRepository::class);
     }
 
@@ -70,7 +70,7 @@ class WebhookController extends Controller
                                         'callback_data' => '1|' . $lesson_id,
                                     ],
                                     [
-                                        'text' => '✓ Отклонить',
+                                        'text' => 'Отклонить',
                                         'callback_data' => '2|' . $lesson_id,
                                     ],
                                 ]

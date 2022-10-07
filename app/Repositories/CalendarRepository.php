@@ -10,8 +10,12 @@ use Carbon\Carbon;
 use \Auth;
 use Illuminate\Database\Eloquent\Model;
 
+
 class CalendarRepository extends BaseRepository
 {
+    /**
+     * @method success_lesson();
+     */
     public function transaction_add($data = [])
     {
         $transactions = new Transactions();
