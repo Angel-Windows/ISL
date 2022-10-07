@@ -33,7 +33,9 @@ class WebhookController extends Controller
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         Log::debug($request->all());
-        $callback_data = $request->input('callback_query')['data'] ?? "";
+        $callback_data = $request->input('callback_query')['data'] ?? null;
+        $message = $request->input('message') ?? null;
+
         if (strripos($callback_data, '|')) {
             $data_request = explode('|', $callback_data);
             $action = $data_request[0] ?? 0;
@@ -75,6 +77,9 @@ class WebhookController extends Controller
                 $request->input('callback_query')['message']['message_id']
             );
             return response()->json(true, 200);
+        } elseif ($message) {
+            $message_id = $message['chat']['text'];
+            Log::debug("Text:" . $callback_data);
         }
         return response()->json(true, 200);
     }
