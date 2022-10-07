@@ -84,7 +84,7 @@ class WebhookController extends Controller
             if ($message_text == "бот") {
                 $message_bot = ["Я то бот. Но согласись что путин хуйло!", "Сам ты бот ушлёпок.", "кто как обзываеться тот так и называеться", "Ботом меня обозвал пидерком себя назвал.", "Шла саша по шосе а ты гандон.","Ой всё. Я обиделся", "Я тебя по ip вычислю","Был бы ты на зоне петухом бы тебя назвали", "Ну не обзывайся", "Нет ты бот", "Нет ты ботяра"];
 //                $message = ""
-                $message = array_rand($message_bot);
+                $message = $message_bot[array_rand($message_bot)] ?? "Бля ответы кончились";
             }
             $this->telegram->send_message($message_id, $message);
 
