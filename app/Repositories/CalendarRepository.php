@@ -32,8 +32,14 @@ class CalendarRepository extends BaseRepository
     public function success_lesson($id): array
     {
         $lesson = Calendar::where('id', $id)->first();
+        if (!$lesson){
+            return [
+                'code' => 2,
+                'message' => "$id",
+                'data' => [],
+            ];
+        }
         if ($lesson->status == 0) {
-
             return [
                 'code' => 2,
                 'message' => "This status already exist",
