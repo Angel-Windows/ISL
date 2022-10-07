@@ -43,6 +43,17 @@ class Telegram
 
         ]);
     }
+    public function ReplyKeyboardMarkup($chat_id, $message, $buttons)
+    {
+//        dd(self::url . $this->bot . '/sendButtons');
+        return $this->http::post(self::url . $this->bot . '/sendMessage', [
+            'chat_id' => $chat_id,
+            'text' => (string)$message,
+//            'parse_mode' => 'html',
+            'reply_markup' => $buttons,
+
+        ]);
+    }
 
     public function sendButtons($chat_id, $message, $button)
     {

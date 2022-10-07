@@ -32,6 +32,7 @@ class WebhookController extends Controller
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
+        Log::debug($request->all());
         $callback_data = $request->input('callback_query')['data'] ?? "";
         if (strripos($callback_data, '|')) {
             $data_request = explode('|', $callback_data);

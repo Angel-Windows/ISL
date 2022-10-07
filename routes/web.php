@@ -50,22 +50,22 @@ Route::post('/transaction/transaction_info_event', [TransactionController::class
 Route::get('/bot', function (Telegram $telegram) {
     $key = base64_encode(md5(uniqid()));
     $buttons = [
-        'inline_keyboard' => [
+        'keyboard' => [
             [
                 [
-                    'text' => 'button1',
+                    'text' => 'Админка',
                     'callback_data' => '1|' . $key
                 ],
                 [
-                    'text' => 'button1sss',
+                    'text' => 'Проверить статус',
                     'callback_data' => '1' . $key,
-
                 ],
             ]
         ]
     ];
 //    $telegram = new Telegram();
-    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
+    $sendButton = $telegram->ReplyKeyboardMarkup(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
+//    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
 
@@ -76,8 +76,6 @@ Route::post('/payed/store', [TransactionController::class, "payed_store"])->name
 Route::get('/crone', [AdminController::class, "crone"])->name('crone');
 
 Route::post('/webhook', [WebhookController::class, "index"])->name('webhook');
-
-
 
 
 require __DIR__ . '/auth.php';
