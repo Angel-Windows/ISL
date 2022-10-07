@@ -6,26 +6,33 @@ use App\Helpers\Telegram;
 use App\Models\Calendar;
 use App\Repositories\CalendarRepository;
 use App\Repositories\GlobalRepository;
+use App\Repositories\WebhookRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-
 class WebhookController extends Controller
 {
+
     private $telegram;
 //    private $globalRepository;
     private $calendarRepository;
+    private $webhookRepository;
+
+    /**
+     * @param Telegram $telegram
+     */
 
     public function __construct(Telegram $telegram)
     {
         $this->telegram = $telegram;
 //        $this->globalRepository = app(GlobalRepository::class);
         $this->calendarRepository = app(CalendarRepository::class);
+        $this->webhookRepository = app(WebhookRepository::class);
     }
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        $callback_data = $request->input('callback_query')['data']??"";
+        $callback_data = $request->input('callback_query')['data'] ?? "";
         if (strripos($callback_data, '|')) {
             $data_request = explode('|', $callback_data);
             $action = $data_request[0] ?? 0;
@@ -33,49 +40,15 @@ class WebhookController extends Controller
             $calendar = Calendar::where('id', $lesson_id)->first();
             switch ($action) {
                 case "1":
-                    $reply_markup = [
-                        'inline_keyboard' =>
-                            [
-                                [
-                                    [
-                                        'text' => 'Отменить',
-                                        'callback_data' => '3|' . $lesson_id,
-                                    ],
-                                ]
-                            ]
-                    ];
+                    $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
                     $this->calendarRepository->success_lesson($lesson_id);
                     break;
                 case "2":
-                    $reply_markup = [
-                        'inline_keyboard' =>
-                            [
-                                [
-                                    [
-                                        'text' => 'Отменить',
-                                        'callback_data' => '3|' . $lesson_id,
-                                    ],
-                                ]
-                            ]
-                    ];
+                    $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
                     $this->calendarRepository->closed_lesson($lesson_id);
                     break;
                 case "3":
-                    $reply_markup = [
-                        'inline_keyboard' =>
-                            [
-                                [
-                                    [
-                                        'text' => 'Принять',
-                                        'callback_data' => '1|' . $lesson_id,
-                                    ],
-                                    [
-                                        'text' => 'Отклонить',
-                                        'callback_data' => '2|' . $lesson_id,
-                                    ],
-                                ]
-                            ]
-                    ];
+                    $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 1);
                     $this->calendarRepository->back_lesson($lesson_id);
                     break;
                 default:

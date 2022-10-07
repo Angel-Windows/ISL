@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\LessonStart;
 use App\Helpers\Telegram;
 use App\Models\Calendar;
-use Illuminate\Contracts\Container\Container;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
@@ -25,8 +25,16 @@ class AdminController extends Controller
 
     public function crone()
     {
-        $calendar = Calendar::first();
-        event(new LessonStart($calendar));
+        $now_data = Carbon::now();
+        $now_data->timezone(3)->addHour()->setMinutes(0)->setSecond(0);
+
+        $calendar = Calendar::where('fool_time', $now_data->format('Y-m-d'))
+            ->where('time_start', '>=', $now_data->format('H:i:s'))
+            ->where('time_start', '<', $now_data->addHour()->format('H:i:s'))
+            ->get();
+        foreach ($calendar as $item) {
+            event(new LessonStart($item));
+        }
     }
 
 

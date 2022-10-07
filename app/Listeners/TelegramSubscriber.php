@@ -4,15 +4,17 @@ namespace App\Listeners;
 
 use App\Events\LessonStart;
 use App\Helpers\Telegram;
+use App\Repositories\WebhookRepository;
 
 
 class TelegramSubscriber
 {
 
     protected $telegram;
-
+    private $webhookRepository;
     public function __construct(Telegram $telegram)
     {
+        $this->webhookRepository = app(WebhookRepository::class);
         $this->telegram = $telegram;
     }
 
@@ -31,21 +33,12 @@ class TelegramSubscriber
             'day' => $event->calendar->fool_time,
             'time' => $event->calendar->time_start,
         ];
-        $reply_markup = [
-            'inline_keyboard' =>
-                [
-                    [
-                        [
-                            'text' => 'Принять',
-                            'callback_data' => '1|' . $event->calendar->id,
-                        ],
-                        [
-                            'text' => 'Отклонить',
-                            'callback_data' => '2|' . $event->calendar->id,
-                        ],
-                    ]
-                ]
-        ];
+        if($event->calendar->status == 0 || $event->calendar->student_id == 3){
+            $type = 0;
+        }else{
+            $type = 1;
+        }
+        $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $type);
         $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data), $reply_markup);
     }
 
@@ -56,6 +49,5 @@ class TelegramSubscriber
                 TelegramSubscriber::class, 'lessonsStore'
             ]
         );
-
     }
 }
