@@ -38,13 +38,12 @@ class WebhookController extends Controller
             $data_request = explode('|', $callback_data);
             $action = $data_request[0] ?? 0;
             $lesson_id = $data_request[1] ?? 0;
-            Log::debug($callback_data);
-            Log::debug($data_request);
-            if (!$lesson_id){
-
+            $calendar = Calendar::where('id', $lesson_id)->first();
+            if (!$calendar){
+                Log::debug("data_request:" . $callback_data);
                 return response()->json(true, 200);
             }
-            $calendar = Calendar::where('id', $lesson_id)->first();
+
             switch ($action) {
                 case "1":
                     $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
