@@ -78,8 +78,8 @@ class WebhookController extends Controller
             );
             return response()->json(true, 200);
         } elseif ($message) {
-            $message_id = $message['chat']['text'];
-            Log::debug("Text:" . $callback_data);
+            $message_id = $message['chat'];
+            Log::debug("Text:" . $message_id);
         }
         return response()->json(true, 200);
     }
