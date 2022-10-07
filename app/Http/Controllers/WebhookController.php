@@ -38,9 +38,10 @@ class WebhookController extends Controller
             $data_request = explode('|', $callback_data);
             $action = $data_request[0] ?? 0;
             $lesson_id = $data_request[1] ?? 0;
+            Log::debug($callback_data);
+            Log::debug($data_request);
             if (!$lesson_id){
-                Log::debug($callback_data);
-                Log::debug($data_request);
+
                 return response()->json(true, 200);
             }
             $calendar = Calendar::where('id', $lesson_id)->first();
