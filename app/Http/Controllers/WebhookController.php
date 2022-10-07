@@ -86,7 +86,7 @@ class WebhookController extends Controller
 //                $message = ""
                 $message = array_rand($message_bot);
             }
-            $this->telegram->send_message($message_id, $message_text);
+            $this->telegram->send_message($message_id, $message);
 
             Log::debug("Message id:" . $message_id);
             Log::debug("Message text:" . $message_text);
