@@ -4,15 +4,130 @@ namespace App\Repositories;
 
 use App\Models\Calendar;
 use App\Models\RegularLesson;
+use App\Models\Transactions;
+use App\Models\UsersProfile;
 use Carbon\Carbon;
 use \Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class CalendarRepository extends BaseRepository
 {
-    public function transaction_add()
+    public function transaction_add($data = [])
     {
-        return 23;
+        $transactions = new Transactions();
+        foreach ($data as $key=>$item) {
+            $transactions->$key = $item;
+        }
+        $transactions->save();
+    }
+
+    /**
+     * @param $id
+     * @return array
+     */
+    public function success_lesson($id): array
+    {
+        $lesson = Calendar::where('id', $id)->first();
+        if ($lesson->status == 0) {
+
+            return [
+                'code' => 2,
+                'message' => "This status already exist",
+                'data' => []
+            ];
+        } else {
+            $lesson->status = 0;
+            $student = UsersProfile::where('id', $lesson->student_id)->first();
+            $student->decrement('balance', $student->price_lesson);
+            $lesson->save();
+            $professor = UsersProfile::where('id', $lesson->professor_id)->first();
+            $professor->increment('balance', $student->price_lesson);
+            $data = [
+                'student_id' => $student->id,
+                'professor_id' => $lesson->professor_id,
+                'lesson_id' => $lesson->id,
+                'new_balance' => $student->balance,
+                'amount' => $student->price_lesson,
+                'status' => 1,
+                'type' => 0,
+            ];
+            $this->transaction_add($data);
+            return [
+                'code' => 1,
+                'message' => "Success save",
+                'data' => [],
+            ];
+        }
+    }
+    public function closed_lesson($id): array
+    {
+        $lesson = Calendar::where('id', $id)->first();
+        $student = UsersProfile::where('id', $lesson->student_id)->first();
+        if ($lesson->status == 3) {
+            return [
+                'code' => 2,
+                'message' => "Return nothing",
+                'data' => []
+            ];
+        } elseif ($lesson->status != 1 && $lesson->status != 2) {
+            return [
+                'code' => 2,
+                'message' => "Error type",
+                'data' => []
+            ];
+        } else {
+            $lesson->status = 3;
+            $lesson->save();
+            $data = [
+                'student_id' => $student->id,
+                'professor_id' => $lesson->professor_id,
+                'lesson_id' => $lesson->id,
+                'new_balance' => $student->balance,
+                'amount' => $student->price_lesson,
+                'status' => 1,
+                'type' => 1,
+            ];
+            $this->transaction_add($data);
+        }
+
+
+        return [
+            'code' => 1,
+            'message' => "Успешно отменено",
+            'data' => []
+        ];
+    }
+
+    public function back_lesson($id): array
+    {
+        $lesson = Calendar::where('id', $id)->first();
+        $student = UsersProfile::where('id', $lesson->student_id)->first();
+        if ($lesson->status == 0) {
+            $student->increment('balance', $student->price_lesson);
+        } elseif ($lesson->status == 1 || $lesson->status == 2) {
+            return [
+                'code' => 2,
+                'message' => "Return nothing",
+                'data' => []
+            ];
+        }
+        $lesson->status = 2;
+        $lesson->save();
+        $data = [
+            'student_id' => $student->id,
+            'professor_id' => $lesson->professor_id,
+            'lesson_id' => $lesson->id,
+            'new_balance' => $student->balance,
+            'amount' => $student->price_lesson,
+            'status' => 1,
+            'type' => 1,
+        ];
+        $this->transaction_add($data);
+        return [
+            'code' => 1,
+            'message' => "Success back",
+            'data' => []
+        ];
     }
 
     public function fill_regular_transaction($student_id, $professor_id, $date, $time, $length, $is_regular = false)

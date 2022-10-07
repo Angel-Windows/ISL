@@ -7,12 +7,15 @@ use App\Models\Config;
 class GlobalRepository extends BaseRepository
 {
     private $transactionRepository;
-
     public function __construct()
     {
         $this->transactionRepository = app(TransactionRepository::class);
     }
 
+    /**
+     * @param $request
+     * @return void
+     */
     public function change_filters($request)
     {
         $filter_name = $request['filter_name'] ?? 'filters_calendar';
@@ -34,6 +37,10 @@ class GlobalRepository extends BaseRepository
 
     }
 
+    /**
+     * @param $filter_name
+     * @return array
+     */
     public function get_filter($filter_name)
     {
         $filters = Config::where('group_name', $filter_name)->get();

@@ -60,8 +60,6 @@ class PageControler extends Controller
     }
     public function calendar(Request $request)
     {
-//        dd($this->lessonsRepository->transaction_add());
-//        $return = $this->lessonsRepository->transaction_add();
         $page = (int)$request->input('page');
 
         $data_day_time = [];

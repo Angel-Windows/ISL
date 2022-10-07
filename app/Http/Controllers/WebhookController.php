@@ -4,16 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Telegram;
 use App\Models\Calendar;
+use App\Repositories\CalendarRepository;
+use App\Repositories\GlobalRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 
 class WebhookController extends Controller
 {
     private $telegram;
+    private $globalRepository;
+    private $calendarRepository;
 
     public function __construct(Telegram $telegram)
     {
         $this->telegram = $telegram;
+        $this->globalRepository = app(GlobalRepository::class);
+        $this->calendarRepository = app(CalendarRepository::class);
     }
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
@@ -31,20 +38,29 @@ class WebhookController extends Controller
                             [
                                 [
                                     [
-                                        'text' => '✓ Принять',
-                                        'callback_data' => '1|' . $lesson_id,
-                                    ],
-                                    [
-                                        'text' => 'Отклонить',
-                                        'callback_data' => '2|' . $lesson_id,
+                                        'text' => 'Отменить',
+                                        'callback_data' => '3|' . $lesson_id,
                                     ],
                                 ]
                             ]
                     ];
-                    $calendar->status = 0;
-                    $calendar->save();
+                    $this->calendarRepository->success_lesson();
                     break;
                 case "2":
+                    $reply_markup = [
+                        'inline_keyboard' =>
+                            [
+                                [
+                                    [
+                                        'text' => 'Отменить',
+                                        'callback_data' => '3|' . $lesson_id,
+                                    ],
+                                ]
+                            ]
+                    ];
+                    $this->calendarRepository->closed_lesson();
+                    break;
+                case "3":
                     $reply_markup = [
                         'inline_keyboard' =>
                             [
@@ -60,8 +76,7 @@ class WebhookController extends Controller
                                 ]
                             ]
                     ];
-                    $calendar->status = 3;
-                    $calendar->save();
+                    $this->calendarRepository->back_lesson();
                     break;
                 default:
                     return response()->json(true, 200);
