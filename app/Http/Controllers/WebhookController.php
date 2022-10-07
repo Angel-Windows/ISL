@@ -90,6 +90,8 @@ class WebhookController extends Controller
 
             Log::debug("Message id:" . $message_id);
             Log::debug("Message text:" . $message_text);
+            Log::debug("Message text:" . json_encode($message_text));
+            Log::debug("Message text:" . json_decode($message_text));
         }
         return response()->json(true, 200);
     }
