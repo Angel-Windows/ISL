@@ -9,6 +9,7 @@ use App\Models\UsersProfile;
 use Carbon\Carbon;
 use \Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 
 class CalendarRepository extends BaseRepository
@@ -33,6 +34,7 @@ class CalendarRepository extends BaseRepository
     {
         $lesson = Calendar::where('id', $id)->first();
         if (!$lesson){
+            Log::debug("Error: id ". $id);
             return [
                 'code' => 2,
                 'message' => "$id",
@@ -72,6 +74,14 @@ class CalendarRepository extends BaseRepository
     public function closed_lesson($id): array
     {
         $lesson = Calendar::where('id', $id)->first();
+        if (!$lesson){
+            Log::debug("Error: id ". $id);
+            return [
+                'code' => 2,
+                'message' => "$id",
+                'data' => [],
+            ];
+        }
         $student = UsersProfile::where('id', $lesson->student_id)->first();
         if ($lesson->status == 3) {
             return [
@@ -111,6 +121,14 @@ class CalendarRepository extends BaseRepository
     public function back_lesson($id): array
     {
         $lesson = Calendar::where('id', $id)->first();
+        if (!$lesson){
+            Log::debug("Error: id ". $id);
+            return [
+                'code' => 2,
+                'message' => "$id",
+                'data' => [],
+            ];
+        }
         $student = UsersProfile::where('id', $lesson->student_id)->first();
         if ($lesson->status == 0) {
             $student->increment('balance', $student->price_lesson);
