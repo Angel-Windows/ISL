@@ -82,5 +82,6 @@ class WebhookController extends Controller
             );
             return response()->json(true, 200);
         }
+        return response()->json(true, 200);
     }
 }
