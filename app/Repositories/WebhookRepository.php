@@ -57,6 +57,7 @@ class WebhookRepository extends BaseRepository
         foreach (explode('|', $telegram_templates->buttons??"") as $item) {
             $buttons['keyboard'][0][] = [
                 'text' => $item,
+                'callback_data'=>"callback_datacallback_data"
             ];
         }
         if (isset($buttons['keyboard'][0][0])) {
