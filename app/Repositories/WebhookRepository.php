@@ -54,7 +54,7 @@ class WebhookRepository extends BaseRepository
     {
         $telegram_templates = TelegramTemplate::where('message', $message)->first();
         $buttons = ['keyboard' => [[]]];
-        foreach (explode('|', $telegram_templates->buttons) as $item) {
+        foreach (explode('|', $telegram_templates->buttons??"") as $item) {
             $buttons['keyboard'][0][] = [
                 'text' => $item,
                 'callback_data' => '1|' . $telegram_templates->parent_id
