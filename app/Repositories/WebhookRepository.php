@@ -52,7 +52,7 @@ class WebhookRepository extends BaseRepository
 
     public function bd_answer_templates($message)
     {
-        $telegram_templates = TelegramTemplate::where('message', "Путин")->first();
+        $telegram_templates = TelegramTemplate::where('message', $message)->first();
         $buttons = ['keyboard' => [[]]];
         foreach (explode('|', $telegram_templates->buttons) as $item) {
             $buttons['keyboard'][0][] = [
