@@ -8,6 +8,7 @@ use App\Repositories\CalendarRepository;
 use App\Repositories\GlobalRepository;
 use App\Repositories\WebhookRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
@@ -86,6 +87,11 @@ class WebhookController extends Controller
 //                $message = ""
                 $message = $message_bot[array_rand($message_bot)] ?? "Бля ответы кончились";
                 $this->telegram->send_message($message_id, $message);
+            }elseif ($message_text == "Логин") {
+                Http::post('https://new.it-schoollearn.com/login', [
+                    'email' => 'eliphas.sn@gmail.com',
+                    'password' => '1232',
+                ]);
             } elseif ($data_templates = $this->webhookRepository->bd_answer_templates($message_text)) {
                 $this->telegram->ReplyKeyboardMarkup($message_id ?? "324428256", $data_templates['answer'], $data_templates['buttons']);
             } else {

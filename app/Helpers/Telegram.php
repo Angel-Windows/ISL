@@ -48,8 +48,11 @@ class Telegram
 //        dd(self::url . $this->bot . '/sendButtons');
         return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
+            'remove_keyboard'=>true,
             'text' => (string)$message,
+            'callback_data' => '1|Test',
 //            'parse_mode' => 'html',
+            'string' => 'ReplyMarkup',
             'reply_markup' => $buttons,
 
         ]);

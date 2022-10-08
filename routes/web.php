@@ -64,23 +64,16 @@ Route::get('/bot', function (Telegram $telegram) {
 //        ]
 //    ];
     $telegram_templates = \App\Models\TelegramTemplate::where('message', "Путин")->first();
-    $buttons = [
-        'keyboard' => [
-            [
-
-            ]
-        ]
-    ];
+    $buttons = ['keyboard' => [[]]];
     foreach (explode('|', $telegram_templates->buttons) as $item) {
         $buttons['keyboard'][0][] = [
-            'text' => $item,
+            'text' => "||spoiler||",
             'callback_data' => '1|' . $key
         ];
     }
-//    dd($buttons);
 
-//    $telegram = new Telegram();
-    $sendButton = $telegram->ReplyKeyboardMarkup(env('REPORT_TELEGRAM_ID', "324428256"), $telegram_templates->answer, $buttons);
+
+    $sendButton = $telegram->ReplyKeyboardMarkup(324428256, $telegram_templates->answer, $buttons);
 //    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
