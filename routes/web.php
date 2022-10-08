@@ -22,6 +22,11 @@ use App\Http\Controllers\WebhookController;
 |
 */
 auth();
+Route::get('/dashboard', function (){
+    return view('dashboard');
+});
+
+
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 
