@@ -61,7 +61,7 @@ class WebhookRepository extends BaseRepository
         }
         if (isset($buttons['keyboard'][0][0])) {
             return [
-                'answer' => $telegram_templates->answer,
+                'answer' => $telegram_templates->answer??"",
                 'buttons' => $buttons
             ];
         }else{
