@@ -41,7 +41,7 @@ class WebhookController extends Controller
             $action = $data_request[0] ?? 0;
             $lesson_id = $data_request[1] ?? 0;
             $calendar = Calendar::where('id', $lesson_id)->first();
-            if (!$calendar){
+            if (!$calendar) {
                 Log::debug("data_request:" . $callback_data);
                 return response()->json(true, 200);
             }
@@ -82,16 +82,15 @@ class WebhookController extends Controller
             $message_text = $message['text'];
             $message = "Привет пупсик. пообщаемся?";
             if ($message_text == "бот") {
-                $message_bot = ["Я то бот. Но согласись что путин хуйло!", "Сам ты бот ушлёпок.", "кто как обзываеться тот так и называеться", "Ботом меня обозвал пидерком себя назвал.", "Шла саша по шосе а ты гандон.","Ой всё. Я обиделся", "Я тебя по ip вычислю","Был бы ты на зоне петухом бы тебя назвали", "Ну не обзывайся", "Нет ты бот", "Нет ты ботяра", "Это чат школы бля. а ты хуйнёй страдаешь"];
+                $message_bot = ["Я то бот. Но согласись что путин хуйло!", "Сам ты бот ушлёпок.", "кто как обзываеться тот так и называеться", "Ботом меня обозвал пидерком себя назвал.", "Шла саша по шосе а ты гандон.", "Ой всё. Я обиделся", "Я тебя по ip вычислю", "Был бы ты на зоне петухом бы тебя назвали", "Ну не обзывайся", "Нет ты бот", "Нет ты ботяра", "Это чат школы бля. а ты хуйнёй страдаешь"];
 //                $message = ""
                 $message = $message_bot[array_rand($message_bot)] ?? "Бля ответы кончились";
+                $this->telegram->send_message($message_id, $message);
+            } elseif ($data_templates = $this->webhookRepository->bd_answer_templates($message_text)) {
+                $this->telegram->ReplyKeyboardMarkup($message_id ?? "324428256", $data_templates['answer'], $data_templates['buttons']);
+            } else {
+                $this->telegram->send_message($message_id, $message);
             }
-            $this->telegram->send_message($message_id, $message);
-
-            Log::debug("Message id:" . $message_id);
-            Log::debug("Message text:" . $message_text);
-            Log::debug("Message text:" . json_encode($message_text));
-            Log::debug("Message text:" . json_decode($message_text));
         }
         return response()->json(true, 200);
     }

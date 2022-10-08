@@ -49,22 +49,38 @@ Route::post('/transaction/transaction_info_event', [TransactionController::class
 
 Route::get('/bot', function (Telegram $telegram) {
     $key = base64_encode(md5(uniqid()));
+//    $buttons = [
+//        'keyboard' => [
+//            [
+//                [
+//                    'text' => 'Админка',
+//                    'callback_data' => '1|' . $key
+//                ],
+//                [
+//                    'text' => 'Проверить статус',
+//                    'callback_data' => '1' . $key,
+//                ],
+//            ]
+//        ]
+//    ];
+    $telegram_templates = \App\Models\TelegramTemplate::where('message', "Путин")->first();
     $buttons = [
         'keyboard' => [
             [
-                [
-                    'text' => 'Админка',
-                    'callback_data' => '1|' . $key
-                ],
-                [
-                    'text' => 'Проверить статус',
-                    'callback_data' => '1' . $key,
-                ],
+
             ]
         ]
     ];
+    foreach (explode('|', $telegram_templates->buttons) as $item) {
+        $buttons['keyboard'][0][] = [
+            'text' => $item,
+            'callback_data' => '1|' . $key
+        ];
+    }
+//    dd($buttons);
+
 //    $telegram = new Telegram();
-    $sendButton = $telegram->ReplyKeyboardMarkup(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
+    $sendButton = $telegram->ReplyKeyboardMarkup(env('REPORT_TELEGRAM_ID', "324428256"), $telegram_templates->answer, $buttons);
 //    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');

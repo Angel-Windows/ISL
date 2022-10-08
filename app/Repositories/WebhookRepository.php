@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Calendar;
 use App\Models\RegularLesson;
+use App\Models\TelegramTemplate;
 use Carbon\Carbon;
 use \Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -47,5 +48,29 @@ class WebhookRepository extends BaseRepository
                 return 0;
         }
         return $reply_markup;
+    }
+
+    public function bd_answer_templates($message)
+    {
+        $telegram_templates = TelegramTemplate::where('message', "Путин")->first();
+        $buttons = ['keyboard' => [[]]];
+        foreach (explode('|', $telegram_templates->buttons) as $item) {
+            $buttons['keyboard'][0][] = [
+                'text' => $item,
+                'callback_data' => '1|' . $telegram_templates->parent_id
+            ];
+        }
+        if (isset($buttons['keyboard'][0][0])) {
+            return [
+                'answer' => $telegram_templates->answer,
+                'buttons' => $buttons
+            ];
+        }else{
+            return false;
+        }
+
+//    dd($buttons);
+
+//    $telegram = new Telegram();
     }
 }

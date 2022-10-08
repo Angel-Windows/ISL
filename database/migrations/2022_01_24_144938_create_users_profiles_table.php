@@ -16,6 +16,8 @@ class CreateUsersProfilesTable extends Migration
         Schema::create('users_profiles', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
+            $table->integer('telegram_id')->nullable();
+
             $table->float('balance')->default(0);
             $table->float('temp_balance')->default(0);
             $table->string('name');
