@@ -93,7 +93,7 @@ class WebhookController extends Controller
                     'password' => '1232',
                 ]);
             }elseif ($message_text == "Аутх") {
-                $this->telegram->send_message($message_id, \Auth::id());
+                $this->telegram->send_message($message_id, "Id: " . \Auth::id());
             } elseif ($data_templates = $this->webhookRepository->bd_answer_templates($message_text)) {
                 $this->telegram->ReplyKeyboardMarkup($message_id ?? "324428256", $data_templates['answer'], $data_templates['buttons']);
             } else {
