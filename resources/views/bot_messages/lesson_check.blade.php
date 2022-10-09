@@ -4,6 +4,6 @@
 <b>День: </b> <code>{{$day}}</code>
 <b>Время: </b> <code>{{$time}}</code>
 <b>Статус: </b> <code>{{$status}}</code>
-<b>Баланс: </b> <code>||{{$status}}||</code>
+<b>Баланс: </b> ||<code>{{$status}}</code>||
 
 
