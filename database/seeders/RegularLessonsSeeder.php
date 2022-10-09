@@ -26,7 +26,7 @@ class RegularLessonsSeeder extends Seeder
                 //Артем Шарапов
                 ['student_id' => 6, 'professor_id' => 1, 'day_week' => 3, 'time_start' => '19:00:00', 'length' => 60],
                 ['student_id' => 6, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '18:00:00', 'length' => 60],
-                ['student_id' => 6, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '20:00:00', 'length' => 60],
+                ['student_id' => 6, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '22:00:00', 'length' => 60],
                 //Максим Семиполец
                 ['student_id' => 7, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '20:00:00', 'length' => 60],
                 ['student_id' => 7, 'professor_id' => 1, 'day_week' => 4, 'time_start' => '20:00:00', 'length' => 60],
