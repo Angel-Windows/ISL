@@ -82,7 +82,7 @@ class WebhookController extends Controller
         } elseif (strripos($message['text'], '@gmail.com')) {
             $user = User::where('email', $message['text'])->first();
             if ($user) {
-                $user->telegram_id = $message['text'];
+                $user->telegram_id = $message['chat']['id'];
                 $user->save();
                 $this->telegram->send_message($message['chat']['id'], "Успешно авторизовано");
             }else{
