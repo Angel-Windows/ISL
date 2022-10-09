@@ -33,7 +33,7 @@ class WebhookController extends Controller
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-//        Log::debug($request->all());
+        Log::debug($request->all());
         $callback_data = $request->input('callback_query')['data'] ?? null;
         if ($callback_data) {
             $this->callback_function($callback_data);
@@ -51,12 +51,13 @@ class WebhookController extends Controller
 
     private function message_function($request)
     {
-        $message_text = $message['text'] ?? null;
-        $message_id = $message['chat']['id'] ?? null;
+        $message_text = $request['text'] ?? null;
+        $message_id = $request['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
+        Log::debug("message_function ". $message_text);
 
         if ($template) {
-            if ($template->message == '/login') {
+            if ($message_text == '/login') {
                 $telegram_session = new TelegramSession();
                 $telegram_session->type = 1;
                 $telegram_session->telegram_id = $message_id;
