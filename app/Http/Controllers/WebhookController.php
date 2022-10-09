@@ -121,7 +121,7 @@ class WebhookController extends Controller
                 return response()->json(true, 200);
         }
         $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, $lesson->status);
-        $templates_lesson = $this->webhookRepository->buttons_bot($lesson);
+        $templates_lesson = $this->webhookRepository->templates_lesson($lesson);
 
         $message_telegram = $this->telegram->editButtons($cht_id, $templates_lesson, $reply_markup, $message_id);
         return response()->json(true, 200);

@@ -31,7 +31,7 @@ class TelegramSubscriber
     {
 
         $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $event->calendar->status);
-        $templates_lesson = $this->webhookRepository->buttons_bot($event->calendar);
+        $templates_lesson = $this->webhookRepository->templates_lesson($event->calendar);
 
         $message_telegram = $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), $templates_lesson, $reply_markup);
         $student = User::where('id', $event->calendar->student_id)->first();
