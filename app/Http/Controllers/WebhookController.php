@@ -46,7 +46,7 @@ class WebhookController extends Controller
     private function callback_function($callback_data)
     {
         $data_request = explode('|', $callback_data);
-        $callback_id = $callback_data['callback_query'];
+        $callback_id = $callback_data['id'];
 
         $this->btn($callback_id, $data_request[0], $data_request[1]);
         Log::debug("callback_function " . $data_request[1]);
