@@ -36,7 +36,7 @@ class WebhookController extends Controller
         Log::debug($request->all());
         $callback_data = $request->input('callback_query')['data'] ?? null;
         if ($callback_data) {
-            $this->callback_function($callback_data);
+            $this->callback_function($callback_data, $request);
         } else {
             $this->message_function($request);
         }
