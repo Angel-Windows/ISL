@@ -27,11 +27,11 @@ class AdminController extends Controller
     {
         $now_data = Carbon::now();
         $now_data->timezone(3)->addHour()->setMinutes(0)->setSecond(0);
-
         $calendar = Calendar::where('fool_time', $now_data->format('Y-m-d'))
             ->where('time_start', '>=', $now_data->format('H:i:s'))
             ->where('time_start', '<', $now_data->addHour()->format('H:i:s'))
             ->get();
+
         foreach ($calendar as $item) {
             event(new LessonStart($item));
         }

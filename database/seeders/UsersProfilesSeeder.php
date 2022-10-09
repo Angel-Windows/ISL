@@ -27,6 +27,7 @@ class UsersProfilesSeeder extends Seeder
                 ['currency' => '2', 'user_id' => 9, 'balance' => 450, 'name' => 'Максим Дімура', 'price_lesson' => 250],
                 ['currency' => '1', 'user_id' => 10, 'balance' => -488, 'name' => 'Максим Елин', 'price_lesson' => 250],
                 ['currency' => '4', 'user_id' => 11, 'balance' => -489, 'name' => 'Ангелина Рожкован', 'price_lesson' => 250],
+                ['currency' => '4', 'user_id' => 12, 'balance' => 200, 'name' => 'Данил Жогов', 'price_lesson' => 100],
             ]
         );
     }

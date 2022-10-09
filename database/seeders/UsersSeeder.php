@@ -18,17 +18,18 @@ class UsersSeeder extends Seeder
     {
         DB::statement('truncate table users');
         DB::table('users')->insert([
-                ["hash" => $this->create_hash(), 'email' => 'eliphas.sn@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'syperdan100@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'sayler.sn@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'markaganbegyan@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'sergey@school.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'artem@school.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'egor@school.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'dsharapovad@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'maxdimuraelios@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'max_elin@gmail.com', 'password' => Hash::make(1232)],
-                ["hash" => $this->create_hash(), 'email' => 'angelina_rozhkovan@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> 324428256, 'email' => 'eliphas.sn@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'heramn@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'sayler.sn@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'markaganbegyan@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'sergey@school.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'artem@school.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'egor@school.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'dsharapovad@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'maxdimuraelios@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'max_elin@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'angelina@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> 952336186, 'email' => 'syperdan100@gmail.com', 'password' => Hash::make(1232)],
             ]
         );
     }

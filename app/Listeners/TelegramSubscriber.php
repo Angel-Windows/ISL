@@ -4,6 +4,8 @@ namespace App\Listeners;
 
 use App\Events\LessonStart;
 use App\Helpers\Telegram;
+use App\Models\User;
+use App\Models\UsersProfile;
 use App\Repositories\WebhookRepository;
 
 
@@ -26,12 +28,16 @@ class TelegramSubscriber
      */
     public function lessonsStore(LessonStart $event)
     {
+        $professor_profiles = UsersProfile::where('id', $event->calendar->professor_id)->first();
+        $student_profiles = UsersProfile::where('id', $event->calendar->student_id)->first();
+
         $data = [
             'id' => $event->calendar->id,
-            'professor' => $event->calendar->professor_id,
-            'student' => $event->calendar->student_id,
+            'professor' => $professor_profiles->name,
+            'student' => $student_profiles->name,
             'day' => $event->calendar->fool_time,
             'time' => $event->calendar->time_start,
+            'status' => $event->calendar->status,
         ];
         if($event->calendar->status == 0 || $event->calendar->student_id == 3){
             $type = 0;
@@ -40,6 +46,12 @@ class TelegramSubscriber
         }
         $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $type);
         $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data), $reply_markup);
+        $student = User::where('id', 12)->first();
+        if ($student) {
+            if ($student_telegramId = $student->telegram_id) {
+                $this->telegram->send_message($student_telegramId, (string)view('bot_messages.lesson_check', $data));
+            }
+        }
     }
 
     public function subscribe($events)
