@@ -54,6 +54,8 @@ class WebhookController extends Controller
         $message_text = $message['text'] ?? null;
         $message_id = $message['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
+        Log::debug("message_function ", $message_text);
+
         if ($template) {
             if ($template->message == 'login') {
                 $telegram_session = new TelegramSession();
