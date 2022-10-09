@@ -103,7 +103,7 @@ class WebhookController extends Controller
 
     private function btn($cht_id,$action, $lesson_id, $message_id)
     {
-        $lesson = Calendar::where('id', $lesson_id);
+        $lesson = Calendar::where('id', $lesson_id)->first();
         switch ($action) {
             case "1":
                 $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
