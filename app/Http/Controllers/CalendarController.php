@@ -73,8 +73,8 @@ class CalendarController extends Controller
 
     public function lesson_info_event(Request $request)
     {
-        $telegram_session = TelegramSession::where('telegram_id', 324428256)->where('status', 1)->first();
-            dd($telegram_session);
+        dd(\Hash::check('1232', '$2y$10$hIYmpSpbEMtyRz11IJLK7.zRmGFdKWXQil8l0C1Tf72cC/x62Rv1i'));
+//        TelegramSession::where('telegram_id', 1232)->delete();
     }
 
     public function get_lesson_info(Request $request)

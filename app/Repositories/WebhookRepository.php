@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Calendar;
 use App\Models\RegularLesson;
+use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
 use Carbon\Carbon;
 use \Auth;
@@ -76,6 +77,6 @@ class WebhookRepository extends BaseRepository
 
     public function delete_all_session($telegram_id)
     {
-
+        $telegramSession = TelegramSession::where('telegram_id', $telegram_id)->delete();
     }
 }
