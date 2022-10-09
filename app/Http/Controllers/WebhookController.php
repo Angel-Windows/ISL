@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Telegram;
+use App\Models\TelegramSession;
+use App\Models\TelegramTemplate;
+use App\Models\User;
 use App\Repositories\CalendarRepository;
 use App\Repositories\WebhookRepository;
 use Illuminate\Http\Request;
@@ -30,29 +33,65 @@ class WebhookController extends Controller
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-
-        Log::debug($request->all());
+//        Log::debug($request->all());
         $callback_data = $request->input('callback_query')['data'] ?? null;
-
-
-
-        if ($callback_data){
+        if ($callback_data) {
             $this->callback_function($callback_data);
-        }else{
+        } else {
             $this->message_function($request);
         }
         return response()->json(true, 200);
     }
-    private function callback_function($callback_data){
+
+    private function callback_function($callback_data)
+    {
         $data_request = explode('|', $callback_data);
+        Log::debug("callback_function");
     }
 
     private function message_function($request)
     {
-//        $message_text = $message['text'] ?? null;
-//        $message_id = $message['chat']['id'] ?? null;
+        $message_text = $message['text'] ?? null;
+        $message_id = $message['chat']['id'] ?? null;
+        $template = TelegramTemplate::where('message', $message_text)->first();
+        if ($template) {
+            if ($template->message == 'login') {
+                $telegram_session = new TelegramSession();
+                $telegram_session->type = 1;
+                $telegram_session->telegram_id = $message_id;
+                $telegram_session->text = "start";
+                $telegram_session->save();
+            }
+        } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('stats', 1)->first()) {
+            $telegram_session->status = 0;
+            $telegram_session->save();
+            if ($telegram_session->type == 1) {
+                if ($telegram_session->parent_id) {
+                    if (User::where('email', $message_text)->first()) {
+                        $newTelegramSession = new TelegramSession();
+                        $newTelegramSession->type = 1;
+                        $newTelegramSession->telegram_id = $message_id;
+                        $newTelegramSession->text = $message_text;
+                        $newTelegramSession->save();
+                        $this->telegram->send_message($message_id, 'Введите пароль');
+                    } else {
+                        $this->telegram->send_message($message_id, 'e-mail не найден');
+                    }
+                } else {
+                    if (User::where('email', $message_text)->first()) {
+                        $newTelegramSession = new TelegramSession();
+                        $newTelegramSession->type = 1;
+                        $newTelegramSession->telegram_id = $message_id;
+                        $newTelegramSession->text = $message_text;
+                        $newTelegramSession->save();
+                        $this->telegram->send_message($message_id, 'Успешно авторизованно');
+                    } else {
+                        $this->telegram->send_message($message_id, 'Пароль неверный');
+                    }
+                }
+            }
+        }
     }
-
 
     private function btn($action, $lesson_id)
     {

@@ -16,7 +16,7 @@ class CreateTelegramTemplatesTable extends Migration
         Schema::create('telegram_templates', function (Blueprint $table) {
             $table->id();
             $table->integer('parent_id')->nullable();
-            $table->integer('type')->default(0);
+            $table->integer('type')->default(0)->comment('0-Btn|1-Command');
             $table->string('message');
             $table->string('answer');
             $table->string('buttons')->nullable();
