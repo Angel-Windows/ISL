@@ -51,8 +51,9 @@ class WebhookController extends Controller
 
     private function message_function($request)
     {
-        $message_text = $request['text'] ?? null;
-        $message_id = $request['chat']['id'] ?? null;
+        $message = $request->input('message');
+        $message_text = $message['text'] ?? null;
+        $message_id = $message['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
         Log::debug("message_function ". $message_text);
 
