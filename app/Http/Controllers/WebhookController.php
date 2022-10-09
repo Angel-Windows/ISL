@@ -62,7 +62,7 @@ class WebhookController extends Controller
                 $telegram_session->text = "start";
                 $telegram_session->save();
             }
-        } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('stats', 1)->first()) {
+        } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
             $telegram_session->status = 0;
             $telegram_session->save();
             if ($telegram_session->type == 1) {

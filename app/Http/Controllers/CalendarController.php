@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TelegramSession;
 use App\Models\Transactions;
 use App\Models\UsersProfile;
 use App\Repositories\CalendarRepository;
@@ -72,30 +73,8 @@ class CalendarController extends Controller
 
     public function lesson_info_event(Request $request)
     {
-        $id = $request['id'];
-        $event = $request['event'];
-        $return = [];
-        switch ($event) {
-            case "0":
-                $return = 0;
-                break;
-            case "1":
-                $return = $this->calendarRepository->success_lesson($id);
-//                $return = $this->success_lesson($id);
-                break;
-            case "2":
-                $return = $this->calendarRepository->closed_lesson($id);
-//                $return = $this->closed_lesson($id);
-                break;
-            case "3":
-                $return = $this->calendarRepository->back_lesson($id);
-//                $return = $this->back_lesson($id);
-                break;
-            default:
-                break;
-        }
-        $return['type'] = (int)$event;
-        return json_encode($return);
+        $telegram_session = TelegramSession::where('telegram_id', 324428256)->where('status', 1)->first();
+            dd($telegram_session);
     }
 
     public function get_lesson_info(Request $request)
