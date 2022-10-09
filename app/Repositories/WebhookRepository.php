@@ -7,14 +7,20 @@ use App\Models\RegularLesson;
 use App\Models\TelegramChat;
 use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
+use App\Models\UsersProfile;
 use Carbon\Carbon;
 use \Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class WebhookRepository extends BaseRepository
 {
-    public function buttons_bot($lesson_id, $type)
+    public function buttons_bot($lesson_id, $status)
     {
+        if ($status == 0 || $status == 3) {
+            $type = 0;
+        } else {
+            $type = 1;
+        }
         switch ($type) {
             case 0:
                 $reply_markup = [
@@ -88,5 +94,21 @@ class WebhookRepository extends BaseRepository
     public function delete_all_session($telegram_id)
     {
         $telegramSession = TelegramSession::where('telegram_id', $telegram_id)->delete();
+    }
+
+    public function templates_lesson($calendar): string
+    {
+        $professor_profiles = UsersProfile::where('id', $calendar->professor_id)->first();
+        $student_profiles = UsersProfile::where('id', $calendar->student_id)->first();
+        $data = [
+            'id' => $calendar->id,
+            'professor' => $professor_profiles->name,
+            'student' => $student_profiles->name,
+            'day' => $calendar->fool_time,
+            'time' => $calendar->time_start,
+            'status' => $calendar->status,
+        ];
+
+        return (string)view('bot_messages.lesson_check', $data);
     }
 }

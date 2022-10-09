@@ -29,29 +29,15 @@ class TelegramSubscriber
      */
     public function lessonsStore(LessonStart $event)
     {
-        $professor_profiles = UsersProfile::where('id', $event->calendar->professor_id)->first();
-        $student_profiles = UsersProfile::where('id', $event->calendar->student_id)->first();
 
-        $data = [
-            'id' => $event->calendar->id,
-            'professor' => $professor_profiles->name,
-            'student' => $student_profiles->name,
-            'day' => $event->calendar->fool_time,
-            'time' => $event->calendar->time_start,
-            'status' => $event->calendar->status,
-        ];
-        if($event->calendar->status == 0 || $event->calendar->student_id == 3){
-            $type = 0;
-        }else{
-            $type = 1;
-        }
-        $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $type);
+        $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $event->calendar->status);
+        $templates_lesson = $this->webhookRepository->buttons_bot($event->calendar);
 
-        $message_telegram = $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data), $reply_markup);
+        $message_telegram = $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), $templates_lesson, $reply_markup);
         $student = User::where('id', $event->calendar->student_id)->first();
         if ($student) {
             if ($student_telegramId = $student->telegram_id) {
-                $message_telegram = $this->telegram->send_message($student_telegramId, (string)view('bot_messages.lesson_check', $data));
+                $message_telegram = $this->telegram->send_message($student_telegramId, $templates_lesson);
                 $this->webhookRepository->add_telegram_chats($message_telegram, $event->calendar->id);
             }
         }
