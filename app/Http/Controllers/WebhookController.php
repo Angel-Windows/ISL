@@ -57,7 +57,7 @@ class WebhookController extends Controller
         Log::debug("message_function ", $message_text);
 
         if ($template) {
-            if ($template->message == 'login') {
+            if ($template->message == '/login') {
                 $telegram_session = new TelegramSession();
                 $telegram_session->type = 1;
                 $telegram_session->telegram_id = $message_id;
