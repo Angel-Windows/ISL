@@ -83,7 +83,10 @@ class WebhookController extends Controller
                         $this->webhookRepository->delete_all_session($message_id);
                     }
                 } else {
-                    if (\Hash::check($message_text, User::where('email', $telegram_session->text)->first()->password)) {
+                    $user = User::where('email', $telegram_session->text)->first();
+                    if (\Hash::check($message_text, $user->password)) {
+                        $user->telegram_id = $message_id;
+                        $user->save();
                         $this->telegram->send_message($message_id, 'Успешно авторизованно');
                     } else {
                         $this->telegram->send_message($message_id, 'Пароль неверный');
