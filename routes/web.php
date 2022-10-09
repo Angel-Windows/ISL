@@ -3,6 +3,7 @@
 use App\Http\Controllers\PageControler;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GlobalController;
@@ -23,7 +24,11 @@ use App\Http\Controllers\WebhookController;
 */
 auth();
 Route::get('/dashboard', function (){
-    return view('dashboard');
+//    Http::post(route('login'), [
+//        'email' => 'eliphas.sn@gmail.com',
+//        'password' => '1232',
+//    ]);
+//    return view('dashboard');
 });
 
 

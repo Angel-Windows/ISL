@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Telegram;
 use App\Models\Calendar;
+use App\Models\User;
 use App\Repositories\CalendarRepository;
 use App\Repositories\GlobalRepository;
 use App\Repositories\WebhookRepository;
@@ -78,7 +79,18 @@ class WebhookController extends Controller
                 $request->input('callback_query')['message']['message_id']
             );
             return response()->json(true, 200);
+        } elseif (strripos($message['text'], '@gmail.com')) {
+            $user = User::where('email', $message['text'])->first();
+            if ($user) {
+                $user->telegram_id = $message['text'];
+                $user->save();
+                $this->telegram->send_message($message['chat']['id'], "Успешно авторизовано");
+            }else{
+                $this->telegram->send_message($message['chat']['id'], "Не удалось авторизоваться");
+            }
+
         } elseif ($message) {
+
             $message_id = $message['chat']['id'];
             $message_text = $message['text'];
             $message = "Привет пупсик. пообщаемся?";
@@ -87,13 +99,6 @@ class WebhookController extends Controller
 //                $message = ""
                 $message = $message_bot[array_rand($message_bot)] ?? "Бля ответы кончились";
                 $this->telegram->send_message($message_id, $message);
-            }elseif ($message_text == "Логин") {
-                Http::post('https://new.it-schoollearn.com/login', [
-                    'email' => 'eliphas.sn@gmail.com',
-                    'password' => '1232',
-                ]);
-            }elseif ($message_text == "Аутх") {
-                $this->telegram->send_message($message_id, "Id: " . \Auth::id());
             } elseif ($data_templates = $this->webhookRepository->bd_answer_templates($message_text)) {
                 $this->telegram->ReplyKeyboardMarkup($message_id ?? "324428256", $data_templates['answer'], $data_templates['buttons']);
             } else {
