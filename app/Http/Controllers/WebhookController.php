@@ -46,9 +46,9 @@ class WebhookController extends Controller
     private function callback_function($callback_data, $request)
     {
         $data_request = explode('|', $callback_data);
-        $callback_id = $request->input('callback_query')['id'];
-
-        $this->btn($callback_id, $data_request[0], $data_request[1]);
+        $callback_id = $request->input('callback_query')['message']['message_id'];
+        $chat_id = $request->input('callback_query')['chat']['id'];
+        $this->btn($chat_id, $data_request[0], $data_request[1], $callback_id);
         Log::debug("callback_function " . $data_request[1]);
     }
 
@@ -100,7 +100,7 @@ class WebhookController extends Controller
         }
     }
 
-    private function btn($cht_id,$action, $lesson_id)
+    private function btn($cht_id,$action, $lesson_id, $message_id)
     {
         switch ($action) {
             case "1":
@@ -118,7 +118,7 @@ class WebhookController extends Controller
             default:
                 return response()->json(true, 200);
         }
-        $this->telegram->editButtons($cht_id, '', $reply_markup, $reply_markup);
+        $this->telegram->editButtons($cht_id, 'test', $reply_markup, $message_id);
         return response()->json(true, 200);
     }
 }
