@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Telegram;
-use App\Models\Calendar;
-use App\Models\User;
 use App\Repositories\CalendarRepository;
-use App\Repositories\GlobalRepository;
 use App\Repositories\WebhookRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+
 
 class WebhookController extends Controller
 {
 
-    private $telegram;
+    private Telegram $telegram;
 //    private $globalRepository;
     private $calendarRepository;
     private $webhookRepository;
@@ -27,84 +24,54 @@ class WebhookController extends Controller
     public function __construct(Telegram $telegram)
     {
         $this->telegram = $telegram;
-//        $this->globalRepository = app(GlobalRepository::class);
         $this->calendarRepository = app(CalendarRepository::class);
         $this->webhookRepository = app(WebhookRepository::class);
     }
 
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
-        Log::debug($request->all());
+        Log::debug((string)$request->all());
         $callback_data = $request->input('callback_query')['data'] ?? null;
-        $message = $request->input('message') ?? null;
 
-        if (strripos($callback_data, '|')) {
-            $data_request = explode('|', $callback_data);
-            $action = $data_request[0] ?? 0;
-            $lesson_id = $data_request[1] ?? 0;
-            $calendar = Calendar::where('id', $lesson_id)->first();
-            if (!$calendar) {
-                Log::debug("data_request:" . $callback_data);
-                return response()->json(true, 200);
-            }
 
-            switch ($action) {
-                case "1":
-                    $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
-                    $this->calendarRepository->success_lesson($lesson_id);
-                    break;
-                case "2":
-                    $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
-                    $this->calendarRepository->closed_lesson($lesson_id);
-                    break;
-                case "3":
-                    $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 1);
-                    $this->calendarRepository->back_lesson($lesson_id);
-                    break;
-                default:
-                    return response()->json(true, 200);
-            }
 
-            $data = [
-                'id' => $calendar->id,
-                'professor' => $calendar->professor_id,
-                'student' => $calendar->student_id,
-                'day' => $calendar->fool_time,
-                'time' => $calendar->time_start,
-            ];
-            $this->telegram->editButtons(
-                env('REPORT_TELEGRAM_ID', "324428256"),
-                (string)view('bot_messages.lesson_check', $data),
-                $reply_markup,
-                $request->input('callback_query')['message']['message_id']
-            );
-            return response()->json(true, 200);
-        } elseif (strripos($message['text'], '@gmail.com')) {
-            $user = User::where('email', $message['text'])->first();
-            if ($user) {
-                $user->telegram_id = $message['chat']['id'];
-                $user->save();
-                $this->telegram->send_message($message['chat']['id'], "Успешно авторизовано");
-            }else{
-                $this->telegram->send_message($message['chat']['id'], "Не удалось авторизоваться");
-            }
-
-        } elseif ($message) {
-
-            $message_id = $message['chat']['id'];
-            $message_text = $message['text'];
-            $message = "Привет пупсик. пообщаемся?";
-            if ($message_text == "бот") {
-                $message_bot = ["Я то бот. Но согласись что путин хуйло!", "Сам ты бот ушлёпок.", "кто как обзываеться тот так и называеться", "Ботом меня обозвал пидерком себя назвал.", "Шла саша по шосе а ты гандон.", "Ой всё. Я обиделся", "Я тебя по ip вычислю", "Был бы ты на зоне петухом бы тебя назвали", "Ну не обзывайся", "Нет ты бот", "Нет ты ботяра", "Это чат школы бля. а ты хуйнёй страдаешь"];
-//                $message = ""
-                $message = $message_bot[array_rand($message_bot)] ?? "Бля ответы кончились";
-                $this->telegram->send_message($message_id, $message);
-            } elseif ($data_templates = $this->webhookRepository->bd_answer_templates($message_text)) {
-                $this->telegram->ReplyKeyboardMarkup($message_id ?? "324428256", $data_templates['answer'], $data_templates['buttons']);
-            } else {
-                $this->telegram->send_message($message_id, $message);
-            }
+        if ($callback_data){
+            $this->callback_function($callback_data);
+        }else{
+            $this->message_function($request);
         }
         return response()->json(true, 200);
     }
+    private function callback_function($callback_data){
+        $data_request = explode('|', $callback_data);
+    }
+
+    private function message_function($request)
+    {
+//        $message_text = $message['text'] ?? null;
+//        $message_id = $message['chat']['id'] ?? null;
+    }
+
+
+    private function btn($action, $lesson_id)
+    {
+        switch ($action) {
+            case "1":
+                $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
+                $this->calendarRepository->success_lesson($lesson_id);
+                break;
+            case "2":
+                $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);
+                $this->calendarRepository->closed_lesson($lesson_id);
+                break;
+            case "3":
+                $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 1);
+                $this->calendarRepository->back_lesson($lesson_id);
+                break;
+            default:
+                return response()->json(true, 200);
+        }
+    }
 }
+
+//                $message_bot = ["Я то бот. Но согласись что путин хуйло!", "Сам ты бот ушлёпок.", "кто как обзываеться тот так и называеться", "Ботом меня обозвал пидерком себя назвал.", "Шла саша по шосе а ты гандон.", "Ой всё. Я обиделся", "Я тебя по ip вычислю", "Был бы ты на зоне петухом бы тебя назвали", "Ну не обзывайся", "Нет ты бот", "Нет ты ботяра", "Это чат школы бля. а ты хуйнёй страдаешь"];
