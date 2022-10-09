@@ -18,7 +18,7 @@ class UsersSeeder extends Seeder
     {
         DB::statement('truncate table users');
         DB::table('users')->insert([
-                ["hash" => $this->create_hash(),'telegram_id'=> 324428256, 'email' => 'eliphas.sn@gmail.com', 'password' => Hash::make(1324)],
+                ["hash" => $this->create_hash(),'telegram_id'=> 324428256, 'email' => 'eliphas.sn@gmail.com', 'password' => Hash::make(2706)],
                 ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'heramn@gmail.com', 'password' => Hash::make(1232)],
                 ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'sayler.sn@gmail.com', 'password' => Hash::make(1232)],
                 ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'markaganbegyan@gmail.com', 'password' => Hash::make(1232)],
