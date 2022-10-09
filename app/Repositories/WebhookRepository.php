@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Calendar;
 use App\Models\RegularLesson;
+use App\Models\TelegramChat;
 use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
 use Carbon\Carbon;
@@ -55,24 +56,33 @@ class WebhookRepository extends BaseRepository
     {
         $telegram_templates = TelegramTemplate::where('message', $message)->first();
         $buttons = ['keyboard' => [[]]];
-        foreach (explode('|', $telegram_templates->buttons??"") as $item) {
+        foreach (explode('|', $telegram_templates->buttons ?? "") as $item) {
             $buttons['keyboard'][0][] = [
                 'text' => $item,
-                'callback_data'=>"callback_datas"
+                'callback_data' => "callback_datas"
             ];
         }
         if (isset($buttons['keyboard'][0][0])) {
             return [
-                'answer' => $telegram_templates->answer??"",
+                'answer' => $telegram_templates->answer ?? "",
                 'buttons' => $buttons
             ];
-        }else{
+        } else {
             return false;
         }
 
 //    dd($buttons);
 
 //    $telegram = new Telegram();
+    }
+
+    public function add_telegram_chats($message_telegram, $calendar_id)
+    {
+        $message_request = json_decode($message_telegram->body());
+        $telegram_chats = new TelegramChat();
+        $telegram_chats->telegram_id = $message_request->result->message_id;
+        $telegram_chats->calendar_id = $calendar_id;
+        $telegram_chats->save();
     }
 
     public function delete_all_session($telegram_id)

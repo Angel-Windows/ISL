@@ -26,9 +26,7 @@ class RegularLessonsSeeder extends Seeder
                 //Артем Шарапов
                 ['student_id' => 6, 'professor_id' => 1, 'day_week' => 3, 'time_start' => '19:00:00', 'length' => 60],
                 ['student_id' => 6, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '18:00:00', 'length' => 60],
-                ['student_id' => 6, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '16:00:00', 'length' => 60],
-                ['student_id' => 6, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '16:00:00', 'length' => 60],
-                ['student_id' => 6, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '16:00:00', 'length' => 60],
+                ['student_id' => 6, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '20:00:00', 'length' => 60],
                 //Максим Семиполец
                 ['student_id' => 7, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '20:00:00', 'length' => 60],
                 ['student_id' => 7, 'professor_id' => 1, 'day_week' => 4, 'time_start' => '20:00:00', 'length' => 60],
@@ -54,13 +52,14 @@ class RegularLessonsSeeder extends Seeder
                 ['student_id' => 11, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '17:00:00', 'length' => 60],
                 ['student_id' => 11, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '17:00:00', 'length' => 60],
                 //Данил
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 2, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 3, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 4, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '17:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '19:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '19:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 2, 'time_start' => '19:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 3, 'time_start' => '19:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 4, 'time_start' => '19:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '19:00:00', 'length' => 60],
+                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '19:00:00', 'length' => 60],
+
             ]
         );
     }
