@@ -58,6 +58,7 @@ class WebhookController extends Controller
 
         if ($template) {
             if ($message_text == '/login') {
+                $this->webhookRepository->delete_all_session($message_id);
                 $telegram_session = new TelegramSession();
                 $telegram_session->type = 1;
                 $telegram_session->telegram_id = $message_id;
@@ -69,7 +70,7 @@ class WebhookController extends Controller
             $telegram_session->status = 0;
             $telegram_session->save();
             if ($telegram_session->type == 1) {
-                if ($telegram_session->parent_id) {
+                if ($telegram_session->text == "start") {
                     if (User::where('email', $message_text)->first()) {
                         $newTelegramSession = new TelegramSession();
                         $newTelegramSession->type = 1;
@@ -79,6 +80,7 @@ class WebhookController extends Controller
                         $this->telegram->send_message($message_id, 'Введите пароль');
                     } else {
                         $this->telegram->send_message($message_id, 'e-mail не найден');
+                        $this->webhookRepository->delete_all_session($message_id);
                     }
                 } else {
                     if (User::where('email', $message_text)->first()) {
@@ -91,6 +93,7 @@ class WebhookController extends Controller
                     } else {
                         $this->telegram->send_message($message_id, 'Пароль неверный');
                     }
+                    $this->webhookRepository->delete_all_session($message_id);
                 }
             }
         }

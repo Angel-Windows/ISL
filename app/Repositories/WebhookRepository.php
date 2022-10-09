@@ -73,4 +73,9 @@ class WebhookRepository extends BaseRepository
 
 //    $telegram = new Telegram();
     }
+
+    public function delete_all_session($telegram_id)
+    {
+
+    }
 }
