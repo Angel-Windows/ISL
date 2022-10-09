@@ -46,9 +46,8 @@ class TelegramSubscriber
             $type = 1;
         }
         $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $type);
-        $message_telegram = $this->telegram->send_message(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data));
 
-//        $message_telegram = $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data), $reply_markup);
+        $message_telegram = $this->telegram->sendButtons(env('REPORT_TELEGRAM_ID', "324428256"), (string)view('bot_messages.lesson_check', $data), $reply_markup);
         $student = User::where('id', $event->calendar->student_id)->first();
         if ($student) {
             if ($student_telegramId = $student->telegram_id) {
