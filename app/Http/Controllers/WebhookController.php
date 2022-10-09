@@ -115,6 +115,7 @@ class WebhookController extends Controller
             default:
                 return response()->json(true, 200);
         }
+        return response()->json(true, 200);
     }
 }
 
