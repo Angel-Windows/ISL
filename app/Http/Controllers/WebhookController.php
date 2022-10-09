@@ -55,7 +55,6 @@ class WebhookController extends Controller
         $message_text = $message['text'] ?? null;
         $message_id = $message['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
-        Log::debug("message_function ". $message_text);
 
         if ($template) {
             if ($message_text == '/login') {
@@ -64,6 +63,7 @@ class WebhookController extends Controller
                 $telegram_session->telegram_id = $message_id;
                 $telegram_session->text = "start";
                 $telegram_session->save();
+                $this->telegram->send_message($message_id, 'Введите свой e-mail');
             }
         } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
             $telegram_session->status = 0;
