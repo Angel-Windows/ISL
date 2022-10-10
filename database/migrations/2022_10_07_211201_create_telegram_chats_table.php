@@ -16,7 +16,8 @@ class CreateTelegramChatsTable extends Migration
         Schema::create('telegram_chats', function (Blueprint $table) {
             $table->id();
             $table->integer("calendar_id");
-            $table->integer("telegram_id");
+            $table->integer("message_id");
+            $table->integer("chat_id");
             $table->timestamps();
         });
     }

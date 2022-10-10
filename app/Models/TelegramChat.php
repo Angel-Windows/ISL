@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @property mixed $telegram_id
  * @property int|mixed $calendar_id
+ * @property mixed $message_id
+ * @property mixed $chat_id
  */
 class TelegramChat extends Model
 {

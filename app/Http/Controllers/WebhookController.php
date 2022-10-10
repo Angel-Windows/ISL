@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Telegram;
 use App\Models\Calendar;
+use App\Models\TelegramChat;
 use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
 use App\Models\User;
@@ -123,7 +124,12 @@ class WebhookController extends Controller
         $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, $lesson->status);
         $templates_lesson = $this->webhookRepository->templates_lesson($lesson);
 
-        $message_telegram = $this->telegram->editButtons($cht_id, $templates_lesson, $reply_markup, $message_id);
+        $this->telegram->editButtons($cht_id, $templates_lesson, $reply_markup, $message_id);
+        $telegram_chats = TelegramChat::where('calendar_id', $lesson_id)->first();
+        if ($telegram_chats){
+            $this->telegram->editMessage($telegram_chats->chat_id, $templates_lesson, $telegram_chats->message_id);
+        }
+
         return response()->json(true, 200);
     }
 }

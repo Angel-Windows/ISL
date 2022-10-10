@@ -4,9 +4,7 @@ namespace App\Listeners;
 
 use App\Events\LessonStart;
 use App\Helpers\Telegram;
-use App\Models\TelegramChat;
 use App\Models\User;
-use App\Models\UsersProfile;
 use App\Repositories\WebhookRepository;
 
 
@@ -29,7 +27,6 @@ class TelegramSubscriber
      */
     public function lessonsStore(LessonStart $event)
     {
-
         $reply_markup = $this->webhookRepository->buttons_bot($event->calendar->id, $event->calendar->status);
         $templates_lesson = $this->webhookRepository->templates_lesson($event->calendar);
 

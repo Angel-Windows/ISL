@@ -67,7 +67,15 @@ class Telegram
             'reply_markup' => $button
         ]);
     }
-
+    public function editMessage($chat_id, $message, $message_id): \Illuminate\Http\Client\Response
+    {
+        return $this->http::post(self::url . $this->bot . '/editMessageText', [
+            'chat_id' => $chat_id,
+            'text' => $message,
+            'parse_mode' => 'html',
+            'message_id' => $message_id,
+        ]);
+    }
     public function editButtons($chat_id, $message, $button, $message_id): \Illuminate\Http\Client\Response
     {
         return $this->http::post(self::url . $this->bot . '/editMessageText', [

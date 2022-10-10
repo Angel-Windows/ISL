@@ -2,15 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Models\Calendar;
-use App\Models\RegularLesson;
+
 use App\Models\TelegramChat;
 use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
 use App\Models\UsersProfile;
-use Carbon\Carbon;
-use \Auth;
-use Illuminate\Database\Eloquent\Model;
 
 class WebhookRepository extends BaseRepository
 {
@@ -85,9 +81,11 @@ class WebhookRepository extends BaseRepository
     public function add_telegram_chats($message_telegram, $calendar_id)
     {
         $message_request = json_decode($message_telegram->body());
+        $chat_id = $message_request->result->chat->id;
         $telegram_chats = new TelegramChat();
-        $telegram_chats->telegram_id = $message_request->result->message_id;
+        $telegram_chats->message_id = $message_request->result->message_id;
         $telegram_chats->calendar_id = $calendar_id;
+        $telegram_chats->chat_id = $chat_id;
         $telegram_chats->save();
     }
 
@@ -107,6 +105,7 @@ class WebhookRepository extends BaseRepository
             'day' => $calendar->fool_time,
             'time' => $calendar->time_start,
             'status' => $calendar->status,
+            'balance' => $student_profiles->balance,
         ];
 
         return (string)view('bot_messages.lesson_check', $data);
