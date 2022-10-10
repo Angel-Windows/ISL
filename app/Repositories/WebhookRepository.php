@@ -98,13 +98,14 @@ class WebhookRepository extends BaseRepository
     {
         $professor_profiles = UsersProfile::where('id', $calendar->professor_id)->first();
         $student_profiles = UsersProfile::where('id', $calendar->student_id)->first();
+        $status = ['Проведенно', 'Запланированно', 'Пернеос', 'Отменен'];
         $data = [
             'id' => $calendar->id,
             'professor' => $professor_profiles->name,
             'student' => $student_profiles->name,
             'day' => $calendar->fool_time,
             'time' => $calendar->time_start,
-            'status' => $calendar->status,
+            'status' => $status[$calendar->status],
             'balance' => $student_profiles->balance,
         ];
 
