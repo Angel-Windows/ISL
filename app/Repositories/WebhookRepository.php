@@ -8,8 +8,16 @@ use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
 use App\Models\UsersProfile;
 
+/**
+ * @package App/Repositories
+ */
 class WebhookRepository extends BaseRepository
 {
+    /**
+     * @param $lesson_id
+     * @param $status
+     * @return int|string[][][][]
+     */
     public function buttons_bot($lesson_id, $status)
     {
         if ($status == 0 || $status == 3) {
@@ -54,6 +62,10 @@ class WebhookRepository extends BaseRepository
         return $reply_markup;
     }
 
+    /**
+     * @param $message
+     * @return array|false
+     */
     public function bd_answer_templates($message)
     {
         $telegram_templates = TelegramTemplate::where('message', $message)->first();
@@ -78,6 +90,11 @@ class WebhookRepository extends BaseRepository
 //    $telegram = new Telegram();
     }
 
+    /**
+     * @param $message_telegram
+     * @param $calendar_id
+     * @return void
+     */
     public function add_telegram_chats($message_telegram, $calendar_id)
     {
         $message_request = json_decode($message_telegram->body());
@@ -89,11 +106,19 @@ class WebhookRepository extends BaseRepository
         $telegram_chats->save();
     }
 
+    /**
+     * @param $telegram_id
+     * @return void
+     */
     public function delete_all_session($telegram_id)
     {
         $telegramSession = TelegramSession::where('telegram_id', $telegram_id)->delete();
     }
 
+    /**
+     * @param $calendar
+     * @return string
+     */
     public function templates_lesson($calendar): string
     {
         $professor_profiles = UsersProfile::where('id', $calendar->professor_id)->first();

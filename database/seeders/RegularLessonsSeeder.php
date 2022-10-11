@@ -46,11 +46,11 @@ class RegularLessonsSeeder extends Seeder
 
                 //fool_day
                 //Ангелина
-                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 2, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 3, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '17:00:00', 'length' => 60],
-                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '17:00:00', 'length' => 60],
+                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '16:00:00', 'length' => 60],
+                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 2, 'time_start' => '16:00:00', 'length' => 60],
+                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 3, 'time_start' => '16:00:00', 'length' => 60],
+                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '16:00:00', 'length' => 60],
+                ['student_id' => 11, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '16:00:00', 'length' => 60],
                 //Данил
                 ['student_id' => 12, 'professor_id' => 1, 'day_week' => 1, 'time_start' => '14:00:00', 'length' => 60],
                 ['student_id' => 12, 'professor_id' => 1, 'day_week' => 2, 'time_start' => '14:00:00', 'length' => 60],

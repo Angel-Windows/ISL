@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
 {
-    protected $telegram;
+    protected Telegram $telegram;
 
     public function __construct(Telegram $telegram)
     {

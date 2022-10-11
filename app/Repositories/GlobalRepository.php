@@ -41,7 +41,7 @@ class GlobalRepository extends BaseRepository
      * @param $filter_name
      * @return array
      */
-    public function get_filter($filter_name)
+    public function get_filter($filter_name): array
     {
         $filters = Config::where('group_name', $filter_name)->get();
         $filter_data = [];
