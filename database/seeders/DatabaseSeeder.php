@@ -13,15 +13,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call([
-            UsersSeeder::class,
-            UsersProfilesSeeder::class,
-            TransactionSeeder::class,
-            RegularLessonsSeeder::class,
-            CalendarSeeder::class,
-            ReferalSeeder::class,
-            TelegramTemplatesSeeder::class,
-        ]);
+        if (env('PERSONAL_SEEDER')) {
+            $this->call([
+                UsersSeeder::class,
+                UsersProfilesSeeder::class,
+                TransactionSeeder::class,
+                RegularLessonsSeeder::class,
+                CalendarSeeder::class,
+                ReferalSeeder::class,
+                TelegramTemplatesSeeder::class,
+            ]);
+        }
         $this->call([
             NavigationSeeder::class,
             ConfigSeeder::class,
