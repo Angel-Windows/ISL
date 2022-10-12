@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
                 RegularLessonsSeeder::class,
                 CalendarSeeder::class,
                 ReferalSeeder::class,
-                TelegramTemplatesSeeder::class,
             ]);
         }
         $this->call([
+            TelegramTemplatesSeeder::class,
             NavigationSeeder::class,
             ConfigSeeder::class,
         ]);

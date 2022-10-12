@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Events\LessonStart;
 use App\Helpers\Telegram;
 use App\Models\Calendar;
+use App\Models\Referal;
+use App\Models\User;
+use App\Models\UsersProfile;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class AdminController extends Controller
@@ -37,5 +42,36 @@ class AdminController extends Controller
         }
     }
 
+    public function create_student_store(Request $request){
+        $user = new User();
+        $user->hash = $this->create_hash();
+        $user->telegram_id = null;
+        $user->email = $request->input('email');
+        $user->password = Hash::make(1232);
+        $user->save();
+
+        $user_profile = new UsersProfile();
+        $user_profile->currency = "2";
+        $user_profile->user_id = $user->id;
+        $user_profile->balance = 0;
+        $user_profile->name = $request->input('name');
+        $user_profile->price_lesson = $request->input('price');
+        $user_profile->save();
+        $referral = new Referal();
+        $referral->user_1 = 1;
+        $referral->user_2 = $user->id;
+        $referral->save();
+    }
+    private function create_hash()
+    {
+        do {
+            $hash = "";
+            $symbol = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M'];
+            for ($i = 0; $i < 7; $i++) {
+                $hash .= $symbol[rand(0, count($symbol) - 1)];
+            }
+        } while (User::where('hash', $hash)->first());
+        return $hash;
+    }
 
 }

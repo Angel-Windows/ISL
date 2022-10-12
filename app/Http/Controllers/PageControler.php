@@ -20,6 +20,7 @@ class PageControler extends Controller
     private $globalRepository;
     public function __construct()
     {
+
         $this->transactionRepository = app(TransactionRepository::class);
         $this->globalRepository = app(GlobalRepository::class);
         $this->middleware(function ($request, $next) {
@@ -141,6 +142,9 @@ class PageControler extends Controller
     }
     public function payed(Request $request){
         return view('pages.payed');
+    }
+    public function create_student(){
+        return view("pages.admin.create_student");
     }
 
 }

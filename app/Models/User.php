@@ -10,6 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @method static where(string $string, int|string|null $id)
+ * @property mixed|string $hash
+ * @property int|mixed $telegram_id
+ * @property int|mixed $email
+ * @property int|mixed $password
+ * @property mixed $id
  */
 class User extends Authenticatable
 {

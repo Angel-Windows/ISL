@@ -92,9 +92,11 @@ Route::get('/payed', [PageControler::class, "payed"])->name('payed');
 Route::post('/payed/store', [TransactionController::class, "payed_store"])->name('payed.store');
 
 
+//Admin
+Route::get('/setWebhook', [AdminController::class, "setWebhook"])->name('setWebhook');
 Route::get('/crone', [AdminController::class, "crone"])->name('crone');
-
 Route::post('/webhook', [WebhookController::class, "index"])->name('webhook');
-
+Route::get('/admin/create_student', [PageControler::class, "create_student"])->name('admin.create_student');
+Route::post('/admin/create_student_store', [AdminController::class, "create_student_store"])->name('admin.create_student_store');
 
 require __DIR__ . '/auth.php';

@@ -48,7 +48,7 @@ $page_get = $_GET['page'] ?? 1;
             </div>
             <aside class="nav_list">
                 @foreach($data_navigation as $item)
-                    <a href="{{route($item->link)}}" @if($route_name == $item->link) class="active" @endif>
+                    <a href="{{route($item->link)}}" @if($route == $item->link) class="active" @endif>
                         <div class="img"><img draggable="false" src="{{asset('res/nav_itmem_home.png')}}" alt=""></div>
                         <em>{{$item->name}}</em>
                     </a>
@@ -79,15 +79,15 @@ $page_get = $_GET['page'] ?? 1;
                     } ?>
                     <div class="today item_menu">
                         <div class="item_container">
-                            <a href="{{route($route_name, ['page' =>$_GET["page"]-1])}}"
+                            <a href="{{route($route, ['page' =>$_GET["page"]-1])}}"
                                class="img"><img draggable="false"
                                                 src="{{asset('res/arrow_left.png')}}" alt=""></a>
                         </div>
                         <div class="item_container">
-                            <a href="{{route($route_name)}}"><span>Today</span></a>
+                            <a href="{{route($route)}}"><span>Today</span></a>
                         </div>
                         <div class="item_container">
-                            <a href="{{route($route_name, ['page' =>$_GET["page"]+1])}}"
+                            <a href="{{route($route, ['page' =>$_GET["page"]+1])}}"
                                class="img"><img draggable="false"
                                                 src="{{asset('res/arrow_right.png')}}" alt=""></a>
                         </div>
@@ -105,16 +105,16 @@ $page_get = $_GET['page'] ?? 1;
                     ?>
                     <div class="today item_menu">
                         <div class="item_container">
-                            <a href="{{route($route_name, ['page'=>$page_get-1])}}"
+                            <a href="{{route($route, ['page'=>$page_get-1])}}"
                                class="img {{$page_nav_left_class}}">
                                 <img draggable="false" src="{{asset('res/arrow_left.png')}}" alt="">
                             </a>
                         </div>
                         <div class="item_container">
-                            <a href="{{route($route_name, ['page'=>1])}}"><span>Начало</span></a>
+                            <a href="{{route($route, ['page'=>1])}}"><span>Начало</span></a>
                         </div>
                         <div class="item_container">
-                            <a href="{{route($route_name, ['page'=>$page_get+1])}}"
+                            <a href="{{route($route, ['page'=>$page_get+1])}}"
                                class="img {{$page_nav_right_class}}"><img draggable="false"
                                                                           src="{{asset('res/arrow_right.png')}}" alt=""></a>
                         </div>

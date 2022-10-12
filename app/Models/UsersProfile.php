@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static where()
+ * @property mixed|string $currency
+ * @property int|mixed $user_id
+ * @property int|mixed $balance
+ * @property mixed|string $name
+ * @property int|mixed $price_lesson
  */
 class UsersProfile extends Model
 {

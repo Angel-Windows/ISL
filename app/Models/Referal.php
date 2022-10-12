@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static where(string $string, int|string|null $id)
+ * @property int|mixed $user_1
+ * @property int|mixed $user_2
  */
 class Referal extends Model
 {
