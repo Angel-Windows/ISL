@@ -59,20 +59,6 @@ Route::post('/transaction/transaction_info_event', [TransactionController::class
 
 Route::get('/bot', function (Telegram $telegram) {
     $key = base64_encode(md5(uniqid()));
-//    $buttons = [
-//        'keyboard' => [
-//            [
-//                [
-//                    'text' => 'Админка',
-//                    'callback_data' => '1|' . $key
-//                ],
-//                [
-//                    'text' => 'Проверить статус',
-//                    'callback_data' => '1' . $key,
-//                ],
-//            ]
-//        ]
-//    ];
     $telegram_templates = \App\Models\TelegramTemplate::where('message', "Путин")->first();
     $buttons = ['keyboard' => [[]]];
     foreach (explode('|', $telegram_templates->buttons) as $item) {

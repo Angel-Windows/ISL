@@ -23,14 +23,16 @@ class CalendarController extends Controller
         $this->globalRepository = app(GlobalRepository::class);
         $this->calendarRepository = app(CalendarRepository::class);
     }
+
     private function transaction_add($data = [])
     {
         $transactions = new Transactions();
-        foreach ($data as $key=>$item) {
+        foreach ($data as $key => $item) {
             $transactions->$key = $item;
         }
         $transactions->save();
     }
+
     public function add_lesson(Request $request)
     {
         $is_regular = $request->input('is_regular');
@@ -73,8 +75,32 @@ class CalendarController extends Controller
 
     public function lesson_info_event(Request $request)
     {
-        dd(\Hash::check('1232', '$2y$10$hIYmpSpbEMtyRz11IJLK7.zRmGFdKWXQil8l0C1Tf72cC/x62Rv1i'));
-//        TelegramSession::where('telegram_id', 1232)->delete();
+        $id = $request['id'];
+        $event = $request['event'];
+        $return = [];
+        switch ($event) {
+            case "0":
+                $return = $this->calendarRepository->edit_lesson($id);
+                break;
+            case "1":
+                $return = $this->calendarRepository->success_lesson($id);
+                break;
+            case "2":
+                $return = $this->calendarRepository->closed_lesson($id);
+                break;
+            case "3":
+                $return = $this->calendarRepository->back_lesson($id);
+                break;
+            default:
+                $return = [
+                    'code' => 2,
+                    'message' => "event " . $event,
+                    'data' => [],
+                ];
+                break;
+        }
+        $return['type'] = (int)$event;
+        return json_encode($return);
     }
 
     public function get_lesson_info(Request $request)

@@ -176,6 +176,7 @@ $page_get = $_GET['page'] ?? 1;
             <aside class="menu_right">
                 @include('components.left_menu.Info')
                 @include('components.left_menu.add_lesson')
+                @include('components.left_menu.update_lesson')
                 @include('components.left_menu.payed')
                 @yield('aside')
             </aside>

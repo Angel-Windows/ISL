@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class Telegram
 {
-    protected $http;
+    protected Http $http;
     protected $bot;
     const url = 'https://api.tlgr.org/bot';
 

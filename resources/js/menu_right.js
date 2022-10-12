@@ -163,6 +163,9 @@ const change_menu_right = () => {
         case "5":
             right_menu_active = document.querySelectorAll(".payed_naw");
             break;
+        case "6":
+            right_menu_active = document.querySelectorAll(".update_lesson");
+            break;
         default:
             console.warn("no active " + localStorage.getItem("menu_right"))
             return false;
@@ -189,8 +192,8 @@ window.menu_right_open = (e) => {
 
 window.lesson_info_open = (e) => {
     const url = url_info;
-
     const lesson_infos = document.querySelector('.lesson_info');
+    const update_lesson = document.querySelector('.update_lesson');
     lesson_infos.classList.add('progress_reload')
 
     const func = (response) => {
@@ -202,6 +205,11 @@ window.lesson_info_open = (e) => {
         lesson_infos.querySelector('.name').innerHTML = response.data.name
         lesson_infos.querySelector('.date').innerHTML = response.data.date
         lesson_infos.querySelector('.time').innerHTML = response.data.time
+        update_lesson.querySelector('.id').innerHTML = response.data.id
+        update_lesson.querySelector('.name').value = response.data.name
+        update_lesson.querySelector('.date').value = response.data.date
+        update_lesson.querySelector('.time').value = response.data.time
+        console.log(response.data.time);
         balance.innerHTML = response.data.balance;
         balance.title = price_lesson
         lesson_infos.classList.remove('progress_reload')

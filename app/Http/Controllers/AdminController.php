@@ -25,7 +25,8 @@ class AdminController extends Controller
     public function setWebhook()
     {
         $http = Http::get('https://api.tlgr.org/bot' . env('REPORT_TELEGRAM_ID') . config('bots.bot') . '/setWebhook?url=https://new.it-schoollearn.com/webhook');
-        dd($http);
+        print_r($http);
+//        dd($http);
     }
 
     public function crone()
