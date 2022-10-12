@@ -11,6 +11,7 @@ use App\Repositories\GlobalRepository;
 use App\Repositories\TransactionRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Auth;
 
@@ -55,6 +56,7 @@ class PageControler extends Controller
     }
 
     public function home(Request $request){
+        Log::debug($request->all());
         return view('pages.home')
 //        return view('pages.calendar')
         ;
