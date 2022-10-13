@@ -39,6 +39,7 @@ $page_get = $_GET['page'] ?? 1;
     <script defer src="{{asset('js/menu_right.js')}}"></script>
 </head>
 <body id="body" class="body">
+
 <main>
     <nav class="nav">
         <article>
@@ -128,57 +129,64 @@ $page_get = $_GET['page'] ?? 1;
                     <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
                     <span>Statistic</span>
                 </a>
-                    <div onclick="target_menu_right(5 )" class="statistic item_menu">
-                        <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
-                        <span>Пополнить</span>
-                    </div>
-                    <?php
-                    $naw_item_menu = false;
-                    switch($route){
-                        case "calendar" :
-                            $naw_item_menu = 'Расписание на ' . $now_data;
-                            break;
-                        case "home" :
-                            $naw_item_menu = 'Главная страница';
-                            break;
-                        case "transaction" :
-                            $naw_item_menu = 'Транзакции страница: ' . $_GET["page"];
-                            break;
-                            case "payed" :
-                            $naw_item_menu = 'Пополнение';
-                            break;
-                    }
+                <div onclick="target_menu_right(5 )" class="statistic item_menu">
+                    <div class="img"><img draggable="false" src="{{asset('res/statistic.png')}}" alt=""></div>
+                    <span>Пополнить</span>
+                </div>
+                <?php
+                $naw_item_menu = false;
+                switch ($route) {
+                    case "calendar" :
+                        $naw_item_menu = 'Расписание на ' . $now_data;
+                        break;
+                    case "home" :
+                        $naw_item_menu = 'Главная страница';
+                        break;
+                    case "transaction" :
+                        $naw_item_menu = 'Транзакции страница: ' . $_GET["page"];
+                        break;
+                    case "payed" :
+                        $naw_item_menu = 'Пополнение';
+                        break;
+                }
 
-                    ?>
+                ?>
                 @if($naw_item_menu)
                     <h2 class="item_menu">{{$naw_item_menu}}</h2>
                 @endif
             </div>
             <div class="menu_profile">
-                <div class="coin">
-                    <div class="img"><img draggable="false" src="{{asset('res/sc.png')}}" alt=""></div>
-                    <span>{{$user->balance}}</span>
-                </div>
-                <div class="profile_avatar img"><img draggable="false" src="{{asset('res/avatara_user.png')}}" alt="">
-                    <ul class="menu_list">
-                        <li><a href="#">Настройки</a></li>
-                        <li><a href="{{route('payed')}}">Пополнение</a></li>
-                        <li><a href="#">Трансакции</a></li>
-                        <li><a href="#">Полезные материалы</a></li>
-                        <li><a href="{{route('logout')}}">Выйти</a></li>
-                    </ul>
-                </div>
+                @if(Auth::user())
+                    <div class="coin">
+                        <div class="img"><img draggable="false" src="{{asset('res/sc.png')}}" alt=""></div>
+                        <span>{{$user->balance}}</span>
+                    </div>
+                    <div class="profile_avatar img"><img draggable="false" src="{{asset('res/avatara_user.png')}}"
+                                                         alt="">
+                        <ul class="menu_list">
+                            <li><a href="#">Настройки</a></li>
+                            <li><a href="{{route('payed')}}">Пополнение</a></li>
+                            <li><a href="#">Трансакции</a></li>
+                            <li><a href="#">Полезные материалы</a></li>
+                            <li><a href="{{route('logout')}}">Выйти</a></li>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{route('login')}}" class="text_center">Войти</a>
+                @endif
             </div>
         </aside>
         {{--        <div class="content">--}}
         <div class="content overflow-hidden @yield('page_name')">
             @yield('content')
             <aside class="menu_right">
-                @include('components.left_menu.Info')
-                @include('components.left_menu.add_lesson')
-                @include('components.left_menu.update_lesson')
-                @include('components.left_menu.payed')
-                @yield('aside')
+                @if(Auth::user())
+                    @include('components.left_menu.Info')
+                    @include('components.left_menu.add_lesson')
+                    @include('components.left_menu.update_lesson')
+                    @include('components.left_menu.payed')
+                    @yield('aside')
+                @endif
             </aside>
         </div>
     </section>

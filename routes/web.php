@@ -42,7 +42,7 @@ Route::get('/test', [CalendarController::class, 'lesson_info_event'])->name('tes
 Route::get('/', function () {
     return redirect(\route('home'));
 });
-Route::get('/home', [PageControler::class, 'home'])->name('home')->middleware('auth');
+Route::get('/home', [PageControler::class, 'home'])->name('home');
 //Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
 Route::get('/calendar', [PageControler::class, 'calendar'])->name('calendar')->middleware('auth');
 Route::get('/transaction', [PageControler::class, 'transaction'])->name('transaction')->middleware('auth');
