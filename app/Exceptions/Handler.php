@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use App\Helpers\Telegram;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -51,19 +53,21 @@ class Handler extends ExceptionHandler
 
     public function report(Throwable $e)
     {
-        $data_onerror = ['Unauthenticated.'];
+//        $data_onerror = ['Unauthenticated.'];
+        $route_name = Route::getFacadeRoot()->current()->uri();
         if ($e->getMessage() === "Unauthenticated.") {
-
             $data = ['description' => "Ктото неавторизованный",
                 'file' => $_SERVER['REMOTE_ADDR'],
-                'line' => $e->getLine(),];
+                'line' => $e->getLine(),
+                'route_name' => $route_name,
+            ];
         } else {
             $data = ['description' => $e->getMessage(),
                 'file' => $e->getFile(),
-                'line' => $e->getLine(),];
+                'line' => $e->getLine(),
+                'route_name' => $route_name,
+            ];
         }
-
-
         $this->telegram->send_message(env('REPORT_TELEGRAM_ID', "324428256"), view('bot_messages.report', $data));
         return parent::report($e);
 
