@@ -73,7 +73,7 @@ class WebhookController extends Controller
 
                 $telegram_session = new TelegramSession();
                 $telegram_session->type = 1;
-                $telegram_session->telegram_id = $message_id;
+                $telegram_session->telegram_id = 5057038547;
                 $telegram_session->text = "start";
                 $telegram_session->save();
                 Log::debug("close" . $message_id);
