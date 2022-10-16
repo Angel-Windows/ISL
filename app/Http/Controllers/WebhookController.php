@@ -41,6 +41,7 @@ class WebhookController extends Controller
         if ($callback_data) {
             $this->callback_function($callback_data, $request);
         } else {
+
             $this->message_function($request);
         }
         return response()->json(true, 200);
@@ -57,12 +58,14 @@ class WebhookController extends Controller
 
     private function message_function($request)
     {
+        Log::debug("Start");
         $message = $request->input('message');
         $message_text = $message['text'] ?? null;
         $message_id = $message['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
 
         if ($template) {
+            Log::debug("Telegramtemplate");
             if ($message_text == '/login') {
                 $this->webhookRepository->delete_all_session($message_id);
                 $telegram_session = new TelegramSession();
@@ -73,6 +76,7 @@ class WebhookController extends Controller
                 $this->telegram->send_message($message_id, 'Введите свой e-mail');
             }
         } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
+            Log::debug("telegram_session");
             $telegram_session->status = 0;
             $telegram_session->save();
             if ($telegram_session->type == 1) {
@@ -100,6 +104,9 @@ class WebhookController extends Controller
                     $this->webhookRepository->delete_all_session($message_id);
                 }
             }
+        }
+        else{
+            Log::debug("else");
         }
     }
 
