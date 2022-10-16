@@ -106,7 +106,7 @@ class WebhookController extends Controller
             }
         }
         else{
-            Log::debug("else");
+            Log::debug($message_id);
         }
     }
 
