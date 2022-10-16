@@ -67,12 +67,16 @@ class WebhookController extends Controller
         if ($template) {
             Log::debug("Telegramtemplate");
             if ($message_text == '/login') {
+                Log::debug("strart" . $message_id);
                 $this->webhookRepository->delete_all_session($message_id);
+                Log::debug("end" . $message_id);
+
                 $telegram_session = new TelegramSession();
                 $telegram_session->type = 1;
                 $telegram_session->telegram_id = $message_id;
                 $telegram_session->text = "start";
                 $telegram_session->save();
+                Log::debug("close" . $message_id);
                 $this->telegram->send_message($message_id, 'Введите свой e-mail');
             }
         } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
