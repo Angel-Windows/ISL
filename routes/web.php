@@ -49,12 +49,20 @@ Route::get('/transaction', [PageControler::class, 'transaction'])->name('transac
 
 //AJAX
 Route::post('/calendar/filters', [GlobalController::class, 'ajax_filters'])->name('calendar.filters_calendar');
-Route::post('/calendar/add_lesson', [CalendarController::class, 'add_lesson'])->name('calendar.add_lesson');
-Route::post('/calendar/lesson_info_event', [CalendarController::class, 'lesson_info_event'])->name('calendar.lesson_info_event');
+Route::middleware(['auth', 'check-role'])->group(function () {
+    Route::post('/calendar/lesson_info_event', [CalendarController::class, 'lesson_info_event'])->name('calendar.lesson_info_event');
+    Route::post('/calendar/add_lesson', [CalendarController::class, 'add_lesson'])->name('calendar.add_lesson');
+    Route::get('/transaction/info', [TransactionController::class, 'get_info'])->name('transaction.get_info');
+    Route::post('/transaction/transaction_info_event', [TransactionController::class, 'transaction_info_event'])->name('transaction.transaction_info_event');
+    Route::get('/payed', [PageControler::class, "payed"])->name('payed');
+    Route::post('/payed/store', [TransactionController::class, "payed_store"])->name('payed.store');
+    Route::get('/setWebhook', [AdminController::class, "setWebhook"])->name('setWebhook');
+    Route::get('/admin/create_student', [PageControler::class, "create_student"])->name('admin.create_student');
+    Route::post('/admin/create_student_store', [AdminController::class, "create_student_store"])->name('admin.create_student_store');
+});
 Route::post('/calendar/get_lesson_info', [CalendarController::class, 'get_lesson_info'])->name('calendar.get_lesson_info');
 
-Route::get('/transaction/info', [TransactionController::class, 'get_info'])->name('transaction.get_info')->middleware('auth');
-Route::post('/transaction/transaction_info_event', [TransactionController::class, 'transaction_info_event'])->name('transaction.transaction_info_event');
+
 
 
 Route::get('/bot', function (Telegram $telegram) {
@@ -74,15 +82,13 @@ Route::get('/bot', function (Telegram $telegram) {
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
 
-Route::get('/payed', [PageControler::class, "payed"])->name('payed');
-Route::post('/payed/store', [TransactionController::class, "payed_store"])->name('payed.store');
+
 
 
 //Admin
-Route::get('/setWebhook', [AdminController::class, "setWebhook"])->name('setWebhook');
+
 Route::get('/crone', [AdminController::class, "crone"])->name('crone');
 Route::post('/webhook', [WebhookController::class, "index"])->name('webhook');
-Route::get('/admin/create_student', [PageControler::class, "create_student"])->name('admin.create_student');
-Route::post('/admin/create_student_store', [AdminController::class, "create_student_store"])->name('admin.create_student_store');
+
 
 require __DIR__ . '/auth.php';
