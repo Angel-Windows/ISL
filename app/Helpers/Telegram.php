@@ -11,20 +11,19 @@ class Telegram
     protected Http $http;
     protected $bot;
     const url = 'https://api.tlgr.org/bot';
+    private int $is_connect;
 
     public function __construct(Http $http)
     {
         $this->http = $http;
+        $this->is_connect = connection_status();
         $this->bot = config('bots.bot');
     }
 
     public function send_message($chat_id, $message)
     {
-//        dd(self::url.$this->bot.'/sendMessage', [
-//            'chat_id' => $chat_id,
-//            'text' => (string)$message,
-//            'parse_mode' => 'html'
-//        ]);
+        if (!$this->is_connect)
+            return false;
         return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
             'text' => (string)$message,
@@ -32,23 +31,13 @@ class Telegram
         ]);
     }
 
-    public function get_button($chat_id, $message, $buttons)
+    public function ReprlyKeyboardMarkup($chat_id, $message, $buttons)
     {
-//        dd(self::url . $this->bot . '/sendButtons');
+        if (!$this->is_connect)
+            return false;
         return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
-            'text' => (string)$message,
-            'parse_mode' => 'html',
-            'reply_markup' => $buttons,
-
-        ]);
-    }
-    public function ReplyKeyboardMarkup($chat_id, $message, $buttons)
-    {
-//        dd(self::url . $this->bot . '/sendButtons');
-        return $this->http::post(self::url . $this->bot . '/sendMessage', [
-            'chat_id' => $chat_id,
-            'remove_keyboard'=>true,
+            'remove_keyboard' => true,
             'text' => (string)$message,
             'callback_data' => '1|Test',
 //            'parse_mode' => 'html',
@@ -60,6 +49,8 @@ class Telegram
 
     public function sendButtons($chat_id, $message, $button)
     {
+        if (!$this->is_connect)
+            return false;
         return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
             'text' => $message,
@@ -67,8 +58,11 @@ class Telegram
             'reply_markup' => $button
         ]);
     }
-    public function editMessage($chat_id, $message, $message_id): \Illuminate\Http\Client\Response
+
+    public function editMessage($chat_id, $message, $message_id)
     {
+        if (!$this->is_connect)
+            return false;
         return $this->http::post(self::url . $this->bot . '/editMessageText', [
             'chat_id' => $chat_id,
             'text' => $message,
@@ -76,8 +70,11 @@ class Telegram
             'message_id' => $message_id,
         ]);
     }
-    public function editButtons($chat_id, $message, $button, $message_id): \Illuminate\Http\Client\Response
+
+    public function editButtons($chat_id, $message, $button, $message_id)
     {
+        if (!$this->is_connect)
+            return false;
         return $this->http::post(self::url . $this->bot . '/editMessageText', [
             'chat_id' => $chat_id,
             'text' => $message,

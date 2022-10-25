@@ -24,6 +24,7 @@ use App\Http\Controllers\WebhookController;
 */
 auth();
 Route::get('/dashboard', function (){
+    return redirect()->route('home');
 //    Http::post(route('login'), [
 //        'email' => 'eliphas.sn@gmail.com',
 //        'password' => '1232',
@@ -45,11 +46,12 @@ Route::get('/', function () {
 Route::get('/home', [PageControler::class, 'home'])->name('home');
 //Route::get('/home', [HomeController::class, 'index'])->middleware('auth');
 Route::get('/calendar', [PageControler::class, 'calendar'])->name('calendar')->middleware('auth');
-Route::get('/transaction', [PageControler::class, 'transaction'])->name('transaction')->middleware('auth');
 
 //AJAX
 Route::post('/calendar/filters', [GlobalController::class, 'ajax_filters'])->name('calendar.filters_calendar');
 Route::middleware(['auth', 'check-role'])->group(function () {
+    Route::get('/transaction', [PageControler::class, 'transaction'])->name('transaction');
+
     Route::post('/calendar/lesson_info_event', [CalendarController::class, 'lesson_info_event'])->name('calendar.lesson_info_event');
     Route::post('/calendar/add_lesson', [CalendarController::class, 'add_lesson'])->name('calendar.add_lesson');
     Route::get('/transaction/info', [TransactionController::class, 'get_info'])->name('transaction.get_info');

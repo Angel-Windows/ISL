@@ -4,14 +4,13 @@ const popup_top = document.querySelector('.popup_top')
 let timeout_popup;
 window.PostForm = (form, func) => {
     const parameters = {}
-    const temp = [...document.querySelectorAll('input, select')];
-    const temp_checkbox = [...document.querySelectorAll('input[type="checkbox"]')];
+    const temp = [...form.querySelectorAll('input, select')];
+    const temp_checkbox = [...form.querySelectorAll('input[type="checkbox"]')];
     temp.forEach((item) => {
         parameters[item.name] = item.value
-    })
+    });
 
     temp_checkbox.forEach((item) => {
-        console.log();
         parameters[item.name] = item.checked
     })
     Post(form.action, func, parameters);
@@ -39,7 +38,9 @@ window.Post = (url, func = () => {
     getResource(url, parameters)
         .then(data => {
             openPopupAlert(data)
-            func(data)
+            if (data.code === 1){
+                func(data)
+            }
         })
         .catch(error => console.error(error));
 

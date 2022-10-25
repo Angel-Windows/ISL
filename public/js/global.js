@@ -880,15 +880,14 @@ var timeout_popup;
 window.PostForm = function (form, func) {
   var parameters = {};
 
-  var temp = _toConsumableArray(document.querySelectorAll('input, select'));
+  var temp = _toConsumableArray(form.querySelectorAll('input, select'));
 
-  var temp_checkbox = _toConsumableArray(document.querySelectorAll('input[type="checkbox"]'));
+  var temp_checkbox = _toConsumableArray(form.querySelectorAll('input[type="checkbox"]'));
 
   temp.forEach(function (item) {
     parameters[item.name] = item.value;
   });
   temp_checkbox.forEach(function (item) {
-    console.log();
     parameters[item.name] = item.checked;
   });
   Post(form.action, func, parameters);
@@ -918,7 +917,10 @@ window.Post = function (url) {
   var parameters = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
   getResource(url, parameters).then(function (data) {
     openPopupAlert(data);
-    func(data);
+
+    if (data.code === 1) {
+      func(data);
+    }
   })["catch"](function (error) {
     return console.error(error);
   });

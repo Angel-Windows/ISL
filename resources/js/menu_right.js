@@ -80,6 +80,7 @@ window.add_lesson = (form) => {
     form.classList.add('progress_reload');
     const func = (request) => {
         form.classList.remove('progress_reload');
+
         calendar_add_item(request.data.item, request.data.filters);
     }
     PostForm(form, func);

@@ -223,7 +223,6 @@ class CalendarRepository extends BaseRepository
             return false;
         } else {
             return $data_item[0];
-
         }
     }
 }

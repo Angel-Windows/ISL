@@ -35,6 +35,7 @@ class CalendarController extends Controller
 
     public function add_lesson(Request $request)
     {
+
         $is_regular = $request->input('is_regular');
         $student_id = $request['student_id'];
         $date = $request['date'];
@@ -45,7 +46,7 @@ class CalendarController extends Controller
         if (!$calendar) {
             return json_encode([
                     'code' => 2,
-                    'message' => 'False',
+                    'message' => "text $calendar",
                     'data' => []
                 ]
             );
