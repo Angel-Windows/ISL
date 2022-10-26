@@ -18,7 +18,7 @@ class ConfigSeeder extends Seeder
         $filters_calendar = [
             [
                 'id' => 1,
-                'name' => "Проведен",
+                'name' => 'Проведен',
                 'class' => 'background_calendar_success',
             ], [
                 'id' => 2,
@@ -53,15 +53,16 @@ class ConfigSeeder extends Seeder
                 'class' => 'background_calendar_transfer',
             ]
         ];
+
         foreach ($filters_calendar as $key=>$item) {
             DB::table('configs')->insert([
-                    ['name'=> $item['name'], 'group_name' => 'filters_calendar', 'value' => json_encode($item)],
+                    ['name'=> $item['name'], 'group_name' => 'filters_calendar', 'value' => json_encode($item, JSON_UNESCAPED_UNICODE)],
                 ]
             );
         }
         foreach ($filters_transactions as $key=>$item) {
             DB::table('configs')->insert([
-                    ['name'=> $item['name'], 'group_name' => 'filters_transaction', 'value' => json_encode($item)],
+                    ['name'=> $item['name'], 'group_name' => 'filters_transaction', 'value' => json_encode($item, JSON_UNESCAPED_UNICODE)],
                 ]
             );
         }

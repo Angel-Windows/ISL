@@ -202,15 +202,16 @@ window.lesson_info_open = (e) => {
         target_menu_right(3)
         const balance = lesson_infos.querySelector('.balance');
         const {price_lesson} = response.data;
+        let filters_calendar = getConfig('filters_calendar');
         lesson_infos.querySelector('.id').innerHTML = response.data.id
         lesson_infos.querySelector('.name').innerHTML = response.data.name
         lesson_infos.querySelector('.date').innerHTML = response.data.date
         lesson_infos.querySelector('.time').innerHTML = response.data.time
+        lesson_infos.querySelector('.status').innerHTML = filters_calendar[response.data.status]['name']
         update_lesson.querySelector('.id').innerHTML = response.data.id
         update_lesson.querySelector('.name').value = response.data.name
         update_lesson.querySelector('.date').value = response.data.date
         update_lesson.querySelector('.time').value = response.data.time
-        console.log(response.data.time);
         balance.innerHTML = response.data.balance;
         balance.title = price_lesson
         lesson_infos.classList.remove('progress_reload')
@@ -226,7 +227,6 @@ window.transaction_info_open = (from) => {
     function change_modal(modal_name) {
         const id = transaction_info.querySelector(`.${modal_name}`);
         id.innerHTML = from.querySelector(`.${modal_name}`).innerHTML;
-        console.log(from);
     }
 
     from.classList.add("active");

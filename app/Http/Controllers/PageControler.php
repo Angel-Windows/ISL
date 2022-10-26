@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calendar;
+use App\Models\Config;
 use App\Models\Navigation;
 use App\Models\Referal;
 use App\Models\User;
@@ -19,12 +20,26 @@ class PageControler extends Controller
 {
     private $transactionRepository;
     private $globalRepository;
-    public function __construct()
+
+    public function __construct(Request $request)
     {
 
         $this->transactionRepository = app(TransactionRepository::class);
         $this->globalRepository = app(GlobalRepository::class);
+
         $this->middleware(function ($request, $next) {
+            if (!$request->session()->exists('config_list') || $request->session()->get('config_list') == "[]") {
+                $config = Config::get()->toArray();
+                $config_data_item = [];
+                foreach ($config as $item) {
+                    $config_data_item[$item['group_name']][] = $item;
+                }
+                $request->session()->put('config_list', json_encode($config_data_item, JSON_UNESCAPED_UNICODE));
+                $config_data = json_encode($config_data_item, JSON_UNESCAPED_UNICODE);
+            } else {
+                $config_data = $request->session()->get('config_list');
+            }
+//            dd($config_data);
             $id = Auth::id();
             $route_name = Route::getFacadeRoot()->current()->uri();
             $data_navigation = Navigation::whereIn('group', [0, 1, 2])->get();
@@ -47,22 +62,19 @@ class PageControler extends Controller
             view()->share('user', $user);
             view()->share('now_data', $now_data->format('Y-m-d'));
             view()->share('date_now', Carbon::now());
+            view()->share('config_data', $config_data);
             return $next($request);
         });
-        //            $user_site_profile = Users_profiles::where('user_id', Auth::id())->first();
-        //            $currency = CurrencyConverter::isCurrency(1, $user_site_profile->currency, $user_site_profile->currency);
-        //            view()->share('user_site_profile', $user_site_profile);
-        //            view()->share('currency', $currency['result_need']);
     }
 
-    public function home(Request $request){
-        Log::debug($request->all());
-        return view('pages.home')
-//        return view('pages.calendar')
-        ;
+    public function home(Request $request)
+    {
+        return view('pages.home');
     }
+
     public function calendar(Request $request)
     {
+
         $page = (int)$request->input('page');
 
         $data_day_time = [];
@@ -94,7 +106,7 @@ class PageControler extends Controller
             ->with('data_lesson', json_encode($data_lesson));
     }
 
-    public function transaction()
+    public function transaction(Request $request)
     {
         $filter = $this->globalRepository->get_filter('filters_transaction');
         $data_transactions = $this->transactionRepository->get_list($filter);
@@ -135,18 +147,16 @@ class PageControler extends Controller
 //            ->whereNotIn('day_week', $day_week_select ?? [])
             ->leftJoin('users_profiles', 'users_profiles.user_id', 'calendars.student_id')
             ->orderBy('calendars.id')
-//            ->orderBy('fool_time')
-//            ->orderBy('time_start')
             ->select('calendars.*', 'users_profiles.name')
-//            ->select('calendars.*', 'users_profiles.first_name', 'users_profiles.last_name',)
             ->get();
         return [...$data_lesson];
     }
-    public function payed(Request $request){
+    public function payed(Request $request)
+    {
         return view('pages.payed');
     }
-    public function create_student(){
+    public function create_student(Request $request)
+    {
         return view("pages.admin.create_student");
     }
-
 }

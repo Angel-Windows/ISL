@@ -21,6 +21,10 @@
             <td>Баланс</td>
             <td class="balance" title="150"></td>
         </tr>
+        <tr>
+            <td>Статус</td>
+            <td class="status" title="150"></td>
+        </tr>
     </table>
     <div class="buttons">
         <form

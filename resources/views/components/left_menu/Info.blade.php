@@ -17,6 +17,7 @@
             <td>Баланс</td>
             <td>{{$user->balance}}</td>
         </tr>
+
     </table>
     <div class="hr hr_horizontal"></div>
     <h2>Информация</h2>

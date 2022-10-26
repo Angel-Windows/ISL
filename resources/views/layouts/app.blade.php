@@ -34,9 +34,14 @@ $page_get = $_GET['page'] ?? 1;
     <!-- Scripts -->
     {{--    <script src="https://kit.fontawesome.com/55683bb2a9.js" crossorigin="anonymous"></script>--}}
 
+
     <script defer src="{{asset('js/global.js')}}"></script>
     <script defer src="{{asset('js/nav_left.js')}}"></script>
     <script defer src="{{asset('js/menu_right.js')}}"></script>
+    <script>
+        let config_json = "{{$config_data}}".replace(/&quot;/g,'"').replace(/"{/g,'{').replace(/}"/g,'}');
+        let config = JSON.parse(config_json)
+    </script>
 </head>
 <body id="body" class="body">
 

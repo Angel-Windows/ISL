@@ -38,8 +38,11 @@ window.Post = (url, func = () => {
     getResource(url, parameters)
         .then(data => {
             openPopupAlert(data)
-            if (data.code === 1){
+            if (data.code === 1) {
                 func(data)
+            } else {
+                const progress_reload = document.querySelector('.progress_reload');
+                progress_reload.classList.remove('progress_reload')
             }
         })
         .catch(error => console.error(error));
@@ -74,4 +77,7 @@ window.create_html = (tag_name, values = {}, parent) => {
         }
         parent.appendChild(elem)
     })
+}
+window.getConfig = (key) => {
+    return config[key];
 }

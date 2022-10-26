@@ -135,6 +135,7 @@ class CalendarController extends Controller
                     "date" => $lesson->fool_time,
                     "time" => $time->format("H:m"),
                     "balance" => $lesson->balance,
+                    "status" => $lesson->status,
                     "price_lesson" => $lesson->price_lesson,
                 ]
             ]
