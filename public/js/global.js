@@ -920,6 +920,9 @@ window.Post = function (url) {
 
     if (data.code === 1) {
       func(data);
+    } else {
+      var progress_reload = document.querySelector('.progress_reload');
+      progress_reload.classList.remove('progress_reload');
     }
   })["catch"](function (error) {
     return console.error(error);
@@ -991,6 +994,10 @@ window.create_html = function (tag_name) {
 
     parent.appendChild(elem);
   });
+};
+
+window.getConfig = function (key) {
+  return config[key];
 };
 })();
 
