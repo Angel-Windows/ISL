@@ -23,7 +23,7 @@ use App\Http\Controllers\WebhookController;
 |
 */
 auth();
-Route::get('/dashboard', function (){
+Route::get('/dashboard', function () {
     return redirect()->route('home');
 //    Http::post(route('login'), [
 //        'email' => 'eliphas.sn@gmail.com',
@@ -65,27 +65,15 @@ Route::middleware(['auth', 'check-role'])->group(function () {
 Route::post('/calendar/get_lesson_info', [CalendarController::class, 'get_lesson_info'])->name('calendar.get_lesson_info');
 
 
-
-
 Route::get('/bot', function (Telegram $telegram) {
     $key = base64_encode(md5(uniqid()));
-    $telegram_templates = \App\Models\TelegramTemplate::where('message', "Путин")->first();
-    $buttons = ['keyboard' => [[]]];
-    foreach (explode('|', $telegram_templates->buttons) as $item) {
-        $buttons['keyboard'][0][] = [
-            'text' => "||spoiler||",
-            'callback_data' => '1|' . $key
-        ];
-    }
+    $telegram_templates = "";
 
+//    $sendButton = $telegram->ReprlyKeyboardMarkup(324428256, $telegram_templates->answer, $buttons);
 
-    $sendButton = $telegram->ReplyKeyboardMarkup(324428256, $telegram_templates->answer, $buttons);
 //    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
 //    $telegram->send_message(324428256,'sdsdss');
 })->name('transaction.get_info');
-
-
-
 
 //Admin
 

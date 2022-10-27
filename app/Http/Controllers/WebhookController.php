@@ -63,21 +63,36 @@ class WebhookController extends Controller
         $message_text = $message['text'] ?? null;
         $message_id = $message['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
+        $user = User::where('telegram_id', $message_id)->first() ?? null;
+
         Log::debug($message_id);
         if ($template) {
             Log::debug("Telegramtemplate");
-            if ($message_text == '/login') {
-                Log::debug("strart" . $message_id);
-                $this->webhookRepository->delete_all_session($message_id);
-                Log::debug("end" . $message_id);
+            switch ($message_text) {
+                case '/login':
+                    $this->webhookRepository->delete_all_session($message_id);
+                    $telegram_session = new TelegramSession();
+                    $telegram_session->type = 1;
+                    $telegram_session->telegram_id = $message_id;
+                    $telegram_session->text = "start";
+                    $telegram_session->save();
+                    $this->telegram->send_message($message_id, 'Введите свой e-mail');
+                    break;
+                case '/add_balance':
+                    $this->webhookRepository->delete_all_session($message_id);
+                    $students = \App\Models\Referal::where('user_1', $user->id)
+                        ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
+                        ->get();
+                    $buttonds = ['keyboard' => [[]]];
 
-                $telegram_session = new TelegramSession();
-                $telegram_session->type = 1;
-                $telegram_session->telegram_id = $message_id;
-                $telegram_session->text = "start";
-                $telegram_session->save();
-                Log::debug("close" . $message_id);
-                $this->telegram->send_message($message_id, 'Введите свой e-mail');
+                    foreach ($students as $item) {
+                        $buttons['inline_keyboard'][][] = [
+                            'text' => $item->name,
+                            'callback_data' => $item->user_1
+                        ];
+                    }
+                    $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
+                    break;
             }
         } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
             Log::debug("telegram_session");

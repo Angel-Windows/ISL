@@ -16,7 +16,8 @@ class Telegram
     public function __construct(Http $http)
     {
         $this->http = $http;
-        $this->is_connect = connection_status();
+        $this->is_connect = 1;
+//        $this->is_connect = connection_status();
         $this->bot = config('bots.bot');
     }
 
@@ -24,6 +25,7 @@ class Telegram
     {
         if (!$this->is_connect)
             return false;
+
         return $this->http::post(self::url . $this->bot . '/sendMessage', [
             'chat_id' => $chat_id,
             'text' => (string)$message,
