@@ -52,30 +52,32 @@ class WebhookController extends Controller
         $data_request = explode('|', $callback_data);
         $callback_id = $request->input('callback_query')['message']['message_id'];
         $chat_id = $request->input('callback_query')['message']['chat']['id'];
-        $this->btn($chat_id, $data_request[0], $data_request[1], $callback_id);
+        switch ($data_request[1]) {
+            case 'add_balance' :
+                $this->webhookRepository->add_session(2, $chat_id, $data_request[0]);
+                $this->telegram->send_message($callback_id, 'Введите суму');
+                break;
+            default :
+                $this->btn($chat_id, $data_request[0], $data_request[1], $callback_id);
+                break;
+        }
         Log::debug("callback_function " . $data_request[1]);
     }
 
     private function message_function($request)
     {
-        Log::debug("Start");
         $message = $request->input('message');
         $message_text = $message['text'] ?? null;
         $message_id = $message['chat']['id'] ?? null;
         $template = TelegramTemplate::where('message', $message_text)->first();
         $user = User::where('telegram_id', $message_id)->first() ?? null;
-
         Log::debug($message_id);
         if ($template) {
             Log::debug("Telegramtemplate");
             switch ($message_text) {
                 case '/login':
                     $this->webhookRepository->delete_all_session($message_id);
-                    $telegram_session = new TelegramSession();
-                    $telegram_session->type = 1;
-                    $telegram_session->telegram_id = $message_id;
-                    $telegram_session->text = "start";
-                    $telegram_session->save();
+
                     $this->telegram->send_message($message_id, 'Введите свой e-mail');
                     break;
                 case '/add_balance':
@@ -88,24 +90,19 @@ class WebhookController extends Controller
                     foreach ($students as $item) {
                         $buttons['inline_keyboard'][][] = [
                             'text' => $item->name,
-                            'callback_data' => $item->user_1
+                            'callback_data' => $item->user_1 . "|add_balance"
                         ];
                     }
                     $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
                     break;
             }
         } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
-            Log::debug("telegram_session");
             $telegram_session->status = 0;
             $telegram_session->save();
-            if ($telegram_session->type == 1) {
+            if ($telegram_session->type == 1) { //Login
                 if ($telegram_session->text == "start") {
                     if (User::where('email', $message_text)->first()) {
-                        $newTelegramSession = new TelegramSession();
-                        $newTelegramSession->type = 1;
-                        $newTelegramSession->telegram_id = $message_id;
-                        $newTelegramSession->text = $message_text;
-                        $newTelegramSession->save();
+                        $this->webhookRepository->add_session(1, $message_id, $message_text);
                         $this->telegram->send_message($message_id, 'Введите пароль');
                     } else {
                         $this->telegram->send_message($message_id, 'e-mail не найден');
@@ -122,6 +119,11 @@ class WebhookController extends Controller
                     }
                     $this->webhookRepository->delete_all_session($message_id);
                 }
+            }else if($telegram_session->type == 2) { // add_balance
+                $get_session = $this->webhookRepository->get_session(2) ?? null;
+                if ($get_session) {
+                    $this->calendarRepository->add_balance($get_session->text, $message);
+                }
             }
         }
         else{
@@ -131,7 +133,6 @@ class WebhookController extends Controller
 
     private function btn($cht_id,$action, $lesson_id, $message_id)
     {
-
         switch ($action) {
             case "1":
                 $reply_markup = $this->webhookRepository->buttons_bot($lesson_id, 0);

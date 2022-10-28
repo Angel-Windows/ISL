@@ -225,4 +225,13 @@ class CalendarRepository extends BaseRepository
             return $data_item[0];
         }
     }
+    public function add_balance($user_id, $amount){
+        Log::debug(json_encode([
+            'type'=> "add_balance",
+            'user_id' => $user_id,
+            'amount' => $amount
+        ]));
+        $user_profile = UsersProfile::where('user_id', $user_id)->first();
+        $user_profile->increment($amount);
+    }
 }

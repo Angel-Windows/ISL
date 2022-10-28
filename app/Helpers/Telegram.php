@@ -18,7 +18,12 @@ class Telegram
         $this->http = $http;
         $this->is_connect = 1;
 //        $this->is_connect = connection_status();
-        $this->bot = config('bots.bot');
+        if(env('TELEGRAM_BOT') === "admin_bot"){
+            $this->bot = config('bots.admin_bot');
+
+        }else{
+            $this->bot = config('bots.bot');
+        }
     }
 
     public function send_message($chat_id, $message)

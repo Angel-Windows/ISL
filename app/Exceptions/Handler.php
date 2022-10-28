@@ -53,14 +53,18 @@ class Handler extends ExceptionHandler
 
     public function report(Throwable $e)
     {
-//        $data_onerror = ['Unauthenticated.'];
         $route_name = Route::getFacadeRoot()->current()->uri();
         if ($e->getMessage() === "Unauthenticated.") {
-            $data = ['description' => "Ктото неавторизованный",
-                'file' => $_SERVER['REMOTE_ADDR'],
-                'line' => $e->getLine(),
-                'route_name' => $route_name,
-            ];
+            if($_SERVER['REMOTE_ADDR'] === "127.0.0.1"){
+                return parent::report($e);
+            }else{
+                $data = ['description' => "Ктото неавторизованный",
+                    'file' => $_SERVER['REMOTE_ADDR'],
+                    'line' => $e->getLine(),
+                    'route_name' => $route_name,
+                ];
+            }
+
         } else {
             $data = ['description' => $e->getMessage(),
                 'file' => $e->getFile(),
