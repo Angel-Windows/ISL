@@ -92,7 +92,9 @@ class WebhookController extends Controller
                 break;
             case "/balance":
                 Log::debug("Case /balance");
-                $user_profile = UsersProfile::where('telegram_id', $message_id)->first() ?? null;
+                $user_profile = User::where('telegram_id', $message_id)
+                        ->leftJoin('users_profiles', 'users_profiles.user_id', 'users.id')
+                        ->first() ?? null;
                 if ($user_profile) {
                     $this->telegram->send_message($message_id, $user_profile->balance);
                 }else{
@@ -104,6 +106,11 @@ class WebhookController extends Controller
                 $this->webhookRepository->delete_all_session($message_id);
                 $this->webhookRepository->add_session(1, $message_id, "start");
                 $this->telegram->send_message($message_id, 'Введите свой e-mail');
+                break;
+            case '/logout':
+                Log::debug("Case /logout");
+                $this->webhookRepository->delete_all_session($message_id);
+                $this->telegram->send_message($message_id, 'Вы успешно вышли с системы');
                 break;
             default :
                 if ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
