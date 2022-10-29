@@ -67,20 +67,6 @@ Route::post('/calendar/get_lesson_info', [CalendarController::class, 'get_lesson
 
 
 Route::get('/bot', function (Telegram $telegram) {
-    $user = User::where('telegram_id', 324428256)->first() ?? null;
-    $students = \App\Models\Referal::where('user_1', $user->id)
-        ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
-        ->get();
-
-    $buttonds = [];
-
-    foreach ($students as $item) {
-        $buttonds['inline_keyboard'][][0] = [
-            'text' => $item->name,
-            'callback_data' => $item->user_1 . "|add_balance"
-        ];
-    }
-    $telegram->sendButtons(324428256, "Ученику", $buttonds);
 })->name('transaction.get_info');
 
 //Admin

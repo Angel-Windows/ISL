@@ -140,7 +140,8 @@ class WebhookController extends Controller
                         }
                     } else if ($telegram_session->type == 2) { // add_balance
                         Log::debug("start AddBalance function");
-                        $this->calendarRepository->add_balance($telegram_session->text, $message);
+                        if (is_numeric($message))
+                        $this->calendarRepository->add_balance($telegram_session->text, (int) $message);
                     }
 
                 } else {
