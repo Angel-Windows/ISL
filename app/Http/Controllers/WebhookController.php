@@ -57,7 +57,8 @@ class WebhookController extends Controller
         switch ($data_request[1]) {
             case 'add_balance' :
                 $this->webhookRepository->add_session(2, $chat_id, $data_request[0]);
-                $this->telegram->send_message($chat_id, 'Введите суму');
+                $student = UsersProfile::where('id', $data_request[0])->first();
+                $this->telegram->send_message($chat_id, 'Введите суму Ученику: ' . $student->name);
                 break;
             default :
                 $this->btn($chat_id, $data_request[0], $data_request[1], $callback_id);
