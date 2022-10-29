@@ -143,6 +143,8 @@ class WebhookController extends Controller
                         if (is_numeric($message_text)){
                             $this->calendarRepository->add_balance($telegram_session->text, (int)$message_text);
                             $this->telegram->send_message($message_id, 'Успешно зачисленно');
+                            $this->webhookRepository->delete_all_session($message_id);
+
                         }else{
                             $this->telegram->send_message($message_id, 'Вы ввели неверную сумму, попробуйте ещё раз');
                             $this->webhookRepository->add_session(2, $telegram_session->telegram_id, $telegram_session->text);

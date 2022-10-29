@@ -232,6 +232,6 @@ class CalendarRepository extends BaseRepository
             'amount' => $amount
         ]));
         $user_profile = UsersProfile::where('user_id', $user_id)->first();
-        $user_profile->increment($amount);
+        $user_profile->balance->increment($amount);
     }
 }
