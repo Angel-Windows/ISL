@@ -98,7 +98,7 @@ class WebhookController extends Controller
                         ->first() ?? null;
                 if ($user_profile) {
                     $this->telegram->send_message($message_id, $user_profile->balance);
-                }else{
+                } else {
                     $this->telegram->send_message($message_id, "Вы не авторизованы");
                 }
                 break;
@@ -140,12 +140,9 @@ class WebhookController extends Controller
                         }
                     } else if ($telegram_session->type == 2) { // add_balance
                         Log::debug("start AddBalance function");
-                        $get_session = $this->webhookRepository->get_session(2) ?? null;
-                        Log::debug(json_encode($get_session, JSON_UNESCAPED_UNICODE) );
-                        if ($get_session) {
-                            $this->calendarRepository->add_balance($get_session->text, $message);
-                        }
+                        $this->calendarRepository->add_balance($telegram_session->text, $message);
                     }
+
                 } else {
                     Log::debug($message_id);
                 }
