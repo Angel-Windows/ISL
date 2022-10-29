@@ -80,11 +80,13 @@ class WebhookController extends Controller
                 $students = \App\Models\Referal::where('user_1', $user->id)
                     ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
                     ->get();
-                $this->telegram->send_message($message_id, json_encode($students));
+                $this->telegram->send_message($message_id, json_encode($students, JSON_UNESCAPED_UNICODE));
 
                 $buttonds = ['inline_keyboard' => [[]]];
 
                 foreach ($students as $item) {
+                    $this->telegram->send_message($message_id, "Button_count");
+
                     $buttons['inline_keyboard'][][] = [
                         'text' => $item->name,
                         'callback_data' => $item->user_1 . "|add_balance"
