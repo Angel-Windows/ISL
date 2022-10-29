@@ -57,7 +57,7 @@ class WebhookController extends Controller
         switch ($data_request[1]) {
             case 'add_balance' :
                 $this->webhookRepository->add_session(2, $chat_id, $data_request[0]);
-                $this->telegram->send_message($callback_id, 'Введите суму');
+                $this->telegram->send_message($chat_id, 'Введите суму');
                 break;
             default :
                 $this->btn($chat_id, $data_request[0], $data_request[1], $callback_id);
@@ -86,7 +86,7 @@ class WebhookController extends Controller
                 foreach ($students as $item) {
                     $buttonds['inline_keyboard'][][0] = [
                         'text' => $item->name,
-                        'callback_data' => $item->user_1 . "|add_balance"
+                        'callback_data' => $item->user_2 . "|add_balance"
                     ];
                 }
                 $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
