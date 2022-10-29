@@ -80,6 +80,8 @@ class WebhookController extends Controller
                 $students = \App\Models\Referal::where('user_1', $user->id)
                     ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
                     ->get();
+                Log::debug(json_encode($students));
+
                 $buttonds = ['keyboard' => [[]]];
 
                 foreach ($students as $item) {
