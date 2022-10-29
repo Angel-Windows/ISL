@@ -8,6 +8,7 @@ use App\Models\TelegramChat;
 use App\Models\TelegramSession;
 use App\Models\TelegramTemplate;
 use App\Models\User;
+use App\Models\UsersProfile;
 use App\Repositories\CalendarRepository;
 use App\Repositories\WebhookRepository;
 use Illuminate\Http\Request;
@@ -70,70 +71,75 @@ class WebhookController extends Controller
         $message = $request->input('message');
         $message_text = $message['text'] ?? null;
         $message_id = $message['chat']['id'] ?? null;
-        $template = TelegramTemplate::where('message', $message_text)->first();
+//        $template = TelegramTemplate::where('message', $message_text)->first();
         $user = User::where('telegram_id', $message_id)->first() ?? null;
-        Log::debug($message_id);
-        if ($template) {
-            Log::debug("Telegramtemplate");
-            switch ($message_text) {
-                case '/login':
-                    Log::debug("Add your email");
-                    $this->webhookRepository->delete_all_session($message_id);
-                    $this->webhookRepository->add_session(1,$message_id, "start");
-                    $this->telegram->send_message($message_id, 'Введите свой e-mail');
-                    break;
-                case '/add_balance':
-                    $this->webhookRepository->delete_all_session($message_id);
-                    $students = \App\Models\Referal::where('user_1', $user->id)
-                        ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
-                        ->get();
-                    $buttonds = ['keyboard' => [[]]];
+        switch ($message_text) {
+            case '/login':
+                Log::debug("Case /login");
+                $this->webhookRepository->delete_all_session($message_id);
+                $this->webhookRepository->add_session(1, $message_id, "start");
+                $this->telegram->send_message($message_id, 'Введите свой e-mail');
+                break;
+            case '/add_balance':
+                Log::debug("Case /add_balance");
+                $this->webhookRepository->delete_all_session($message_id);
+                $students = \App\Models\Referal::where('user_1', $user->id)
+                    ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
+                    ->get();
+                $buttonds = ['keyboard' => [[]]];
 
-                    foreach ($students as $item) {
-                        $buttons['inline_keyboard'][][] = [
-                            'text' => $item->name,
-                            'callback_data' => $item->user_1 . "|add_balance"
-                        ];
-                    }
-                    $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
-                    break;
-            }
-        } elseif ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
-            $telegram_session->status = 0;
-            $telegram_session->save();
-            if ($telegram_session->type == 1) { //Login
-                if ($telegram_session->text == "start") {
-                    if (User::where('email', $message_text)->first()) {
-                        $this->webhookRepository->add_session(1, $message_id, $message_text);
-                        $this->telegram->send_message($message_id, 'Введите пароль');
-                    } else {
-                        $this->telegram->send_message($message_id, 'e-mail не найден');
-                        $this->webhookRepository->delete_all_session($message_id);
+                foreach ($students as $item) {
+                    $buttons['inline_keyboard'][][] = [
+                        'text' => $item->name,
+                        'callback_data' => $item->user_1 . "|add_balance"
+                    ];
+                }
+                $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
+                break;
+            case "/balance":
+                Log::debug("Case /balance");
+                $user_profile = UsersProfile::where('telegram_id', $message_id)->first();
+                $this->telegram->send_message($message_id, $user_profile->balance);
+                break;
+            default :
+                if ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
+                    $telegram_session->status = 0;
+                    $telegram_session->save();
+                    if ($telegram_session->type == 1) { //Login
+                        if ($telegram_session->text == "start") {
+                            if (User::where('email', $message_text)->first()) {
+                                $this->webhookRepository->add_session(1, $message_id, $message_text);
+                                $this->telegram->send_message($message_id, 'Введите пароль');
+                            } else {
+                                $this->telegram->send_message($message_id, 'e-mail не найден');
+                                $this->webhookRepository->delete_all_session($message_id);
+                            }
+                        } else {
+                            $user = User::where('email', $telegram_session->text)->first();
+                            if (\Hash::check($message_text, $user->password)) {
+                                $user->telegram_id = $message_id;
+                                $user->save();
+                                $this->telegram->send_message($message_id, 'Успешно авторизованно');
+                            } else {
+                                $this->telegram->send_message($message_id, 'Пароль неверный');
+                            }
+                            $this->webhookRepository->delete_all_session($message_id);
+                        }
+                    } else if ($telegram_session->type == 2) { // add_balance
+                        $get_session = $this->webhookRepository->get_session(2) ?? null;
+                        if ($get_session) {
+                            $this->calendarRepository->add_balance($get_session->text, $message);
+                        }
                     }
                 } else {
-                    $user = User::where('email', $telegram_session->text)->first();
-                    if (\Hash::check($message_text, $user->password)) {
-                        $user->telegram_id = $message_id;
-                        $user->save();
-                        $this->telegram->send_message($message_id, 'Успешно авторизованно');
-                    } else {
-                        $this->telegram->send_message($message_id, 'Пароль неверный');
-                    }
-                    $this->webhookRepository->delete_all_session($message_id);
+                    Log::debug($message_id);
                 }
-            }else if($telegram_session->type == 2) { // add_balance
-                $get_session = $this->webhookRepository->get_session(2) ?? null;
-                if ($get_session) {
-                    $this->calendarRepository->add_balance($get_session->text, $message);
-                }
-            }
+                break;
         }
-        else{
-            Log::debug($message_id);
-        }
+
     }
 
-    private function btn($cht_id,$action, $lesson_id, $message_id)
+    private function btn($cht_id, $action, $lesson_id, $message_id)
     {
         switch ($action) {
             case "1":
@@ -157,7 +163,7 @@ class WebhookController extends Controller
 
         $this->telegram->editButtons($cht_id, $templates_lesson, $reply_markup, $message_id);
         $telegram_chats = TelegramChat::where('calendar_id', $lesson_id)->first();
-        if ($telegram_chats){
+        if ($telegram_chats) {
             $this->telegram->editMessage($telegram_chats->chat_id, $templates_lesson, $telegram_chats->message_id);
         }
 

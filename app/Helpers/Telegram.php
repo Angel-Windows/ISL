@@ -26,6 +26,11 @@ class Telegram
         }
     }
 
+    /**
+     * @param $chat_id
+     * @param $message
+     * @return false|\Illuminate\Http\Client\Response
+     */
     public function send_message($chat_id, $message)
     {
         if (!$this->is_connect)
