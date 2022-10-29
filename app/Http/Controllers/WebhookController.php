@@ -49,6 +49,7 @@ class WebhookController extends Controller
 
     private function callback_function($callback_data, $request)
     {
+
         $data_request = explode('|', $callback_data);
         $callback_id = $request->input('callback_query')['message']['message_id'];
         $chat_id = $request->input('callback_query')['message']['chat']['id'];
@@ -76,8 +77,9 @@ class WebhookController extends Controller
             Log::debug("Telegramtemplate");
             switch ($message_text) {
                 case '/login':
+                    Log::debug("Add your email");
                     $this->webhookRepository->delete_all_session($message_id);
-
+                    $this->webhookRepository->add_session(1,$message_id, "start");
                     $this->telegram->send_message($message_id, 'Введите свой e-mail');
                     break;
                 case '/add_balance':
