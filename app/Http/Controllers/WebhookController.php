@@ -89,6 +89,17 @@ class WebhookController extends Controller
                         'callback_data' => $item->user_1 . "|add_balance"
                     ];
                 }
+                $buttonds = [
+                    'inline_keyboard' =>
+                        [
+                            [
+                                [
+                                    'text' => 'Отменить',
+                                    'callback_data' => '3|' . 1,
+                                ],
+                            ]
+                        ]
+                ];
                 $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
                 break;
             case "/balance":
