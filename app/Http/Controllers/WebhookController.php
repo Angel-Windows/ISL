@@ -74,12 +74,6 @@ class WebhookController extends Controller
 //        $template = TelegramTemplate::where('message', $message_text)->first();
         $user = User::where('telegram_id', $message_id)->first() ?? null;
         switch ($message_text) {
-            case '/login':
-                Log::debug("Case /login");
-                $this->webhookRepository->delete_all_session($message_id);
-                $this->webhookRepository->add_session(1, $message_id, "start");
-                $this->telegram->send_message($message_id, 'Введите свой e-mail');
-                break;
             case '/add_balance':
                 Log::debug("Case /add_balance");
                 $this->webhookRepository->delete_all_session($message_id);
@@ -98,8 +92,18 @@ class WebhookController extends Controller
                 break;
             case "/balance":
                 Log::debug("Case /balance");
-                $user_profile = UsersProfile::where('telegram_id', $message_id)->first();
-                $this->telegram->send_message($message_id, $user_profile->balance);
+                $user_profile = UsersProfile::where('telegram_id', $message_id)->first() ?? null;
+                if ($user_profile) {
+                    $this->telegram->send_message($message_id, $user_profile->balance);
+                }else{
+                    $this->telegram->send_message($message_id, "Вы не авторизованы");
+                }
+                break;
+            case '/login':
+                Log::debug("Case /login");
+                $this->webhookRepository->delete_all_session($message_id);
+                $this->webhookRepository->add_session(1, $message_id, "start");
+                $this->telegram->send_message($message_id, 'Введите свой e-mail');
                 break;
             default :
                 if ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
