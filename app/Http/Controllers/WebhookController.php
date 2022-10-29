@@ -81,25 +81,14 @@ class WebhookController extends Controller
                     ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
                     ->get();
 
-                $buttonds = ['inline_keyboard' => [[]]];
+                $buttonds = [];
 
                 foreach ($students as $item) {
-                    $buttons['inline_keyboard'][0][] = [
+                    $buttonds['inline_keyboard'][][0] = [
                         'text' => $item->name,
                         'callback_data' => $item->user_1 . "|add_balance"
                     ];
                 }
-                $buttonds = [
-                    'inline_keyboard' =>
-                        [
-                            [
-                                [
-                                    'text' => 'Отменить',
-                                    'callback_data' => '3|' . 1,
-                                ],
-                            ]
-                        ]
-                ];
                 $this->telegram->sendButtons(324428256, "Ученику", $buttonds);
                 break;
             case "/balance":

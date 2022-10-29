@@ -3,6 +3,7 @@
 use App\Http\Controllers\PageControler;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\TransactionController;
+use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
@@ -66,13 +67,20 @@ Route::post('/calendar/get_lesson_info', [CalendarController::class, 'get_lesson
 
 
 Route::get('/bot', function (Telegram $telegram) {
-    $key = base64_encode(md5(uniqid()));
-    $telegram_templates = "";
+    $user = User::where('telegram_id', 324428256)->first() ?? null;
+    $students = \App\Models\Referal::where('user_1', $user->id)
+        ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
+        ->get();
 
-//    $sendButton = $telegram->ReprlyKeyboardMarkup(324428256, $telegram_templates->answer, $buttons);
+    $buttonds = [];
 
-//    $sendButton = $telegram->get_button(env('REPORT_TELEGRAM_ID', "324428256"), 'test', $buttons);
-//    $telegram->send_message(324428256,'sdsdss');
+    foreach ($students as $item) {
+        $buttonds['inline_keyboard'][][0] = [
+            'text' => $item->name,
+            'callback_data' => $item->user_1 . "|add_balance"
+        ];
+    }
+    $telegram->sendButtons(324428256, "Ученику", $buttonds);
 })->name('transaction.get_info');
 
 //Admin
