@@ -4,6 +4,7 @@ use App\Http\Controllers\PageControler;
 use App\Http\Controllers\ProgressController;
 use App\Http\Controllers\TransactionController;
 use App\Models\User;
+use App\Models\UsersProfile;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
