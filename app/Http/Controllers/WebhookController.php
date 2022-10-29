@@ -139,10 +139,14 @@ class WebhookController extends Controller
                             $this->webhookRepository->delete_all_session($message_id);
                         }
                     } else if ($telegram_session->type == 2) { // add_balance
-                        Log::debug("start AddBalance function " .  json_encode($message));
-
-                        if (is_numeric($message))
-                        $this->calendarRepository->add_balance($telegram_session->text, (int) $message);
+                        Log::debug("start AddBalance function SUM:" . json_encode($message_text));
+                        if (is_numeric($message_text)){
+                            $this->calendarRepository->add_balance($telegram_session->text, (int)$message_text);
+                            $this->telegram->send_message($message_id, 'Успешно зачисленно');
+                        }else{
+                            $this->telegram->send_message($message_id, 'Вы ввели неверную сумму, попробуйте ещё раз');
+                            $this->webhookRepository->add_session(2, $telegram_session->telegram_id, $telegram_session->text);
+                        }
                     }
 
                 } else {
