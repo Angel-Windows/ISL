@@ -78,7 +78,7 @@ class WebhookController extends Controller
                 Log::debug("Case /add_balance");
                 $this->webhookRepository->delete_all_session($message_id);
                 $students = \App\Models\Referal::where('user_1', $user->id)
-                    ->leftJoin('users_profiles', 'users_profiles.id', 'referals.id')
+                    ->leftJoin('users_profiles', 'users_profiles.id', 'referals.user_2')
                     ->get();
 
                 $buttonds = [];
