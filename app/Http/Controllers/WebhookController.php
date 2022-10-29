@@ -139,7 +139,8 @@ class WebhookController extends Controller
                             $this->webhookRepository->delete_all_session($message_id);
                         }
                     } else if ($telegram_session->type == 2) { // add_balance
-                        Log::debug("start AddBalance function");
+                        Log::debug("start AddBalance function " .  json_encode($message));
+
                         if (is_numeric($message))
                         $this->calendarRepository->add_balance($telegram_session->text, (int) $message);
                     }
