@@ -82,7 +82,7 @@ class WebhookController extends Controller
                     ->get();
                 $this->telegram->send_message($message_id, json_encode($students));
 
-                $buttonds = ['keyboard' => [[]]];
+                $buttonds = ['inline_keyboard' => [[]]];
 
                 foreach ($students as $item) {
                     $buttons['inline_keyboard'][][] = [
