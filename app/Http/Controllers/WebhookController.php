@@ -114,6 +114,7 @@ class WebhookController extends Controller
                 $this->telegram->send_message($message_id, 'Вы успешно вышли с системы');
                 break;
             default :
+                Log::debug("Not Bot Commands");
                 if ($telegram_session = TelegramSession::where('telegram_id', $message_id)->where('status', 1)->first()) {
                     $telegram_session->status = 0;
                     $telegram_session->save();
@@ -138,7 +139,9 @@ class WebhookController extends Controller
                             $this->webhookRepository->delete_all_session($message_id);
                         }
                     } else if ($telegram_session->type == 2) { // add_balance
+                        Log::debug("start AddBalance function");
                         $get_session = $this->webhookRepository->get_session(2) ?? null;
+                        Log::debug(json_encode($get_session, JSON_UNESCAPED_UNICODE) );
                         if ($get_session) {
                             $this->calendarRepository->add_balance($get_session->text, $message);
                         }
