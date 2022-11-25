@@ -24,6 +24,7 @@ class Telegram
         }else{
             $this->bot = config('bots.bot');
         }
+//        $this->bot = "5786008651:AAEvdK7IK-BXYldxvKselsDDzx5wbSQTsEs";
     }
 
     /**

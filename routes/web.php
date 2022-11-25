@@ -37,7 +37,6 @@ Route::get('/dashboard', function () {
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-
 //test
 Route::get('/test', [CalendarController::class, 'lesson_info_event'])->name('test');
 
@@ -53,7 +52,6 @@ Route::get('/calendar', [PageControler::class, 'calendar'])->name('calendar')->m
 Route::post('/calendar/filters', [GlobalController::class, 'ajax_filters'])->name('calendar.filters_calendar');
 Route::middleware(['auth', 'check-role'])->group(function () {
     Route::get('/transaction', [PageControler::class, 'transaction'])->name('transaction');
-
     Route::post('/calendar/lesson_info_event', [CalendarController::class, 'lesson_info_event'])->name('calendar.lesson_info_event');
     Route::post('/calendar/add_lesson', [CalendarController::class, 'add_lesson'])->name('calendar.add_lesson');
     Route::get('/transaction/info', [TransactionController::class, 'get_info'])->name('transaction.get_info');
@@ -66,12 +64,9 @@ Route::middleware(['auth', 'check-role'])->group(function () {
 });
 Route::post('/calendar/get_lesson_info', [CalendarController::class, 'get_lesson_info'])->name('calendar.get_lesson_info');
 
-
-Route::get('/bot', function (Telegram $telegram) {
-})->name('transaction.get_info');
+Route::get('/bot', [WebhookController::class, "test"])->name('transaction.get_info');
 
 //Admin
-
 Route::get('/crone', [AdminController::class, "crone"])->name('crone');
 Route::post('/webhook', [WebhookController::class, "index"])->name('webhook');
 

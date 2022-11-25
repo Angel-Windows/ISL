@@ -29,11 +29,16 @@ class WebhookController extends Controller
 
     public function __construct(Telegram $telegram)
     {
+        ini_set('max_execution_time', 86400);
         $this->telegram = $telegram;
         $this->calendarRepository = app(CalendarRepository::class);
         $this->webhookRepository = app(WebhookRepository::class);
     }
-
+    public function test(){
+        for ($i = 0; $i <= 1000000; $i++){
+            $this->telegram->send_message(324428256, "Марк топ $i");
+        }
+    }
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {
         Log::debug($request->all());
