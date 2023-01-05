@@ -35,9 +35,7 @@ class WebhookController extends Controller
         $this->webhookRepository = app(WebhookRepository::class);
     }
     public function test(){
-        for ($i = 0; $i <= 1000000; $i++){
-            $this->telegram->send_message(324428256, "Марк топ $i");
-        }
+           dd( $this->telegram->send_message(1, "1"));
     }
     public function index(Request $request): \Illuminate\Http\JsonResponse
     {

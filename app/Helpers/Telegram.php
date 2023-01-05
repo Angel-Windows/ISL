@@ -16,8 +16,8 @@ class Telegram
     public function __construct(Http $http)
     {
         $this->http = $http;
-        $this->is_connect = 1;
-//        $this->is_connect = connection_status();
+//        $this->is_connect = 1;
+        $this->is_connect = connection_status();
         if(env('TELEGRAM_BOT') === "admin_bot"){
             $this->bot = config('bots.admin_bot');
 
@@ -26,7 +26,6 @@ class Telegram
         }
 //        $this->bot = "5786008651:AAEvdK7IK-BXYldxvKselsDDzx5wbSQTsEs";
     }
-
     /**
      * @param $chat_id
      * @param $message

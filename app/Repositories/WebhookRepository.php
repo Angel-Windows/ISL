@@ -93,17 +93,20 @@ class WebhookRepository extends BaseRepository
     /**
      * @param $message_telegram
      * @param $calendar_id
-     * @return void
+     * @return false
      */
     public function add_telegram_chats($message_telegram, $calendar_id)
     {
         $message_request = json_decode($message_telegram->body());
+        if (!$message_request->result)
+            return false;
         $chat_id = $message_request->result->chat->id;
         $telegram_chats = new TelegramChat();
         $telegram_chats->message_id = $message_request->result->message_id;
         $telegram_chats->calendar_id = $calendar_id;
         $telegram_chats->chat_id = $chat_id;
         $telegram_chats->save();
+        return true;
     }
 
     /**
