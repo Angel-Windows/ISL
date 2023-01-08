@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        if (env('PERSONAL_SEEDER')) {
+        if (!env('PERSONAL_SEEDER')) {
             $this->call([
                 UsersSeeder::class,
                 UsersProfilesSeeder::class,

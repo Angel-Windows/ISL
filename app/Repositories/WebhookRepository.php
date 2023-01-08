@@ -139,14 +139,18 @@ class WebhookRepository extends BaseRepository
 
         return (string)view('bot_messages.lesson_check', $data);
     }
-    public function add_session($type, $message_id, $text){
+
+    public function add_session($type, $message_id, $text)
+    {
         $telegram_session = new TelegramSession();
         $telegram_session->type = $type;
         $telegram_session->telegram_id = $message_id;
         $telegram_session->text = $text;
         $telegram_session->save();
     }
-    public function get_session($type, $status = 1){
+
+    public function get_session($type, $status = 1)
+    {
         return TelegramSession::where('type', $type)
             ->where('status', $status)
             ->first();

@@ -23,4 +23,4 @@ mix.js('resources/js/nav_left.js', 'public/js')
     .js('resources/js/calendar.js', 'public/js')
     .js('resources/js/global.js', 'public/js');
 mix.css('resources/css/reset.css', 'public/css');
-mix.sass('resources/css/scss/app.scss', 'public/css/style.css');
+ц
