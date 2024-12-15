@@ -197,7 +197,14 @@ window.lesson_info_open = (e) => {
         fresh_buttons(e.className.replace(/lesson_item background_calendar_/g, ""))
         target_menu_right(3)
         const balance = lesson_infos.querySelector('.balance');
-        const {price_lesson} = response.data;
+        const {price_lesson, status} = response.data;
+        lesson_infos.querySelector('.status').innerHTML = {
+            0: "Проведено",
+            1: "Постоянный урок",
+            2: "Урок перенесен",
+            3: "Отмена",
+        }[status] || "Неизвестный статус";
+
         lesson_infos.querySelector('.id').innerHTML = response.data.id
         lesson_infos.querySelector('.name').innerHTML = response.data.name
         lesson_infos.querySelector('.date').innerHTML = response.data.date

@@ -73,7 +73,31 @@ class CalendarController extends Controller
 
     public function lesson_info_event(Request $request)
     {
-        dd(\Hash::check('1232', '$2y$10$hIYmpSpbEMtyRz11IJLK7.zRmGFdKWXQil8l0C1Tf72cC/x62Rv1i'));
+        $id = $request['id'];
+        $event = $request['event'];
+        $return = [];
+        switch ($event) {
+            case "0":
+                $return = 0;
+                break;
+            case "1":
+                $return = $this->calendarRepository->success_lesson($id);
+//                $return = $this->success_lesson($id);
+                break;
+            case "2":
+                $return = $this->calendarRepository->closed_lesson($id);
+//                $return = $this->closed_lesson($id);
+                break;
+            case "3":
+                $return = $this->calendarRepository->back_lesson($id);
+//                $return = $this->back_lesson($id);
+                break;
+            default:
+                break;
+        }
+        $return['type'] = (int)$event;
+        return json_encode($return);
+//        dd(\Hash::check('1232', '$2y$10$hIYmpSpbEMtyRz11IJLK7.zRmGFdKWXQil8l0C1Tf72cC/x62Rv1i'));
 //        TelegramSession::where('telegram_id', 1232)->delete();
     }
 
@@ -106,6 +130,7 @@ class CalendarController extends Controller
 //                    "name" => $lesson->first_name . " " . $lesson->last_name,
 //                    "date" => $time->format("Y-m-d"),
                     "date" => $lesson->fool_time,
+                    "status" => $lesson->status,
                     "time" => $time->format("H:m"),
                     "balance" => $lesson->balance,
                     "price_lesson" => $lesson->price_lesson,

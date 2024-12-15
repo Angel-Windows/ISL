@@ -30,6 +30,7 @@ class UsersSeeder extends Seeder
                 ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'max_elin@gmail.com', 'password' => Hash::make(1232)],
                 ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'angelina@gmail.com', 'password' => Hash::make(1232)],
                 ["hash" => $this->create_hash(),'telegram_id'=> 952336186, 'email' => 'syperdan100@gmail.com', 'password' => Hash::make(1232)],
+                ["hash" => $this->create_hash(),'telegram_id'=> null, 'email' => 'leusenkoEgor@gmail.com', 'password' => Hash::make(1232)],
             ]
         );
     }

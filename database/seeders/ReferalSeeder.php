@@ -26,6 +26,7 @@ class ReferalSeeder extends Seeder
             ["user_1" => 1, "user_2"=>10],
             ["user_1" => 1, "user_2"=>11],
             ["user_1" => 1, "user_2"=>12],
+            ["user_1" => 1, "user_2"=>13],
         ]);
     }
 }

@@ -498,6 +498,7 @@ body .background_calendar_no_check:after {
   text-align: end;
 }
 .content_item.lesson_info button {
+  cursor: pointer;
   padding: 0;
   width: 2em;
   height: 2em;
