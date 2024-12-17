@@ -60,8 +60,8 @@ class RegularLessonsSeeder extends Seeder
 //                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '14:00:00', 'length' => 60],
 //                ['student_id' => 12, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '14:00:00', 'length' => 60],
 
-                ['student_id' => 13, 'professor_id' => 1, 'day_week' => 5, 'time_start' => '18:00:00', 'length' => 60],
                 ['student_id' => 13, 'professor_id' => 1, 'day_week' => 6, 'time_start' => '18:00:00', 'length' => 60],
+                ['student_id' => 13, 'professor_id' => 1, 'day_week' => 0, 'time_start' => '18:00:00', 'length' => 60],
             ]
         );
     }
